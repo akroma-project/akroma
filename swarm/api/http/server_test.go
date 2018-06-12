@@ -26,11 +26,11 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/swarm/api"
-	swarm "github.com/ethereum/go-ethereum/swarm/api/client"
-	"github.com/ethereum/go-ethereum/swarm/storage"
-	"github.com/ethereum/go-ethereum/swarm/testutil"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/swarm/api"
+	swarm "github.com/akroma-project/akroma/swarm/api/client"
+	"github.com/akroma-project/akroma/swarm/storage"
+	"github.com/akroma-project/akroma/swarm/testutil"
 )
 
 func TestBzzGetPath(t *testing.T) {

@@ -23,10 +23,10 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/tests"
+	"github.com/akroma-project/akroma/core/state"
+	"github.com/akroma-project/akroma/core/vm"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/tests"
 
 	cli "gopkg.in/urfave/cli.v1"
 )

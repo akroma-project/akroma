@@ -25,9 +25,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/p2p/discover"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/akroma-project/akroma/event"
+	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/rlp"
 )
 
 // Msg defines the structure of a p2p message.

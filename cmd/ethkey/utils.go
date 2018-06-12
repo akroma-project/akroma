@@ -22,9 +22,9 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/console"
-	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/console"
+	"github.com/akroma-project/akroma/crypto"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -21,8 +21,8 @@ import (
 
 	"sync/atomic"
 
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/consensus"
+	"github.com/akroma-project/akroma/log"
 )
 
 type CpuAgent struct {

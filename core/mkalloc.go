@@ -34,8 +34,8 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/akroma-project/akroma/core"
+	"github.com/akroma-project/akroma/rlp"
 )
 
 type allocItem struct{ Addr, Balance *big.Int }

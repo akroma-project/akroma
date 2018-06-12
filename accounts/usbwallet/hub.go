@@ -22,9 +22,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/accounts"
+	"github.com/akroma-project/akroma/event"
+	"github.com/akroma-project/akroma/log"
 	"github.com/karalabe/hid"
 )
 

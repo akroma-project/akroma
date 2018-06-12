@@ -29,9 +29,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/event"
+	"github.com/akroma-project/akroma/log"
 )
 
 const (

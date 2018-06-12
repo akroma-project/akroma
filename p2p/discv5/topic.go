@@ -23,8 +23,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/common/mclock"
+	"github.com/akroma-project/akroma/log"
 )
 
 const (

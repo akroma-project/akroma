@@ -27,8 +27,8 @@ import (
 
 	"reflect"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/crypto"
 )
 
 const jsondata = `

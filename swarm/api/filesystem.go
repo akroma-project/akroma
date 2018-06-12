@@ -26,9 +26,9 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 const maxParallelFiles = 5

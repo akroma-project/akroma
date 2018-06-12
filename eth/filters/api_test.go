@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/rpc"
 )
 
 func TestUnmarshalJSONNewFilterArgs(t *testing.T) {

@@ -25,7 +25,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/log"
 )
 
 // walletDockerfile is the Dockerfile required to run a web wallet.

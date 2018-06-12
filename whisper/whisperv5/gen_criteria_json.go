@@ -5,7 +5,7 @@ package whisperv5
 import (
 	"encoding/json"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/akroma-project/akroma/common/hexutil"
 )
 
 var _ = (*criteriaOverride)(nil)

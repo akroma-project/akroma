@@ -23,8 +23,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/akroma-project/akroma/core"
+	"github.com/akroma-project/akroma/log"
 	"github.com/olekukonko/tablewriter"
 )
 

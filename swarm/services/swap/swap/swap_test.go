@@ -21,7 +21,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/akroma-project/akroma/common"
 )
 
 type testInPayment struct {
