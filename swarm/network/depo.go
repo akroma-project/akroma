@@ -22,9 +22,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 //metrics variables

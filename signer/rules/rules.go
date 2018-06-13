@@ -22,12 +22,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/signer/core"
-	"github.com/ethereum/go-ethereum/signer/rules/deps"
-	"github.com/ethereum/go-ethereum/signer/storage"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/internal/ethapi"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/signer/core"
+	"github.com/akroma-project/akroma/signer/rules/deps"
+	"github.com/akroma-project/akroma/signer/storage"
 	"github.com/robertkrimen/otto"
 )
 

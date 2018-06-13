@@ -22,8 +22,8 @@ import (
 	"io"
 	"net"
 
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/akroma-project/akroma/crypto"
+	"github.com/akroma-project/akroma/rlp"
 )
 
 // Entry is implemented by known node record entry types.

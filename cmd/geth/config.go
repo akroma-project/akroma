@@ -27,12 +27,12 @@ import (
 
 	cli "gopkg.in/urfave/cli.v1"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/dashboard"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/params"
-	whisper "github.com/ethereum/go-ethereum/whisper/whisperv6"
+	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/dashboard"
+	"github.com/akroma-project/akroma/eth"
+	"github.com/akroma-project/akroma/node"
+	"github.com/akroma-project/akroma/params"
+	whisper "github.com/akroma-project/akroma/whisper/whisperv6"
 	"github.com/naoina/toml"
 )
 

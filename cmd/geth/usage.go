@@ -24,8 +24,8 @@ import (
 
 	"strings"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/internal/debug"
+	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/internal/debug"
 	"gopkg.in/urfave/cli.v1"
 )
 

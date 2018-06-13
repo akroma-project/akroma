@@ -21,12 +21,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/light"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/core/rawdb"
+	"github.com/akroma-project/akroma/crypto"
+	"github.com/akroma-project/akroma/eth"
+	"github.com/akroma-project/akroma/ethdb"
+	"github.com/akroma-project/akroma/light"
 )
 
 var testBankSecureTrieKey = secAddr(testBankAddress)

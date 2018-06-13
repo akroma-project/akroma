@@ -22,8 +22,8 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/akroma-project/akroma/accounts/abi"
+	"github.com/akroma-project/akroma/common"
 
 	"bytes"
 	"os"

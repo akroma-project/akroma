@@ -20,8 +20,8 @@ package rawdb
 import (
 	"encoding/binary"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/metrics"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/metrics"
 )
 
 // The fields below define the low level database schema prefixing.

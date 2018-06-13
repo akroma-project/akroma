@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p/discover"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/p2p/discover"
 )
 
 type TestPeer interface {
