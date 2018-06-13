@@ -43,7 +43,7 @@ var (
 		ByzantiumBlock:      big.NewInt(0),
 		ConstantinopleBlock: nil,
 		AkromaBlock:         big.NewInt(300000),
-		BaneslayerBlock:     big.NewInt(1000000),
+		BaneslayerBlock:     big.NewInt(1200000),
 		Ethash:              new(EthashConfig),
 	}
 
