@@ -122,10 +122,10 @@ type ChainConfig struct {
 	EIP155Block *big.Int `json:"eip155Block,omitempty"` // EIP155 HF block
 	EIP158Block *big.Int `json:"eip158Block,omitempty"` // EIP158 HF block
 
-	ByzantiumBlock  *big.Int `json:"byzantiumBlock,omitempty"`  // Byzantium switch block (nil = no fork, 0 = already on byzantium)
-	ConstantinopleBlock  *big.Int `json:"constantinopleBlock,omitempty"`  // Constantinople switch block (nil = no fork, 0 = already on byzantium)
-	AkromaBlock     *big.Int `json:"akromaBlock,omitempty"`     // Akroma switch block (nil = no fork, 0 = already on akroma)
-	BaneslayerBlock *big.Int `json:"baneslayerBlock,omitempty"` //second major akroma release
+	ByzantiumBlock      *big.Int `json:"byzantiumBlock,omitempty"`      // Byzantium switch block (nil = no fork, 0 = already on byzantium)
+	ConstantinopleBlock *big.Int `json:"constantinopleBlock,omitempty"` // Constantinople switch block (nil = no fork, 0 = already on byzantium)
+	AkromaBlock         *big.Int `json:"akromaBlock,omitempty"`         // Akroma switch block (nil = no fork, 0 = already on akroma)
+	BaneslayerBlock     *big.Int `json:"baneslayerBlock,omitempty"`     //second major akroma release
 
 	// Various consensus engines
 	Ethash *EthashConfig `json:"ethash,omitempty"`

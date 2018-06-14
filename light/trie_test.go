@@ -22,7 +22,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/consensus/ethash"
 	"github.com/akroma-project/akroma/core"
 	"github.com/akroma-project/akroma/core/state"
@@ -30,6 +29,7 @@ import (
 	"github.com/akroma-project/akroma/ethdb"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/trie"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func TestNodeIterator(t *testing.T) {

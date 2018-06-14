@@ -24,12 +24,12 @@ import (
 	"net"
 	"os"
 
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/node"
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/p2p/discover"
 	"github.com/akroma-project/akroma/rpc"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 // Node represents a node in a simulation network which is created by a
