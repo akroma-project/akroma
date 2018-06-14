@@ -36,6 +36,22 @@ func TestBlockchain(t *testing.T) {
 	// Still failing tests
 	bt.skipLoad(`^bcWalletTest.*_Byzantium$`)
 
+	//Akroma: Ethereum specific tests
+	bt.skipLoad(`^bcExploitTest/`)
+	bt.skipLoad(`^bcRandomBlockhashTest/`)
+	bt.skipLoad(`^TransitionTests/`)
+	bt.skipLoad(`^bcGasPricerTest/`)
+	bt.skipLoad(`^bcBlockGasLimitTest/`)
+	bt.skipLoad(`^bcUncleHeaderValiditiy/`)
+	bt.skipLoad(`^bcMultiChainTest/`)
+	bt.skipLoad(`^bcForkStressTest/`)
+	bt.skipLoad(`^bcStateTests/`)
+	bt.skipLoad(`^bcTotalDifficultyTest/`)
+	bt.skipLoad(`^bcUncleTest/`)
+	bt.skipLoad(`^bcValidBlockTest/`)
+	bt.skipLoad(`^bcWalletTest/`)
+	//Akroma: Create Akroma versions as required
+
 	bt.walk(t, blockTestDir, func(t *testing.T, name string, test *BlockTest) {
 		if err := bt.checkFailure(t, name, test.Run()); err != nil {
 			t.Error(err)
