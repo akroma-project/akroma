@@ -310,6 +310,11 @@ var (
 		Usage: "Number of trie node generations to keep in memory",
 		Value: int(state.MaxTrieCacheGen),
 	}
+	// Masternode settings
+	MasternodeFlag = cli.BoolFlag{
+		Name:  "masternode",
+		Usage: "Enable masternode",
+	}
 	// Miner settings
 	MiningEnabledFlag = cli.BoolFlag{
 		Name:  "mine",
@@ -703,8 +708,17 @@ func setHTTP(ctx *cli.Context, cfg *node.Config) {
 	if ctx.GlobalIsSet(RPCCORSDomainFlag.Name) {
 		cfg.HTTPCors = splitAndTrim(ctx.GlobalString(RPCCORSDomainFlag.Name))
 	}
+	if ctx.GlobalIsSet(MasternodeFlag.Name) && cfg.HTTPHost == "" {
+		cfg.HTTPHost = "0.0.0.0"
+	}
 	if ctx.GlobalIsSet(RPCApiFlag.Name) {
 		cfg.HTTPModules = splitAndTrim(ctx.GlobalString(RPCApiFlag.Name))
+	}
+	if ctx.GlobalIsSet(MasternodeFlag.Name) {
+		cfg.HTTPModules = append(cfg.HTTPModules, "net")
+		if len(cfg.HTTPCors) == 0 {
+			cfg.HTTPCors = splitAndTrim("*")
+		}
 	}
 	if ctx.GlobalIsSet(RPCVirtualHostsFlag.Name) {
 		cfg.HTTPVirtualHosts = splitAndTrim(ctx.GlobalString(RPCVirtualHostsFlag.Name))
