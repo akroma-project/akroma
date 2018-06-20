@@ -39,10 +39,10 @@ var (
 	FrontierBlockReward    *big.Int = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
 	ByzantiumBlockReward   *big.Int = big.NewInt(9e+18) // Block reward in wei for successfully mining a block upward from Byzantium (Akroma: block 1)
 	AkromaBlockReward      *big.Int = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
-	masternodeBlockReward  *big.Int = big.NewInt(2e+18) // Block reward in wei for current and future development
-	developmentBlockReward *big.Int = big.NewInt(1e+18) // Block reward in wei for current and future development
 	maxUncles                       = 2                 // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime          = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
+	DevelopmentFundAddress          = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
+	MasternodeFundAddress           = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
 )
 
 // Various error messages to mark blocks invalid. These should be private to
@@ -540,8 +540,15 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	if config.IsByzantium(header.Number) {
 		blockReward = ByzantiumBlockReward
 	}
+	masternodeBlockReward := big.NewInt(2e+18)
+	developmentBlockReward := big.NewInt(1e+18)
 	if config.IsAkroma(header.Number) {
 		blockReward = AkromaBlockReward
+	}
+	if config.IsBaneslayer(header.Number) {
+		blockReward = new(big.Int).Mul(big.NewInt(6), big.NewInt(1e+18))
+		masternodeBlockReward = new(big.Int).Mul(big.NewInt(225), big.NewInt(1e+16))
+		developmentBlockReward = new(big.Int).Mul(big.NewInt(75), big.NewInt(1e+16))
 	}
 	// Accumulate the rewards for the miner and any included uncles
 	reward := new(big.Int).Set(blockReward)
@@ -558,9 +565,9 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	}
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
-	state.AddBalance(common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484"), developmentBlockReward)
+	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
 	// Masternode Fund address
 	if config.IsAkroma(header.Number) {
-		state.AddBalance(common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43"), masternodeBlockReward)
+		state.AddBalance(MasternodeFundAddress, masternodeBlockReward)
 	}
 }

@@ -59,8 +59,8 @@ var (
 		EIP158Block:         big.NewInt(1),
 		ByzantiumBlock:      big.NewInt(0),
 		ConstantinopleBlock: nil,
-		AkromaBlock:         big.NewInt(5),
-		BaneslayerBlock:     big.NewInt(10),
+		AkromaBlock:         big.NewInt(0),
+		BaneslayerBlock:     big.NewInt(0),
 		Ethash:              new(EthashConfig),
 	}
 
