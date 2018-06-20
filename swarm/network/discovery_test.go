@@ -1,4 +1,4 @@
-// Copyright 2017 The go-ethereum Authors
+// Copyright 2016 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
@@ -14,23 +14,44 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package adapters
+package network
 
-type SimStateStore struct {
-	m map[string][]byte
-}
+import (
+	"testing"
 
-func (st *SimStateStore) Load(s string) ([]byte, error) {
-	return st.m[s], nil
-}
+	p2ptest "github.com/ethereum/go-ethereum/p2p/testing"
+)
 
-func (st *SimStateStore) Save(s string, data []byte) error {
-	st.m[s] = data
-	return nil
-}
+/***
+ *
+ * - after connect, that outgoing subpeersmsg is sent
+ *
+ */
+func TestDiscovery(t *testing.T) {
+	params := NewHiveParams()
+	s, pp := newHiveTester(t, params, 1, nil)
 
-func NewSimStateStore() *SimStateStore {
-	return &SimStateStore{
-		make(map[string][]byte),
+	id := s.IDs[0]
+	raddr := NewAddrFromNodeID(id)
+	pp.Register([]OverlayAddr{OverlayAddr(raddr)})
+
+	// start the hive and wait for the connection
+	pp.Start(s.Server)
+	defer pp.Stop()
+
+	// send subPeersMsg to the peer
+	err := s.TestExchanges(p2ptest.Exchange{
+		Label: "outgoing subPeersMsg",
+		Expects: []p2ptest.Expect{
+			{
+				Code: 1,
+				Msg:  &subPeersMsg{Depth: 0},
+				Peer: id,
+			},
+		},
+	})
+
+	if err != nil {
+		t.Fatal(err)
 	}
 }

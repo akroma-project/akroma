@@ -20,9 +20,9 @@ import (
 	"time"
 
 	"github.com/akroma-project/akroma/cmd/utils"
-	"github.com/akroma-project/akroma/log"
 	gethmetrics "github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/metrics/influxdb"
+	"github.com/akroma-project/akroma/swarm/log"
 	"gopkg.in/urfave/cli.v1"
 )
 
