@@ -23,17 +23,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/discover"
-	"github.com/ethereum/go-ethereum/p2p/protocols"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/swarm/log"
-	"github.com/ethereum/go-ethereum/swarm/network"
-	"github.com/ethereum/go-ethereum/swarm/network/stream/intervals"
-	"github.com/ethereum/go-ethereum/swarm/pot"
-	"github.com/ethereum/go-ethereum/swarm/state"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/p2p"
+	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/protocols"
+	"github.com/akroma-project/akroma/rpc"
+	"github.com/akroma-project/akroma/swarm/log"
+	"github.com/akroma-project/akroma/swarm/network"
+	"github.com/akroma-project/akroma/swarm/network/stream/intervals"
+	"github.com/akroma-project/akroma/swarm/pot"
+	"github.com/akroma-project/akroma/swarm/state"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 const (

@@ -23,10 +23,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/swarm/fuse"
+	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/node"
+	"github.com/akroma-project/akroma/rpc"
+	"github.com/akroma-project/akroma/swarm/fuse"
 	"gopkg.in/urfave/cli.v1"
 )
 

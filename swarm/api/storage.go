@@ -19,7 +19,7 @@ package api
 import (
 	"path"
 
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 type Response struct {

@@ -25,13 +25,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/p2p/discover"
-	"github.com/ethereum/go-ethereum/p2p/simulations"
-	"github.com/ethereum/go-ethereum/swarm/log"
-	"github.com/ethereum/go-ethereum/swarm/network"
-	streamTesting "github.com/ethereum/go-ethereum/swarm/network/stream/testing"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/simulations"
+	"github.com/akroma-project/akroma/swarm/log"
+	"github.com/akroma-project/akroma/swarm/network"
+	streamTesting "github.com/akroma-project/akroma/swarm/network/stream/testing"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 //constants for random file generation

@@ -27,7 +27,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/swarm"
+	"github.com/akroma-project/akroma/swarm"
 )
 
 // TestCLISwarmExportImport perform the following test:

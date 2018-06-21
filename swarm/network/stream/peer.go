@@ -22,13 +22,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/p2p/protocols"
-	"github.com/ethereum/go-ethereum/swarm/log"
-	pq "github.com/ethereum/go-ethereum/swarm/network/priorityqueue"
-	"github.com/ethereum/go-ethereum/swarm/network/stream/intervals"
-	"github.com/ethereum/go-ethereum/swarm/state"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/p2p/protocols"
+	"github.com/akroma-project/akroma/swarm/log"
+	pq "github.com/akroma-project/akroma/swarm/network/priorityqueue"
+	"github.com/akroma-project/akroma/swarm/network/stream/intervals"
+	"github.com/akroma-project/akroma/swarm/state"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 var sendTimeout = 30 * time.Second

@@ -22,10 +22,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/swarm/log"
-	bv "github.com/ethereum/go-ethereum/swarm/network/bitvector"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/swarm/log"
+	bv "github.com/akroma-project/akroma/swarm/network/bitvector"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 // Stream defines a unique stream identifier.
