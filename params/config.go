@@ -45,6 +45,7 @@ var (
 		AkromaBlock:         big.NewInt(300000),
 		BaneslayerBlock:     big.NewInt(1200000),
 		CopperLeafBlock:     big.NewInt(2200000),
+		DawnbreakBlock:      big.NewInt(3200000),
 		Ethash:              new(EthashConfig),
 	}
 
@@ -63,6 +64,7 @@ var (
 		AkromaBlock:         big.NewInt(0),
 		BaneslayerBlock:     big.NewInt(0),
 		CopperLeafBlock:     big.NewInt(0),
+		DawnbreakBlock:      big.NewInt(0),
 		Ethash:              new(EthashConfig),
 	}
 
@@ -91,16 +93,16 @@ var (
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllEthashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
+	AllEthashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
 
 	// AllCliqueProtocolChanges contains every protocol change (EIPs) introduced
 	// and accepted by the Ethereum core developers into the Clique consensus.
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &CliqueConfig{Period: 0, Epoch: 30000}}
+	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &CliqueConfig{Period: 0, Epoch: 30000}}
 
-	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
+	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
 	TestRules       = TestChainConfig.Rules(new(big.Int))
 )
 
@@ -129,6 +131,7 @@ type ChainConfig struct {
 	AkromaBlock         *big.Int `json:"akromaBlock,omitempty"`         // Akroma switch block (nil = no fork, 0 = already on akroma)
 	BaneslayerBlock     *big.Int `json:"baneslayerBlock,omitempty"`     //second major akroma release
 	CopperLeafBlock     *big.Int `json:"copperLeafBlock,omitempty"`     //third major akroma release
+	DawnbreakBlock      *big.Int `json:"dawnbreakBlock,omitempty"`      //fourth major akroma release
 
 	// Various consensus engines
 	Ethash *EthashConfig `json:"ethash,omitempty"`
@@ -165,7 +168,7 @@ func (c *ChainConfig) String() string {
 	default:
 		engine = "unknown"
 	}
-	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Engine: %v}",
+	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Dawnbreak: %v Engine: %v}",
 		c.ChainID,
 		c.HomesteadBlock,
 		c.DAOForkBlock,
@@ -178,6 +181,7 @@ func (c *ChainConfig) String() string {
 		c.AkromaBlock,
 		c.BaneslayerBlock,
 		c.CopperLeafBlock,
+		c.DawnbreakBlock,
 		engine,
 	)
 }
@@ -227,9 +231,14 @@ func (c *ChainConfig) IsBaneslayer(num *big.Int) bool {
 	return isForked(c.BaneslayerBlock, num)
 }
 
-// IsCopperLeaft returns whether num is either equal to the CopperLeaf fork block or greater.
+// IsCopperLeaf returns whether num is either equal to the CopperLeaf fork block or greater.
 func (c *ChainConfig) IsCopperLeaf(num *big.Int) bool {
 	return isForked(c.CopperLeafBlock, num)
+}
+
+// IsDawnbreak returns whether num is either equal to the CopperLeaf fork block or greater.
+func (c *ChainConfig) IsDawnbreak(num *big.Int) bool {
+	return isForked(c.DawnbreakBlock, num)
 }
 
 // GasTable returns the gas table corresponding to the current phase (homestead or homestead reprice).
@@ -302,7 +311,10 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 		return newCompatError("Baneslayer fork block", c.BaneslayerBlock, newcfg.BaneslayerBlock)
 	}
 	if isForkIncompatible(c.CopperLeafBlock, newcfg.CopperLeafBlock, head) {
-		return newCompatError("CopperLeafBlock fork block", c.CopperLeafBlock, newcfg.CopperLeafBlock)
+		return newCompatError("CopperLeaf fork block", c.CopperLeafBlock, newcfg.CopperLeafBlock)
+	}
+	if isForkIncompatible(c.DawnbreakBlock, newcfg.DawnbreakBlock, head) {
+		return newCompatError("Dawnbreak fork block", c.DawnbreakBlock, newcfg.DawnbreakBlock)
 	}
 	return nil
 }
@@ -375,6 +387,7 @@ type Rules struct {
 	IsAkroma                                  bool
 	IsBaneslayer                              bool
 	IsCopperLeaf                              bool
+	IsDawnbreak                               bool
 }
 
 // Rules ensures c's ChainID is not nil.
@@ -383,5 +396,5 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 	if chainID == nil {
 		chainID = new(big.Int)
 	}
-	return Rules{ChainID: new(big.Int).Set(chainID), IsHomestead: c.IsHomestead(num), IsEIP150: c.IsEIP150(num), IsEIP155: c.IsEIP155(num), IsEIP158: c.IsEIP158(num), IsByzantium: c.IsByzantium(num), IsConstantinople: c.IsConstantinople(num), IsAkroma: c.IsAkroma(num), IsBaneslayer: c.IsBaneslayer(num), IsCopperLeaf: c.IsCopperLeaf(num)}
+	return Rules{ChainID: new(big.Int).Set(chainID), IsHomestead: c.IsHomestead(num), IsEIP150: c.IsEIP150(num), IsEIP155: c.IsEIP155(num), IsEIP158: c.IsEIP158(num), IsByzantium: c.IsByzantium(num), IsConstantinople: c.IsConstantinople(num), IsAkroma: c.IsAkroma(num), IsBaneslayer: c.IsBaneslayer(num), IsCopperLeaf: c.IsCopperLeaf(num), IsDawnbreak: c.IsDawnbreak(num)}
 }

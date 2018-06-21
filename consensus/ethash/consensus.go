@@ -555,6 +555,11 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		masternodeBlockReward = big.NewInt(250e+16) //2.50
 		developmentBlockReward = big.NewInt(65e+16) //0.65
 	}
+	if config.IsDawnbreak(header.Number) {
+		blockReward = big.NewInt(500e+16)           //5.00
+		masternodeBlockReward = big.NewInt(260e+16) //2.60
+		developmentBlockReward = big.NewInt(55e+16) //0.55
+	}
 	// Accumulate the rewards for the miner and any included uncles
 	reward := new(big.Int).Set(blockReward)
 	r := new(big.Int)
