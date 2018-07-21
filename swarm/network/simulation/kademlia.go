@@ -21,11 +21,11 @@ import (
 	"encoding/hex"
 	"time"
 
-	"github.com/ethereum/go-ethereum/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/discover"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/swarm/network"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/swarm/network"
 )
 
 // BucketKeyKademlia is the key to be used for storing the kademlia

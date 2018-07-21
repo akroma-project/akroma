@@ -19,9 +19,9 @@ package simulation
 import (
 	"context"
 
-	"github.com/ethereum/go-ethereum/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/discover"
 
-	"github.com/ethereum/go-ethereum/p2p"
+	"github.com/akroma-project/akroma/p2p"
 )
 
 // PeerEvent is the type of the channel returned by Simulation.PeerEvents.
