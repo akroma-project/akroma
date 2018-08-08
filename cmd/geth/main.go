@@ -104,6 +104,8 @@ var (
 		utils.AddrTxIndexAutoBuildFlag,
 		utils.MinerThreadsFlag,
 		utils.MiningEnabledFlag,
+		utils.MinerThreadsFlag,
+		utils.MinerNotifyFlag,
 		utils.TargetGasLimitFlag,
 		utils.NATFlag,
 		utils.NoDiscoverFlag,
