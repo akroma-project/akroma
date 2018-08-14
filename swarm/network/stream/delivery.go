@@ -24,6 +24,7 @@ import (
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/p2p/discover"
+	cp "github.com/akroma-project/akroma/swarm/chunk"
 	"github.com/akroma-project/akroma/swarm/log"
 	"github.com/akroma-project/akroma/swarm/network"
 	"github.com/akroma-project/akroma/swarm/spancontext"
@@ -229,6 +230,11 @@ R:
 	for req := range d.receiveC {
 		processReceivedChunksCount.Inc(1)
 
+		if len(req.SData) > cp.DefaultSize+8 {
+			log.Warn("received chunk is bigger than expected", "len", len(req.SData))
+			continue R
+		}
+
 		// this should be has locally
 		chunk, err := d.db.Get(context.TODO(), req.Addr)
 		if err == nil {
@@ -244,6 +250,7 @@ R:
 			continue R
 		default:
 		}
+
 		chunk.SData = req.SData
 		d.db.Put(context.TODO(), chunk)
 
