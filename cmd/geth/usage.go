@@ -196,10 +196,10 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.MiningEnabledFlag,
 			utils.MinerThreadsFlag,
 			utils.MinerNotifyFlag,
-			utils.EtherbaseFlag,
-			utils.TargetGasLimitFlag,
-			utils.GasPriceFlag,
-			utils.ExtraDataFlag,
+			utils.MinerGasPriceFlag,
+			utils.MinerGasTargetFlag,
+			utils.MinerEtherbaseFlag,
+			utils.MinerExtraDataFlag,
 		},
 	},
 	{
@@ -241,8 +241,11 @@ var AppHelpFlagGroups = []flagGroup{
 	{
 		Name: "DEPRECATED",
 		Flags: []cli.Flag{
-			utils.FastSyncFlag,
-			utils.LightModeFlag,
+			utils.MinerLegacyThreadsFlag,
+			utils.MinerLegacyGasTargetFlag,
+			utils.MinerLegacyGasPriceFlag,
+			utils.MinerLegacyEtherbaseFlag,
+			utils.MinerLegacyExtraDataFlag,
 		},
 	},
 	{
