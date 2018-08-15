@@ -716,6 +716,7 @@ func setHTTP(ctx *cli.Context, cfg *node.Config) {
 	}
 	if ctx.GlobalIsSet(MasternodeFlag.Name) {
 		cfg.HTTPModules = append(cfg.HTTPModules, "net")
+		cfg.HTTPModules = append(cfg.HTTPModules, "web3")
 		if len(cfg.HTTPCors) == 0 {
 			cfg.HTTPCors = splitAndTrim("*")
 		}
