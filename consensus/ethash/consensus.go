@@ -38,13 +38,13 @@ import (
 
 // Ethash proof-of-work protocol constants.
 var (
-	FrontierBlockReward    *big.Int = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
-	ByzantiumBlockReward   *big.Int = big.NewInt(9e+18) // Block reward in wei for successfully mining a block upward from Byzantium (Akroma: block 1)
-	AkromaBlockReward      *big.Int = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
-	maxUncles                       = 2                 // Maximum number of uncles allowed in a single block
-	allowedFutureBlockTime          = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
-	DevelopmentFundAddress          = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
-	MasternodeFundAddress           = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
+	FrontierBlockReward    = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
+	ByzantiumBlockReward   = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
+	AkromaBlockReward      = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
+	maxUncles              = 2                 // Maximum number of uncles allowed in a single block
+	allowedFutureBlockTime = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
+	DevelopmentFundAddress = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
+	MasternodeFundAddress  = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
 )
 
 // Various error messages to mark blocks invalid. These should be private to
