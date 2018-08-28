@@ -102,6 +102,7 @@ type Config struct {
 	MinerExtraData []byte         `toml:",omitempty"`
 	MinerGasPrice  *big.Int
 	MinerRecommit  time.Duration
+	MinerNoverify  bool
 
 	// Ethash options
 	Ethash ethash.Config
