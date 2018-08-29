@@ -29,7 +29,7 @@ import (
 	"github.com/akroma-project/akroma/rpc"
 )
 
-var maxPrice = big.NewInt(500 * params.Shannon)
+var maxPrice = big.NewInt(500 * params.GWei)
 
 type Config struct {
 	Blocks     int
