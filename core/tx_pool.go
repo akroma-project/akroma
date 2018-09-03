@@ -26,13 +26,13 @@ import (
 	"time"
 
 	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/common/prque"
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/core/types"
 	"github.com/akroma-project/akroma/event"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/params"
-	"gopkg.in/karalabe/cookiejar.v2/collections/prque"
 )
 
 const (
@@ -987,11 +987,11 @@ func (pool *TxPool) promoteExecutables(accounts []common.Address) {
 	if pending > pool.config.GlobalSlots {
 		pendingBeforeCap := pending
 		// Assemble a spam order to penalize large transactors first
-		spammers := prque.New()
+		spammers := prque.New(nil)
 		for addr, list := range pool.pending {
 			// Only evict transactions from high rollers
 			if !pool.locals.contains(addr) && uint64(list.Len()) > pool.config.AccountSlots {
-				spammers.Push(addr, float32(list.Len()))
+				spammers.Push(addr, int64(list.Len()))
 			}
 		}
 		// Gradually drop transactions from offenders
