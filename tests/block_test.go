@@ -30,11 +30,11 @@ func TestBlockchain(t *testing.T) {
 	bt.skipLoad(`^bcForgedTest/bcForkUncle\.json`)
 	bt.skipLoad(`^bcMultiChainTest/(ChainAtoChainB_blockorder|CallContractFromNotBestBlock)`)
 	bt.skipLoad(`^bcTotalDifficultyTest/(lotsOfLeafs|lotsOfBranches|sideChainWithMoreTransactions)`)
-	// Constantinople is not implemented yet.
-	bt.skipLoad(`(?i)(constantinople)`)
+	// This test is broken
+	bt.fails(`blockhashNonConstArg_Constantinople`, "Broken test")
 
 	// Still failing tests
-	bt.skipLoad(`^bcWalletTest.*_Byzantium$`)
+	//	bt.skipLoad(`^bcWalletTest.*_Byzantium$`)
 
 	//Akroma: Ethereum specific tests
 	bt.skipLoad(`^bcExploitTest/`)
