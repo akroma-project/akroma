@@ -385,8 +385,7 @@ func (err *ConfigCompatError) Error() string {
 type Rules struct {
 	ChainID                                   *big.Int
 	IsHomestead, IsEIP150, IsEIP155, IsEIP158 bool
-	IsByzantium                               bool
-	IsConstantinople                          bool
+	IsByzantium, IsConstantinople             bool
 	IsAkroma                                  bool
 	IsBaneslayer                              bool
 	IsCopperLeaf                              bool
@@ -399,5 +398,17 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 	if chainID == nil {
 		chainID = new(big.Int)
 	}
-	return Rules{ChainID: new(big.Int).Set(chainID), IsHomestead: c.IsHomestead(num), IsEIP150: c.IsEIP150(num), IsEIP155: c.IsEIP155(num), IsEIP158: c.IsEIP158(num), IsByzantium: c.IsByzantium(num), IsConstantinople: c.IsConstantinople(num), IsAkroma: c.IsAkroma(num), IsBaneslayer: c.IsBaneslayer(num), IsCopperLeaf: c.IsCopperLeaf(num), IsDawnbreak: c.IsDawnbreak(num)}
+	return Rules{
+		ChainID:          new(big.Int).Set(chainID),
+		IsHomestead:      c.IsHomestead(num),
+		IsEIP150:         c.IsEIP150(num),
+		IsEIP155:         c.IsEIP155(num),
+		IsEIP158:         c.IsEIP158(num),
+		IsByzantium:      c.IsByzantium(num),
+		IsConstantinople: c.IsConstantinople(num),
+		IsAkroma:         c.IsAkroma(num),
+		IsBaneslayer:     c.IsBaneslayer(num),
+		IsCopperLeaf:     c.IsCopperLeaf(num),
+		IsDawnbreak:      c.IsDawnbreak(num),
+	}
 }
