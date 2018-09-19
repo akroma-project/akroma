@@ -156,6 +156,14 @@ func (b *EthAPIBackend) SubscribeLogsEvent(ch chan<- []*types.Log) event.Subscri
 	return b.eth.BlockChain().SubscribeLogsEvent(ch)
 }
 
+func (b *EthAPIBackend) Atxi() *core.AtxiT {
+	return b.eth.BlockChain().GetAtxi()
+}
+
+func (b *EthAPIBackend) AtxiBuildProgress() (*core.AtxiProgressT, error) {
+	return b.eth.BlockChain().GetATXIBuildProgress()
+}
+
 func (b *EthAPIBackend) SendTx(ctx context.Context, signedTx *types.Transaction) error {
 	return b.eth.txPool.AddLocal(signedTx)
 }

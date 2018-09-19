@@ -431,6 +431,23 @@ web3._extend({
 			params: 2,
 			inputFormatter: [web3._extend.formatters.inputBlockNumberFormatter, web3._extend.utils.toHex]
 		}),
+		new web3._extend.Method({
+			name: 'getTransactionsByAddress',
+			call: 'eth_getTransactionsByAddress',
+			params: 8,
+			inputFormatter: [web3._extend.formatters.inputAddressFormatter, null, null, null, null, null, null, null]
+		}),
+		new web3._extend.Method({
+			name: 'buildATXI',
+			call: 'eth_buildATXI',
+			params: 3,
+			inputFormatter: [null, null, null]
+		}),
+		new web3._extend.Method({
+			name: 'getATXIBuildStatus',
+			call: 'eth_getATXIBuildStatus',
+			params: 0,
+		})
 	],
 	properties: [
 		new web3._extend.Property({

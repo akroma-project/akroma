@@ -129,10 +129,12 @@ type BlockChain struct {
 	vmConfig  vm.Config
 
 	badBlocks *lru.Cache // Bad block cache
+
+	atxi *AtxiT // (issue #58)
 }
 
-// NewBlockChain returns a fully initialised block chain using information
-// available in the database. It initialises the default Ethereum Validator and
+// NewBlockChain returns a fully initialized block chain using information
+// available in the database. It initializes the default Ethereum Validator and
 // Processor.
 func NewBlockChain(db ethdb.Database, cacheConfig *CacheConfig, chainConfig *params.ChainConfig, engine consensus.Engine, vmConfig vm.Config) (*BlockChain, error) {
 	if cacheConfig == nil {
@@ -193,6 +195,16 @@ func NewBlockChain(db ethdb.Database, cacheConfig *CacheConfig, chainConfig *par
 	// Take ownership of this particular state
 	go bc.update()
 	return bc, nil
+}
+
+// SetAtxi sets the db and in-use var for atx indexing.
+func (bc *BlockChain) SetAtxi(a *AtxiT) {
+	bc.atxi = a
+}
+
+// GetAtxi return indexes db and if atx index in use.
+func (bc *BlockChain) GetAtxi() *AtxiT {
+	return bc.atxi
 }
 
 func (bc *BlockChain) getProcInterrupt() bool {
@@ -816,7 +828,20 @@ func (bc *BlockChain) InsertReceiptChain(blockChain types.Blocks, receiptChain [
 		rawdb.WriteBody(batch, block.Hash(), block.NumberU64(), block.Body())
 		rawdb.WriteReceipts(batch, block.Hash(), block.NumberU64(), receipts)
 		rawdb.WriteTxLookupEntries(batch, block)
-
+		// Store the addr-tx indexes if enabled (issue #58)
+		if bc.atxi != nil {
+			if err := WriteBlockAddTxIndexes(bc.Config(), bc.atxi.Db, block); err != nil {
+				log.Error("failed to write block add-tx indexes, err: %v", err)
+			}
+			// if buildATXI has been in use (via RPC) and is NOT finished, current < stop
+			// if buildATXI has been in use (via RPC) and IS finished, current == stop
+			// else if builtATXI has not been in use (via RPC), then current == stop == 0
+			if bc.atxi.AutoMode && bc.atxi.Progress.Current == bc.atxi.Progress.Stop {
+				if err := bc.atxi.SetATXIBookmark(block.NumberU64()); err != nil {
+					log.Error(err.Error())
+				}
+			}
+		}
 		stats.processed++
 
 		if batch.ValueSize() >= ethdb.IdealBatchSize {
@@ -987,6 +1012,42 @@ func (bc *BlockChain) WriteBlockWithState(block *types.Block, receipts []*types.
 	}
 	bc.futureBlocks.Remove(block.Hash())
 	return status, nil
+}
+
+// WriteBlockAddrTxIndexesBatch builds indexes for a given range of blocks N. It writes batches at increment 'step'.
+// If any error occurs during db writing it will be returned immediately.
+// It's sole implementation is the command 'atxi-build', since we must use individual block atxi indexing during
+// sync and import in order to ensure we're on the canonical chain for each block.
+func (bc *BlockChain) WriteBlockAddrTxIndexesBatch(config *params.ChainConfig, indexDb ethdb.Database, startBlockN, stopBlockN, stepN uint64) (txsCount int, err error) {
+	block := bc.GetBlockByNumber(startBlockN)
+	batch := indexDb.NewBatch()
+
+	blockProcessedCount := uint64(0)
+	blockProcessedHead := func() uint64 {
+		return startBlockN + blockProcessedCount
+	}
+
+	for block != nil && blockProcessedHead() <= stopBlockN {
+		txP, err := putBlockAddrTxsToBatch(config, batch, block)
+		if err != nil {
+			return txsCount, err
+		}
+		txsCount += txP
+		blockProcessedCount++
+
+		// Write on stepN mod
+		if blockProcessedCount%stepN == 0 {
+			if err := batch.Write(); err != nil {
+				return txsCount, err
+			} else {
+				batch = indexDb.NewBatch()
+			}
+		}
+		block = bc.GetBlockByNumber(blockProcessedHead())
+	}
+
+	// This will put the last batch
+	return txsCount, batch.Write()
 }
 
 // InsertChain attempts to insert the given batch of blocks in to the canonical
@@ -1171,7 +1232,20 @@ func (bc *BlockChain) insertChain(chain types.Blocks) (int, []interface{}, []*ty
 			blockInsertTimer.UpdateSince(bstart)
 			events = append(events, ChainEvent{block, block.Hash(), logs})
 			lastCanon = block
-
+			// Store the addr-tx indexes if enabled (issue 58)
+			if bc.atxi != nil {
+				if err := WriteBlockAddTxIndexes(bc.Config(), bc.atxi.Db, block); err != nil {
+					return i, events, coalescedLogs, err
+				}
+				// if buildATXI has been in use (via RPC) and is NOT finished, current < stop
+				// if buildATXI has been in use (via RPC) and IS finished, current == stop
+				// else if builtATXI has not been in use (via RPC), then current == stop == 0
+				if bc.atxi.AutoMode && bc.atxi.Progress.Current == bc.atxi.Progress.Stop {
+					if err := bc.atxi.SetATXIBookmark(block.NumberU64()); err != nil {
+						return i, events, coalescedLogs, err
+					}
+				}
+			}
 			// Only count canonical blocks for GC processing time
 			bc.gcproc += proctime
 
@@ -1316,6 +1390,18 @@ func (bc *BlockChain) reorg(oldBlock, newBlock *types.Block) error {
 			return fmt.Errorf("Invalid new chain")
 		}
 	}
+
+	// Remove all atxis from old chain; indexes should only reflect canonical (issue 58)
+	// Doesn't matter whether automode or not, they should be removed.
+	if bc.atxi != nil {
+		for _, block := range oldChain {
+			for _, tx := range block.Transactions() {
+				if err := RmAddrTx(bc.atxi.Db, tx, bc.Config(), block.Number()); err != nil {
+					return err
+				}
+			}
+		}
+	}
 	// Ensure the user sees large reorgs
 	if len(oldChain) > 0 && len(newChain) > 0 {
 		logFn := log.Debug
@@ -1334,6 +1420,20 @@ func (bc *BlockChain) reorg(oldBlock, newBlock *types.Block) error {
 		bc.insert(newChain[i])
 		// write lookup entries for hash based transaction/receipt searches
 		rawdb.WriteTxLookupEntries(bc.db, newChain[i])
+		// Store the addr-tx indexes if enabled
+		if bc.atxi != nil {
+			if err := WriteBlockAddTxIndexes(bc.Config(), bc.atxi.Db, newChain[i]); err != nil {
+				return err
+			}
+			// if buildATXI has been in use (via RPC) and is NOT finished, current < stop
+			// if buildATXI has been in use (via RPC) and IS finished, current == stop
+			// else if builtATXI has not been in use (via RPC), then current == stop == 0
+			if bc.atxi.AutoMode && bc.atxi.Progress.Current == bc.atxi.Progress.Stop {
+				if err := bc.atxi.SetATXIBookmark(newChain[i].NumberU64()); err != nil {
+					return err
+				}
+			}
+		}
 		addedTxs = append(addedTxs, newChain[i].Transactions()...)
 	}
 	// calculate the difference between deleted and added transactions

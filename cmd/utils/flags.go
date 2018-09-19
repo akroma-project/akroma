@@ -310,12 +310,20 @@ var (
 		Usage: "Number of trie node generations to keep in memory",
 		Value: int(state.MaxTrieCacheGen),
 	}
-	// Masternode settings
+	// MasternodeFlag settings
 	MasternodeFlag = cli.BoolFlag{
 		Name:  "masternode",
 		Usage: "Enable masternode",
 	}
-	// Miner settings
+	AddrTxIndexFlag = cli.BoolFlag{
+		Name:  "atxi",
+		Usage: "Toggle indexes for transactions by address. Pre-existing chaindata can be indexed with command 'atxi-build'",
+	}
+	AddrTxIndexAutoBuildFlag = cli.BoolFlag{
+		Name:  "atxi.autobuild",
+		Usage: "Begins automatic concurrent indexes building process that runs alongside a normally running geth.",
+	}
+	// MiningEnabledFlag settings
 	MiningEnabledFlag = cli.BoolFlag{
 		Name:  "mine",
 		Usage: "Enable mining",
@@ -814,6 +822,18 @@ func setEtherbase(ctx *cli.Context, ks *keystore.KeyStore, cfg *eth.Config) {
 	}
 }
 
+func MakeIndexDatabase(ctx *cli.Context, stack *node.Node) ethdb.Database {
+	var (
+		cache   = ctx.GlobalInt(CacheFlag.Name) * ctx.GlobalInt(CacheDatabaseFlag.Name) / 100
+		handles = makeDatabaseHandles()
+	)
+	indexesDb, err := stack.OpenDatabase("indexes", cache, handles)
+	if err != nil {
+		log.Error("Could not open database: ", err.Error())
+	}
+	return indexesDb
+}
+
 // MakePasswordList reads password lines from the file specified by the global --password flag.
 func MakePasswordList(ctx *cli.Context) []string {
 	path := ctx.GlobalString(PasswordFileFlag.Name)
@@ -1076,6 +1096,10 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 		cfg.DatabaseCache = ctx.GlobalInt(CacheFlag.Name) * ctx.GlobalInt(CacheDatabaseFlag.Name) / 100
 	}
 	cfg.DatabaseHandles = makeDatabaseHandles()
+
+	if ctx.GlobalBool(AddrTxIndexFlag.Name) { //(issue 58)
+		cfg.UseAddrTxIndex = true
+	}
 
 	if gcmode := ctx.GlobalString(GCModeFlag.Name); gcmode != "full" && gcmode != "archive" {
 		Fatalf("--%s must be either 'full' or 'archive'", GCModeFlag.Name)

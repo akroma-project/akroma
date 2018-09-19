@@ -487,6 +487,99 @@ func NewPublicBlockChainAPI(b Backend) *PublicBlockChainAPI {
 	return &PublicBlockChainAPI{b}
 }
 
+// (issue 58)
+// GetTransactionsByAddress gets transactions for a given address.
+// Optional values include start and stop block numbers, and to/from/both value for tx/address relation.
+// Returns a slice of strings of transactions hashes.
+func (api *PublicBlockChainAPI) GetTransactionsByAddress(address common.Address, blockStartN uint64, blockEndN rpc.BlockNumber, toOrFrom string, txKindOf string, pagStart, pagEnd int, reverse bool) (list []string, err error) {
+	log.Info("RPC call: eth_getTransactionsByAddress", "address", address, "start", blockStartN, "end", blockEndN, "toOrFrom", toOrFrom, "kind", txKindOf)
+
+	atxi := api.b.Atxi()
+	if atxi == nil {
+		return nil, errors.New("addr-tx indexing not enabled")
+	}
+	// Use human-friendly abbreviations, per https://github.com/ethereumproject/go-ethereum/pull/475#issuecomment-366065122
+	// so 't' => to, 'f' => from, 'tf|ft' => either/both. Same pattern for txKindOf.
+	// _t_o OR _f_rom
+	if toOrFrom == "tf" || toOrFrom == "ft" {
+		toOrFrom = "b"
+	}
+	// _s_tandard OR _c_ontract
+	if txKindOf == "sc" || txKindOf == "cs" {
+		txKindOf = "b"
+	}
+
+	if blockEndN == rpc.LatestBlockNumber || blockEndN == rpc.PendingBlockNumber {
+		blockEndN = 0
+	}
+
+	list, err = core.GetAddrTxs(atxi.Db, address, blockStartN, uint64(blockEndN.Int64()), toOrFrom, txKindOf, pagStart, pagEnd, reverse)
+	if err != nil {
+		return
+	}
+
+	// Since list is a slice, it can be nil, which returns 'null'.
+	// Should return empty 'array' if no txs found.
+	if list == nil {
+		list = []string{}
+	}
+	return list, nil
+}
+
+// (issue 58)
+func (api *PublicBlockChainAPI) BuildATXI(start, stop, step rpc.BlockNumber) (bool, error) {
+	log.Info("RPC call: geth_buildATXI", "start", start, "stop", stop, "step", step)
+
+	// convert := func(number rpc.BlockNumber) uint64 {
+	// 	switch number {
+	// 	case rpc.LatestBlockNumber, rpc.PendingBlockNumber:
+	// 		return math.MaxUint64
+	// 	default:
+	// 		return uint64(number.Int64())
+	// 	}
+	// }
+
+	atxi := api.b.Atxi()
+	if atxi == nil {
+		return false, errors.New("addr-tx indexing not enabled")
+	}
+	if atxi.AutoMode {
+		return false, errors.New("addr-tx indexing already running via the auto build mode")
+	}
+
+	progress, err := api.b.AtxiBuildProgress()
+	if err != nil {
+		return false, err
+	}
+	if progress != nil && progress.Start != uint64(math.MaxUint64) && progress.Current < progress.Stop && progress.LastError == nil {
+		return false, fmt.Errorf("ATXI build process is already running (first block: %d, last block: %d, current block: %d\n)", progress.Start, progress.Stop, progress.Current)
+	}
+	//TODO: (issue 58) - kick off build
+	// go core.BuildAddrTxIndex(api.eth.BlockChain(), api.b.ChainDb(), atxi.Db, convert(start), convert(stop), convert(step))
+
+	return true, nil
+}
+
+// (issue 58)
+func (api *PublicBlockChainAPI) GetATXIBuildStatus() (*core.AtxiProgressT, error) {
+	atxi := api.b.Atxi()
+	if atxi == nil {
+		return nil, errors.New("addr-tx indexing not enabled")
+	}
+	if atxi.Progress == nil {
+		return nil, errors.New("no progress available for unstarted atxi indexing process")
+	}
+
+	progress, err := api.b.AtxiBuildProgress()
+	if err != nil {
+		return nil, err
+	}
+	if progress.Start == progress.Current {
+		return nil, nil
+	}
+	return progress, nil
+}
+
 // BlockNumber returns the block number of the chain head.
 func (s *PublicBlockChainAPI) BlockNumber() hexutil.Uint64 {
 	header, _ := s.b.HeaderByNumber(context.Background(), rpc.LatestBlockNumber) // latest header should always be available

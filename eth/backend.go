@@ -73,8 +73,8 @@ type Ethereum struct {
 	lesServer       LesServer
 
 	// DB interfaces
-	chainDb ethdb.Database // Block chain database
-
+	chainDb        ethdb.Database // Block chain database
+	indexesDb      ethdb.Database // Indexes database (optional -- eg. add-tx indexes)
 	eventMux       *event.TypeMux
 	engine         consensus.Engine
 	accountManager *accounts.Manager
@@ -142,6 +142,25 @@ func New(ctx *node.ServiceContext, config *Config) (*Ethereum, error) {
 		}
 		rawdb.WriteDatabaseVersion(chainDb, core.BlockChainVersion)
 	}
+
+	// Initialize indexes db if enabled (issue 58)
+	// Blockchain will be assigned the db and atx enabled after blockchain is initialized below.
+	var indexesDb ethdb.Database
+	if config.UseAddrTxIndex {
+		// TODO: these are arbitrary numbers I just made up. Optimize?
+		// The reason these numbers are different than the atxi-build command is because for "appending" (vs. building)
+		// the atxi database should require far fewer resources since application performance is limited primarily by block import (chaindata db).
+		ethdb.SetCacheRatio("chaindata", 0.95)
+		ethdb.SetHandleRatio("chaindata", 0.95)
+		ethdb.SetCacheRatio("indexes", 0.05)
+		ethdb.SetHandleRatio("indexes", 0.05)
+		indexesDb, err = ctx.OpenDatabase("indexes", config.DatabaseCache, config.DatabaseCache)
+		if err != nil {
+			return nil, err
+		}
+		eth.indexesDb = indexesDb
+	}
+
 	var (
 		vmConfig    = vm.Config{EnablePreimageRecording: config.EnablePreimageRecording}
 		cacheConfig = &core.CacheConfig{Disabled: config.NoPruning, TrieNodeLimit: config.TrieCache, TrieTimeLimit: config.TrieTimeout}
@@ -158,6 +177,12 @@ func New(ctx *node.ServiceContext, config *Config) (*Ethereum, error) {
 	}
 	eth.bloomIndexer.Start(eth.blockchain)
 
+	// Configure enabled atxi for blockchain (issue 58)
+	if config.UseAddrTxIndex {
+		eth.blockchain.SetAtxi(&core.AtxiT{
+			Db: eth.indexesDb,
+		})
+	}
 	if config.TxPool.Journal != "" {
 		config.TxPool.Journal = ctx.ResolvePath(config.TxPool.Journal)
 	}

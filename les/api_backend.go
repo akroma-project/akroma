@@ -184,6 +184,14 @@ func (b *LesApiBackend) AccountManager() *accounts.Manager {
 	return b.eth.accountManager
 }
 
+func (b *LesApiBackend) Atxi() *core.AtxiT {
+	return nil //TODO: (issue 58) - how to handle light clients
+}
+
+func (b *LesApiBackend) AtxiBuildProgress() (*core.AtxiProgressT, error) {
+	return nil, nil //TODO: (issue 58) - how to handle light clients
+}
+
 func (b *LesApiBackend) BloomStatus() (uint64, uint64) {
 	if b.eth.bloomIndexer == nil {
 		return 0, 0

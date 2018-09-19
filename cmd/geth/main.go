@@ -32,6 +32,7 @@ import (
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/cmd/utils"
 	"github.com/akroma-project/akroma/console"
+	"github.com/akroma-project/akroma/core"
 	"github.com/akroma-project/akroma/eth"
 	"github.com/akroma-project/akroma/ethclient"
 	"github.com/akroma-project/akroma/internal/debug"
@@ -99,6 +100,8 @@ var (
 		utils.EtherbaseFlag,
 		utils.GasPriceFlag,
 		utils.MasternodeFlag,
+		utils.AddrTxIndexFlag,
+		utils.AddrTxIndexAutoBuildFlag,
 		utils.MinerThreadsFlag,
 		utils.MiningEnabledFlag,
 		utils.TargetGasLimitFlag,
@@ -181,6 +184,8 @@ func init() {
 		licenseCommand,
 		// See config.go
 		dumpConfigCommand,
+		// See build_atxi_cmd.go
+		buildAddrTxIndexCommand,
 	}
 	sort.Sort(cli.CommandsByName(app.Commands))
 
@@ -303,6 +308,20 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 		}
 	}()
 	// Start auxiliary services if enabled
+	log.Info("Transaction Indexing", "AddrTxIndexFlax", ctx.GlobalBool(utils.AddrTxIndexFlag.Name), "AddrTxIndexAutoBuildFlag", ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name))
+	if ctx.GlobalBool(utils.AddrTxIndexFlag.Name) && ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name) {
+		var ethereum *eth.Ethereum
+		if err := stack.Service(&ethereum); err != nil {
+			utils.Fatalf("Ethereum service not running: %v", err)
+		}
+		a := ethereum.BlockChain().GetAtxi()
+		if a == nil {
+			panic("somehow atxi did not get enabled in backend setup. this is not expected")
+		}
+		a.AutoMode = true
+		go core.BuildAddrTxIndex(ethereum.BlockChain(), ethereum.ChainDb(), a.Db, math.MaxUint64, math.MaxUint64, 10000)
+	}
+
 	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) || ctx.GlobalBool(utils.DeveloperFlag.Name) {
 		// Mining only makes sense if a full Ethereum node is running
 		if ctx.GlobalBool(utils.LightModeFlag.Name) || ctx.GlobalString(utils.SyncModeFlag.Name) == "light" {

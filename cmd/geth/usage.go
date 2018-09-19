@@ -139,6 +139,8 @@ var AppHelpFlagGroups = []flagGroup{
 		Flags: []cli.Flag{
 			utils.UnlockedAccountFlag,
 			utils.PasswordFileFlag,
+			utils.AddrTxIndexFlag,
+			utils.AddrTxIndexAutoBuildFlag,
 		},
 	},
 	{
@@ -182,7 +184,7 @@ var AppHelpFlagGroups = []flagGroup{
 		},
 	},
 	{
-		Name: "MASTER NODE",
+		Name: "MASTERNODE",
 		Flags: []cli.Flag{
 			utils.MasternodeFlag,
 		},
