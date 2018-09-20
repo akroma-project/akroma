@@ -129,6 +129,7 @@ type ChainConfig struct {
 
 	ByzantiumBlock      *big.Int `json:"byzantiumBlock,omitempty"`      // Byzantium switch block (nil = no fork, 0 = already on byzantium)
 	ConstantinopleBlock *big.Int `json:"constantinopleBlock,omitempty"` // Constantinople switch block (nil = no fork, 0 = already on byzantium)
+	EWASMBlock          *big.Int `json:"ewasmBlock,omitempty"`          // EWASM switch block (nil = no fork, 0 = already activated)
 	AkromaBlock         *big.Int `json:"akromaBlock,omitempty"`         // Akroma switch block (nil = no fork, 0 = already on akroma)
 	BaneslayerBlock     *big.Int `json:"baneslayerBlock,omitempty"`     //second major akroma release
 	CopperLeafBlock     *big.Int `json:"copperLeafBlock,omitempty"`     //third major akroma release
@@ -222,6 +223,10 @@ func (c *ChainConfig) IsConstantinople(num *big.Int) bool {
 	return isForked(c.ConstantinopleBlock, num)
 }
 
+// IsEWASM returns whether num represents a block number after the EWASM fork
+func (c *ChainConfig) IsEWASM(num *big.Int) bool {
+	return isForked(c.EWASMBlock, num)
+
 // IsAkroma returns whether num is either equal to the Akroma fork block or greater.
 func (c *ChainConfig) IsAkroma(num *big.Int) bool {
 	return isForked(c.AkromaBlock, num)
@@ -307,6 +312,8 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	if isForkIncompatible(c.ConstantinopleBlock, newcfg.ConstantinopleBlock, head) {
 		return newCompatError("Constantinople fork block", c.ConstantinopleBlock, newcfg.ConstantinopleBlock)
 	}
+	if isForkIncompatible(c.EWASMBlock, newcfg.EWASMBlock, head) {
+		return newCompatError("ewasm fork block", c.EWASMBlock, newcfg.EWASMBlock)
 	if isForkIncompatible(c.AkromaBlock, newcfg.AkromaBlock, head) {
 		return newCompatError("Akroma fork block", c.AkromaBlock, newcfg.AkromaBlock)
 	}
