@@ -38,7 +38,7 @@ import (
 	"github.com/akroma-project/akroma/internal/debug"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/node"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/swarm"
 	bzzapi "github.com/akroma-project/akroma/swarm/api"
 	swarmmetrics "github.com/akroma-project/akroma/swarm/metrics"
@@ -795,10 +795,10 @@ func setSwarmBootstrapNodes(ctx *cli.Context, cfg *node.Config) {
 		return
 	}
 
-	cfg.P2P.BootstrapNodes = []*discover.Node{}
+	cfg.P2P.BootstrapNodes = []*enode.Node{}
 
 	for _, url := range SwarmBootnodes {
-		node, err := discover.ParseNode(url)
+		node, err := enode.ParseV4(url)
 		if err != nil {
 			log.Error("Bootstrap URL invalid", "enode", url, "err", err)
 		}

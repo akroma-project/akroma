@@ -27,7 +27,7 @@ import (
 
 	"github.com/akroma-project/akroma/common/hexutil"
 	"github.com/akroma-project/akroma/p2p"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/p2p/protocols"
 	"github.com/akroma-project/akroma/rlp"
 	"github.com/akroma-project/akroma/rpc"
@@ -283,8 +283,7 @@ func (c *Client) RunProtocol(ctx context.Context, proto *p2p.Protocol) error {
 						break
 					}
 					c.peerPool[topicobj][pubkeyid] = rw
-					nid, _ := discover.HexID("0x00")
-					p := p2p.NewPeer(nid, fmt.Sprintf("%v", addr), []p2p.Cap{})
+					p := p2p.NewPeer(enode.ID{}, fmt.Sprintf("%v", addr), []p2p.Cap{})
 					go proto.Run(p, c.peerPool[topicobj][pubkeyid])
 				}
 				go func() {
@@ -334,8 +333,7 @@ func (c *Client) AddPssPeer(pubkeyid string, addr []byte, spec *protocols.Spec) 
 		c.poolMu.Lock()
 		c.peerPool[topic][pubkeyid] = rw
 		c.poolMu.Unlock()
-		nid, _ := discover.HexID("0x00")
-		p := p2p.NewPeer(nid, fmt.Sprintf("%v", addr), []p2p.Cap{})
+		p := p2p.NewPeer(enode.ID{}, fmt.Sprintf("%v", addr), []p2p.Cap{})
 		go c.protos[topic].Run(p, c.peerPool[topic][pubkeyid])
 	}
 	return nil

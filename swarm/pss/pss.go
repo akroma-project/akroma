@@ -30,7 +30,7 @@ import (
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/p2p"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/p2p/protocols"
 	"github.com/akroma-project/akroma/rpc"
 	"github.com/akroma-project/akroma/swarm/log"
@@ -70,7 +70,7 @@ type pssCacheEntry struct {
 // abstraction to enable access to p2p.protocols.Peer.Send
 type senderPeer interface {
 	Info() *p2p.PeerInfo
-	ID() discover.NodeID
+	ID() enode.ID
 	Address() []byte
 	Send(context.Context, interface{}) error
 }
@@ -430,8 +430,7 @@ func (p *Pss) process(pssmsg *PssMsg) error {
 
 func (p *Pss) executeHandlers(topic Topic, payload []byte, from *PssAddress, asymmetric bool, keyid string) {
 	handlers := p.getHandlers(topic)
-	nid, _ := discover.HexID("0x00") // this hack is needed to satisfy the p2p method
-	peer := p2p.NewPeer(nid, fmt.Sprintf("%x", from), []p2p.Cap{})
+	peer := p2p.NewPeer(enode.ID{}, fmt.Sprintf("%x", from), []p2p.Cap{})
 	for f := range handlers {
 		err := (*f)(payload, peer, asymmetric, keyid)
 		if err != nil {

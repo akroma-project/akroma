@@ -37,7 +37,7 @@ import (
 	"github.com/akroma-project/akroma/event"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/p2p"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 )
@@ -147,7 +147,7 @@ func NewProtocolManager(config *params.ChainConfig, mode downloader.SyncMode, ne
 			NodeInfo: func() interface{} {
 				return manager.NodeInfo()
 			},
-			PeerInfo: func(id discover.NodeID) interface{} {
+			PeerInfo: func(id enode.ID) interface{} {
 				if p := manager.peers.Peer(fmt.Sprintf("%x", id[:8])); p != nil {
 					return p.Info()
 				}

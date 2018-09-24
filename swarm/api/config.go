@@ -27,7 +27,7 @@ import (
 	"github.com/akroma-project/akroma/contracts/ens"
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/node"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/swarm/log"
 	"github.com/akroma-project/akroma/swarm/network"
 	"github.com/akroma-project/akroma/swarm/pss"
@@ -118,7 +118,7 @@ func (c *Config) Init(prvKey *ecdsa.PrivateKey) {
 
 	c.PublicKey = pubkeyhex
 	c.BzzKey = keyhex
-	c.NodeID = discover.PubkeyID(&prvKey.PublicKey).String()
+	c.NodeID = enode.PubkeyToIDV4(&prvKey.PublicKey).String()
 
 	if c.SwapEnabled {
 		c.Swap.Init(c.Contract, prvKey)

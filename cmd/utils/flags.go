@@ -51,8 +51,8 @@ import (
 	"github.com/akroma-project/akroma/metrics/influxdb"
 	"github.com/akroma-project/akroma/node"
 	"github.com/akroma-project/akroma/p2p"
-	"github.com/akroma-project/akroma/p2p/discover"
 	"github.com/akroma-project/akroma/p2p/discv5"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/p2p/nat"
 	"github.com/akroma-project/akroma/p2p/netutil"
 	"github.com/akroma-project/akroma/params"
@@ -715,9 +715,9 @@ func setBootstrapNodes(ctx *cli.Context, cfg *p2p.Config) {
 		return // already set, don't apply defaults.
 	}
 
-	cfg.BootstrapNodes = make([]*discover.Node, 0, len(urls))
+	cfg.BootstrapNodes = make([]*enode.Node, 0, len(urls))
 	for _, url := range urls {
-		node, err := discover.ParseNode(url)
+		node, err := enode.ParseV4(url)
 		if err != nil {
 			log.Crit("Bootstrap URL invalid", "enode", url, "err", err)
 		}
