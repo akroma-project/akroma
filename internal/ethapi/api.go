@@ -526,6 +526,34 @@ func (api *PublicBlockChainAPI) GetTransactionsByAddress(address common.Address,
 	return list, nil
 }
 
+// GetTransactionCountByAddress
+// Returns total transactions
+func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Address, blockStartN uint64, blockEndN rpc.BlockNumber, toOrFrom string, txKindOf string, reverse bool) (hexutil.Uint64, error) {
+	log.Info("RPC call: eth_getTransactionCountByAddress", "address", address, "start", blockStartN, "end", blockEndN, "toOrFrom", toOrFrom, "kind", txKindOf)
+
+	atxi := api.b.Atxi()
+	if atxi == nil {
+		return hexutil.Uint64(uint64(0)), errors.New("addr-tx indexing not enabled")
+	}
+	if toOrFrom == "tf" || toOrFrom == "ft" {
+		toOrFrom = "b"
+	}
+	// _s_tandard OR _c_ontract
+	if txKindOf == "sc" || txKindOf == "cs" {
+		txKindOf = "b"
+	}
+
+	if blockEndN == rpc.LatestBlockNumber || blockEndN == rpc.PendingBlockNumber {
+		blockEndN = 0
+	}
+	txs, err := core.GetAddrTxs(atxi.Db, address, blockStartN, uint64(blockEndN.Int64()), "", "", -1, -1, false)
+	if err != nil {
+		return hexutil.Uint64(uint64(0)), err
+	}
+
+	return hexutil.Uint64(uint64(len(txs))), nil
+}
+
 // (issue 58)
 func (api *PublicBlockChainAPI) BuildATXI(start, stop, step rpc.BlockNumber) (bool, error) {
 	log.Info("RPC call: geth_buildATXI", "start", start, "stop", stop, "step", step)
