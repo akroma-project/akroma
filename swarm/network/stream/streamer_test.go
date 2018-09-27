@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"strconv"
 	"testing"
 	"time"
 
@@ -462,7 +463,7 @@ func TestStreamerUpstreamSubscribeLiveAndHistory(t *testing.T) {
 }
 
 func TestStreamerDownstreamCorruptHashesMsgExchange(t *testing.T) {
-	tester, streamer, _, teardown, err := newStreamerTester(t)
+	tester, streamer, _, teardown, err := newStreamerTester(t, nil)
 	defer teardown()
 	if err != nil {
 		t.Fatal(err)
@@ -477,9 +478,9 @@ func TestStreamerDownstreamCorruptHashesMsgExchange(t *testing.T) {
 		return tc, nil
 	})
 
-	peerID := tester.IDs[0]
+	node := tester.Nodes[0]
 
-	err = streamer.Subscribe(peerID, stream, NewRange(5, 8), Top)
+	err = streamer.Subscribe(node.ID(), stream, NewRange(5, 8), Top)
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
@@ -494,7 +495,7 @@ func TestStreamerDownstreamCorruptHashesMsgExchange(t *testing.T) {
 					History:  NewRange(5, 8),
 					Priority: Top,
 				},
-				Peer: peerID,
+				Peer: node.ID(),
 			},
 		},
 	},
@@ -512,7 +513,7 @@ func TestStreamerDownstreamCorruptHashesMsgExchange(t *testing.T) {
 						To:     8,
 						Stream: stream,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 		})
@@ -521,7 +522,7 @@ func TestStreamerDownstreamCorruptHashesMsgExchange(t *testing.T) {
 	}
 
 	expectedError := errors.New("Message handler error: (msg code 1): error invalid hashes length (len: 40)")
-	if err := tester.TestDisconnected(&p2ptest.Disconnect{Peer: tester.IDs[0], Error: expectedError}); err != nil {
+	if err := tester.TestDisconnected(&p2ptest.Disconnect{Peer: node.ID(), Error: expectedError}); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -771,7 +772,7 @@ func TestMaxPeerServersWithUnsubscribe(t *testing.T) {
 		return newTestServer(t), nil
 	})
 
-	peerID := tester.IDs[0]
+	node := tester.Nodes[0]
 
 	for i := 0; i < maxPeerServers+10; i++ {
 		stream := NewStream("foo", strconv.Itoa(i), true)
@@ -785,7 +786,7 @@ func TestMaxPeerServersWithUnsubscribe(t *testing.T) {
 						Stream:   stream,
 						Priority: Top,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 			Expects: []p2ptest.Expect{
@@ -800,7 +801,7 @@ func TestMaxPeerServersWithUnsubscribe(t *testing.T) {
 						From:   1,
 						To:     1,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 		})
@@ -817,7 +818,7 @@ func TestMaxPeerServersWithUnsubscribe(t *testing.T) {
 					Msg: &UnsubscribeMsg{
 						Stream: stream,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 		})
@@ -845,7 +846,7 @@ func TestMaxPeerServersWithoutUnsubscribe(t *testing.T) {
 		return newTestServer(t), nil
 	})
 
-	peerID := tester.IDs[0]
+	node := tester.Nodes[0]
 
 	for i := 0; i < maxPeerServers+10; i++ {
 		stream := NewStream("foo", strconv.Itoa(i), true)
@@ -860,7 +861,7 @@ func TestMaxPeerServersWithoutUnsubscribe(t *testing.T) {
 							Stream:   stream,
 							Priority: Top,
 						},
-						Peer: peerID,
+						Peer: node.ID(),
 					},
 				},
 				Expects: []p2ptest.Expect{
@@ -869,7 +870,7 @@ func TestMaxPeerServersWithoutUnsubscribe(t *testing.T) {
 						Msg: &SubscribeErrorMsg{
 							Error: ErrMaxPeerServers.Error(),
 						},
-						Peer: peerID,
+						Peer: node.ID(),
 					},
 				},
 			})
@@ -889,7 +890,7 @@ func TestMaxPeerServersWithoutUnsubscribe(t *testing.T) {
 						Stream:   stream,
 						Priority: Top,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 			Expects: []p2ptest.Expect{
@@ -904,7 +905,7 @@ func TestMaxPeerServersWithoutUnsubscribe(t *testing.T) {
 						From:   1,
 						To:     1,
 					},
-					Peer: peerID,
+					Peer: node.ID(),
 				},
 			},
 		})
