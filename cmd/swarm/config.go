@@ -331,6 +331,14 @@ func envVarsOverride(currentConfig *bzzapi.Config) (config *bzzapi.Config) {
 		currentConfig.MaxStreamPeerServers = m
 	}
 
+	if max := os.Getenv(SWARM_ENV_MAX_STREAM_PEER_SERVERS); max != "" {
+		m, err := strconv.Atoi(max)
+		if err != nil {
+			utils.Fatalf("invalid environment variable %s: %v", SWARM_ENV_MAX_STREAM_PEER_SERVERS, err)
+		}
+		currentConfig.MaxStreamPeerServers = m
+	}
+
 	if lne := os.Getenv(SWARM_ENV_LIGHT_NODE_ENABLE); lne != "" {
 		lightnode, err := strconv.ParseBool(lne)
 		if err != nil {
