@@ -70,7 +70,7 @@ var (
 		EIP155Block:         big.NewInt(1),
 		EIP158Block:         big.NewInt(1),
 		ByzantiumBlock:      big.NewInt(0),
-		ConstantinopleBlock: nil,
+		ConstantinopleBlock: big.NewInt(0),
 		AkromaBlock:         big.NewInt(0),
 		BaneslayerBlock:     big.NewInt(0),
 		CopperLeafBlock:     big.NewInt(0),
