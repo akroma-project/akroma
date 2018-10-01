@@ -32,7 +32,7 @@ import (
 
 	"github.com/akroma-project/akroma/log"
 	swarm "github.com/akroma-project/akroma/swarm/api/client"
-	colorable "github.com/mattn/go-colorable"
+	"github.com/mattn/go-colorable"
 )
 
 var loglevel = flag.Int("loglevel", 3, "verbosity of logs")
