@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package feeds
+package feed
 
 import (
 	"bytes"
@@ -24,7 +24,7 @@ import (
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/hexutil"
 	"github.com/akroma-project/akroma/swarm/storage"
-	"github.com/akroma-project/akroma/swarm/storage/feeds/lookup"
+	"github.com/akroma-project/akroma/swarm/storage/feed/lookup"
 )
 
 // Request represents a request to sign or signed feed update message
