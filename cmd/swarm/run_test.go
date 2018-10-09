@@ -32,6 +32,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/internal/cmdtest"
@@ -39,7 +40,8 @@ import (
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/rpc"
 	"github.com/akroma-project/akroma/swarm"
-	"github.com/docker/docker/pkg/reexec"
+	"github.com/akroma-project/akroma/swarm/api"
+	swarmhttp "github.com/akroma-project/akroma/swarm/api/http"
 )
 
 var loglevel = flag.Int("loglevel", 3, "verbosity of logs")
@@ -55,6 +57,9 @@ func init() {
 	})
 }
 
+func serverFunc(api *api.API) swarmhttp.TestServer {
+	return swarmhttp.NewServer(api, "")
+}
 func TestMain(m *testing.M) {
 	// check if we have been reexec'd
 	if reexec.Init() {
