@@ -18,6 +18,7 @@
 package state
 
 import (
+	"errors"
 	"fmt"
 	"math/big"
 	"sort"
@@ -25,6 +26,7 @@ import (
 
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/core/types"
+	"github.com/akroma-project/akroma/core/vm"
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/rlp"
@@ -254,6 +256,24 @@ func (self *StateDB) GetState(addr common.Address, hash common.Hash) common.Hash
 		return stateObject.GetState(self.db, hash)
 	}
 	return common.Hash{}
+}
+
+// GetProof returns the MerkleProof for a given Account
+func (self *StateDB) GetProof(a common.Address) (vm.ProofList, error) {
+	var proof vm.ProofList
+	err := self.trie.Prove(crypto.Keccak256(a.Bytes()), 0, &proof)
+	return proof, err
+}
+
+// GetProof returns the StorageProof for given key
+func (self *StateDB) GetStorageProof(a common.Address, key common.Hash) (vm.ProofList, error) {
+	var proof vm.ProofList
+	trie := self.StorageTrie(a)
+	if trie == nil {
+		return proof, errors.New("storage trie for requested address does not exist")
+	}
+	err := trie.Prove(crypto.Keccak256(key.Bytes()), 0, &proof)
+	return proof, err
 }
 
 // GetCommittedState retrieves a value from the given account's committed storage trie.
