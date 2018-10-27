@@ -41,15 +41,8 @@ import (
 	"github.com/akroma-project/akroma/swarm/log"
 	"github.com/akroma-project/akroma/swarm/storage"
 	"github.com/akroma-project/akroma/swarm/storage/feed"
-
 	"github.com/rs/cors"
 )
-
-type resourceResponse struct {
-	Manifest storage.Address `json:"manifest"`
-	Resource string          `json:"resource"`
-	Update   storage.Address `json:"update"`
-}
 
 var (
 	postRawCount    = metrics.NewRegisteredCounter("api.http.post.raw.count", nil)
