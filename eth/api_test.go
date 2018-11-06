@@ -20,10 +20,10 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/ethdb"
-	"github.com/davecgh/go-spew/spew"
 )
 
 var dumper = spew.ConfigState{Indent: "    "}

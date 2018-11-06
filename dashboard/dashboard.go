@@ -32,12 +32,12 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/elastic/gosigar"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rpc"
-	"github.com/elastic/gosigar"
 	"golang.org/x/net/websocket"
 )
 

@@ -27,10 +27,10 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/node"
 	"github.com/akroma-project/akroma/p2p/discover"
-	"github.com/docker/docker/pkg/reexec"
 )
 
 // DockerAdapter is a NodeAdapter which runs simulation nodes inside Docker

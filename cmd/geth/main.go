@@ -28,6 +28,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/elastic/gosigar"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/cmd/utils"
@@ -39,7 +40,6 @@ import (
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/node"
-	"github.com/elastic/gosigar"
 	"gopkg.in/urfave/cli.v1"
 )
 
