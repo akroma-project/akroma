@@ -32,11 +32,11 @@ import (
 	"time"
 	"unsafe"
 
-	mmap "github.com/edsrzf/mmap-go"
 	"github.com/akroma-project/akroma/consensus"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/rpc"
+	mmap "github.com/edsrzf/mmap-go"
 	"github.com/hashicorp/golang-lru/simplelru"
 )
 

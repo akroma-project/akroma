@@ -27,10 +27,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cespare/cp"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/common"
+	"github.com/cespare/cp"
+	"github.com/davecgh/go-spew/spew"
 )
 
 var (
