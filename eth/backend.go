@@ -73,7 +73,7 @@ type Ethereum struct {
 	lesServer       LesServer
 
 	// DB interfaces
-	chainDb ethdb.Database // Block chain database
+	chainDb        ethdb.Database // Block chain database
 	indexesDb      ethdb.Database // Indexes database (optional -- eg. add-tx indexes)
 	eventMux       *event.TypeMux
 	engine         consensus.Engine

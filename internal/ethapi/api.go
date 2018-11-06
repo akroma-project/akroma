@@ -25,7 +25,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/common"
@@ -42,6 +41,7 @@ import (
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 	"github.com/akroma-project/akroma/rpc"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
