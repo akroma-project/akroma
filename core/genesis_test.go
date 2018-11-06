@@ -21,13 +21,13 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/consensus/ethash"
 	"github.com/akroma-project/akroma/core/rawdb"
 	"github.com/akroma-project/akroma/core/vm"
 	"github.com/akroma-project/akroma/ethdb"
 	"github.com/akroma-project/akroma/params"
-	"github.com/davecgh/go-spew/spew"
 )
 
 func TestDefaultGenesisBlock(t *testing.T) {

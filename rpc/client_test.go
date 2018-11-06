@@ -30,8 +30,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/akroma-project/akroma/log"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/akroma-project/akroma/log"
 )
 
 func TestClientRequest(t *testing.T) {

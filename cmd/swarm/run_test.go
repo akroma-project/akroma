@@ -26,6 +26,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/internal/cmdtest"
@@ -33,7 +34,6 @@ import (
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/rpc"
 	"github.com/akroma-project/akroma/swarm"
-	"github.com/docker/docker/pkg/reexec"
 )
 
 func init() {

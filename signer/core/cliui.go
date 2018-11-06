@@ -24,10 +24,10 @@ import (
 
 	"sync"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/internal/ethapi"
 	"github.com/akroma-project/akroma/log"
-	"github.com/davecgh/go-spew/spew"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

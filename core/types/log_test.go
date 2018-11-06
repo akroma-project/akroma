@@ -22,9 +22,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/hexutil"
-	"github.com/davecgh/go-spew/spew"
 )
 
 var unmarshalLogTests = map[string]struct {
