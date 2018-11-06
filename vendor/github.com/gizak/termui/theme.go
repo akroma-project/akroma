@@ -111,7 +111,7 @@ func lookUpAttr(clrmap map[string]Attribute, name string) Attribute {
 
 	ns := strings.Split(name, ".")
 	for i := range ns {
-		nn := strings.Join(ns[i:], ".")
+		nn := strings.Join(ns[i:len(ns)], ".")
 		a, ok = ColorMap[nn]
 		if ok {
 			break
