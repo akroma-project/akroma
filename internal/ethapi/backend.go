@@ -59,6 +59,7 @@ type Backend interface {
 	SubscribeChainSideEvent(ch chan<- core.ChainSideEvent) event.Subscription
 	Atxi() *core.AtxiT
 	AtxiBuildProgress() (*core.AtxiProgressT, error)
+
 	// TxPool API
 	SendTx(ctx context.Context, signedTx *types.Transaction) error
 	GetPoolTransactions() (types.Transactions, error)
