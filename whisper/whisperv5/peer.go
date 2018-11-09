@@ -20,11 +20,11 @@ import (
 	"fmt"
 	"time"
 
-	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/rlp"
+	mapset "github.com/deckarep/golang-set"
 )
 
 // Peer represents a whisper protocol peer connection.

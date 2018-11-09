@@ -29,8 +29,8 @@ import (
 	"strings"
 	"time"
 
-	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/log"
+	mapset "github.com/deckarep/golang-set"
 	"golang.org/x/net/websocket"
 )
 
