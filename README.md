@@ -1,4 +1,4 @@
-## Akroma 
+## Akroma
 
 Akroma is an EVM based application development platform (smart-contracts). Akroma will utilize a Masternode system, and build out an Oracle platform. Akroma is a fork of the Ethereum code with small changes being added to support the concept of Masternodes and a stable governance model via the Akroma Foundation. Akroma inherits all of the features of Ethereum and will merge in upstream changes from the Ethereum go-lang client.
 
