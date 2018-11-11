@@ -13,7 +13,7 @@ Please note we have a code of conduct, please follow it in all your interactions
    You may copy markdown into pull request comment, which can be found [here](https://github.com/akroma-project/akroma/blob/master/docs/PULL_REQUEST_TEMPLATE/default.md)
    or append `&template=default.md` to the end of the pull request url to automatically
    generate pull request comment with template.
-3. The Pull Request may be merged in once you have the sign-off of one or more developers, or if you 
+3. The Pull Request may be merged in once you have the sign-off of one or more developers, or if you
    do not have permission to do that, you may request the second reviewer to merge it for you.
 
 ## Code of Conduct

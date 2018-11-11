@@ -38,8 +38,6 @@ import (
 	bzzapi "github.com/akroma-project/akroma/swarm/api"
 )
 
-const SWARM_VERSION = "0.3"
-
 var (
 	//flag definition for the dumpconfig command
 	DumpConfigCommand = cli.Command{
