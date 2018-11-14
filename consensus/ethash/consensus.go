@@ -24,7 +24,6 @@ import (
 	"runtime"
 	"time"
 
-	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/math"
 	"github.com/akroma-project/akroma/consensus"
@@ -34,6 +33,7 @@ import (
 	"github.com/akroma-project/akroma/crypto/sha3"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
+	mapset "github.com/deckarep/golang-set"
 )
 
 // Ethash proof-of-work protocol constants.
