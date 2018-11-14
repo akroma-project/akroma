@@ -265,6 +265,7 @@ func (c *ChainConfig) IsConstantinople(num *big.Int) bool {
 // IsEWASM returns whether num represents a block number after the EWASM fork
 func (c *ChainConfig) IsEWASM(num *big.Int) bool {
 	return isForked(c.EWASMBlock, num)
+}
 
 // IsAkroma returns whether num is either equal to the Akroma fork block or greater.
 func (c *ChainConfig) IsAkroma(num *big.Int) bool {
@@ -353,6 +354,7 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	}
 	if isForkIncompatible(c.EWASMBlock, newcfg.EWASMBlock, head) {
 		return newCompatError("ewasm fork block", c.EWASMBlock, newcfg.EWASMBlock)
+	}
 	if isForkIncompatible(c.AkromaBlock, newcfg.AkromaBlock, head) {
 		return newCompatError("Akroma fork block", c.AkromaBlock, newcfg.AkromaBlock)
 	}
