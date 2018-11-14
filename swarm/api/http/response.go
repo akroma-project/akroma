@@ -24,9 +24,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/swarm/api"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/swarm/api"
 )
 
 var (

@@ -3,8 +3,8 @@ package http
 import (
 	"context"
 
-	"github.com/ethereum/go-ethereum/swarm/api"
-	"github.com/ethereum/go-ethereum/swarm/sctx"
+	"github.com/akroma-project/akroma/swarm/api"
+	"github.com/akroma-project/akroma/swarm/sctx"
 )
 
 type contextKey int

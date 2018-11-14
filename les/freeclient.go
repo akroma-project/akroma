@@ -23,11 +23,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/common/prque"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/akroma-project/akroma/common/mclock"
+	"github.com/akroma-project/akroma/common/prque"
+	"github.com/akroma-project/akroma/ethdb"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/rlp"
 )
 
 // freeClientPool implements a client database that limits the connection time

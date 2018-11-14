@@ -23,9 +23,9 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/swarm/api"
-	"github.com/ethereum/go-ethereum/swarm/api/client"
+	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/swarm/api"
+	"github.com/akroma-project/akroma/swarm/api/client"
 	"gopkg.in/urfave/cli.v1"
 )
 

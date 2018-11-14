@@ -6,11 +6,11 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/swarm/api"
-	"github.com/ethereum/go-ethereum/swarm/log"
-	"github.com/ethereum/go-ethereum/swarm/sctx"
-	"github.com/ethereum/go-ethereum/swarm/spancontext"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/swarm/api"
+	"github.com/akroma-project/akroma/swarm/log"
+	"github.com/akroma-project/akroma/swarm/sctx"
+	"github.com/akroma-project/akroma/swarm/spancontext"
 	"github.com/pborman/uuid"
 )
 

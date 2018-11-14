@@ -20,14 +20,14 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/discover"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/akroma-project/akroma/common"
+	"github.com/akroma-project/akroma/core"
+	"github.com/akroma-project/akroma/eth"
+	"github.com/akroma-project/akroma/ethdb"
+	"github.com/akroma-project/akroma/light"
+	"github.com/akroma-project/akroma/p2p"
+	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/params"
 )
 
 // lesCommons contains fields needed by both server and client.
