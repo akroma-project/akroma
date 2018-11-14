@@ -133,8 +133,8 @@ type BlockChain struct {
 	atxi *AtxiT // (issue #58)
 }
 
-// NewBlockChain returns a fully initialized block chain using information
-// available in the database. It initializes the default Ethereum Validator and
+// NewBlockChain returns a fully initialised block chain using information
+// available in the database. It initialises the default Ethereum Validator and
 // Processor.
 func NewBlockChain(db ethdb.Database, cacheConfig *CacheConfig, chainConfig *params.ChainConfig, engine consensus.Engine, vmConfig vm.Config) (*BlockChain, error) {
 	if cacheConfig == nil {
@@ -846,6 +846,7 @@ func (bc *BlockChain) InsertReceiptChain(blockChain types.Blocks, receiptChain [
 				}
 			}
 		}
+
 		stats.processed++
 
 		if batch.ValueSize() >= ethdb.IdealBatchSize {
@@ -1251,6 +1252,7 @@ func (bc *BlockChain) insertChain(chain types.Blocks) (int, []interface{}, []*ty
 					}
 				}
 			}
+
 			// Only count canonical blocks for GC processing time
 			bc.gcproc += proctime
 

@@ -320,7 +320,7 @@ var (
 		Name:  "atxi.autobuild",
 		Usage: "Begins automatic concurrent indexes building process that runs alongside a normally running geth.",
 	}
-	// MiningEnabledFlag settings
+	// Miner settings
 	MiningEnabledFlag = cli.BoolFlag{
 		Name:  "mine",
 		Usage: "Enable mining",
