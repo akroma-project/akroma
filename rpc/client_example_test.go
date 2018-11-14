@@ -25,7 +25,7 @@ import (
 	"github.com/akroma-project/akroma/rpc"
 )
 
-// In this example, our client whishes to track the latest 'block number'
+// In this example, our client wishes to track the latest 'block number'
 // known to the server. The server supports two methods:
 //
 // eth_getBlockByNumber("latest", {})
