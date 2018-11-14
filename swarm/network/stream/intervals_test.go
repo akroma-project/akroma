@@ -18,10 +18,8 @@ package stream
 
 import (
 	"context"
-	crand "crypto/rand"
 	"encoding/binary"
 	"fmt"
-	"io"
 	"os"
 	"sync"
 	"testing"
@@ -36,6 +34,7 @@ import (
 	"github.com/akroma-project/akroma/swarm/network/simulation"
 	"github.com/akroma-project/akroma/swarm/state"
 	"github.com/akroma-project/akroma/swarm/storage"
+	"github.com/akroma-project/akroma/swarm/testutil"
 )
 
 func TestIntervalsLive(t *testing.T) {
@@ -130,7 +129,8 @@ func testIntervals(t *testing.T, live bool, history *Range, skipCheck bool) {
 		fileStore := item.(*storage.FileStore)
 
 		size := chunkCount * chunkSize
-		_, wait, err := fileStore.Store(ctx, io.LimitReader(crand.Reader, int64(size)), int64(size), false)
+
+		_, wait, err := fileStore.Store(ctx, testutil.RandomReader(1, size), int64(size), false)
 		if err != nil {
 			log.Error("Store error: %v", "err", err)
 			t.Fatal(err)

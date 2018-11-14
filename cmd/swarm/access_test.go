@@ -38,6 +38,7 @@ import (
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/swarm/api"
 	swarm "github.com/akroma-project/akroma/swarm/api/client"
+	swarmhttp "github.com/akroma-project/akroma/swarm/api/http"
 	"github.com/akroma-project/akroma/swarm/testutil"
 )
 
@@ -54,7 +55,7 @@ var DefaultCurve = crypto.S256()
 // is then fetched through 2nd node. since the tested code is not key-aware - we can just
 // fetch from the 2nd node using HTTP BasicAuth
 func TestAccessPassword(t *testing.T) {
-	srv := testutil.NewTestSwarmServer(t, serverFunc, nil)
+	srv := swarmhttp.NewTestSwarmServer(t, serverFunc, nil)
 	defer srv.Close()
 
 	dataFilename := testutil.TempFileWithContent(t, data)
