@@ -24,7 +24,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/consensus"
 	"github.com/akroma-project/akroma/consensus/misc"
@@ -35,6 +34,7 @@ import (
 	"github.com/akroma-project/akroma/event"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/params"
+	mapset "github.com/deckarep/golang-set"
 )
 
 const (
