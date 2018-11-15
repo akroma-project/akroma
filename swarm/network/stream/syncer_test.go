@@ -28,7 +28,6 @@ import (
 
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/node"
-	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/p2p/simulations/adapters"
 	"github.com/akroma-project/akroma/swarm/log"
@@ -151,13 +150,13 @@ func testSyncBetweenNodes(t *testing.T, nodes, conns, chunkCount int, skipCheck 
 		disconnections := sim.PeerEvents(
 			context.Background(),
 			sim.NodeIDs(),
-			simulation.NewPeerEventsFilter().Type(p2p.PeerEventTypeDrop),
+			simulation.NewPeerEventsFilter().Drop(),
 		)
 
 		go func() {
 			for d := range disconnections {
 				if d.Error != nil {
-					log.Error("peer drop", "node", d.NodeID, "peer", d.Event.Peer)
+					log.Error("peer drop", "node", d.NodeID, "peer", d.PeerID)
 					t.Fatal(d.Error)
 				}
 			}
