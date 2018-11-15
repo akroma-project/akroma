@@ -21,9 +21,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ethereum/go-ethereum/common/bitutil"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/swarm/storage"
+	"github.com/akroma-project/akroma/common/bitutil"
+	"github.com/akroma-project/akroma/common/hexutil"
+	"github.com/akroma-project/akroma/swarm/storage"
 )
 
 // TopicLength establishes the max length of a topic string

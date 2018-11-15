@@ -25,17 +25,17 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/swarm/api"
-	"github.com/ethereum/go-ethereum/swarm/storage/feed/lookup"
-	"github.com/ethereum/go-ethereum/swarm/testutil"
+	"github.com/akroma-project/akroma/swarm/api"
+	"github.com/akroma-project/akroma/swarm/storage/feed/lookup"
+	"github.com/akroma-project/akroma/swarm/testutil"
 
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/swarm/storage/feed"
+	"github.com/akroma-project/akroma/crypto"
+	"github.com/akroma-project/akroma/swarm/storage/feed"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/log"
-	swarm "github.com/ethereum/go-ethereum/swarm/api/client"
-	swarmhttp "github.com/ethereum/go-ethereum/swarm/api/http"
+	"github.com/akroma-project/akroma/common/hexutil"
+	"github.com/akroma-project/akroma/log"
+	swarm "github.com/akroma-project/akroma/swarm/api/client"
+	swarmhttp "github.com/akroma-project/akroma/swarm/api/http"
 )
 
 func TestCLIFeedUpdate(t *testing.T) {
