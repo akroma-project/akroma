@@ -26,9 +26,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p/enr"
-	"github.com/ethereum/go-ethereum/p2p/netutil"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/p2p/enr"
+	"github.com/akroma-project/akroma/p2p/netutil"
 )
 
 const (

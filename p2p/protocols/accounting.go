@@ -16,7 +16,7 @@
 
 package protocols
 
-import "github.com/ethereum/go-ethereum/metrics"
+import "github.com/akroma-project/akroma/metrics"
 
 //define some metrics
 var (

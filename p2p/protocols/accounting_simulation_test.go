@@ -28,14 +28,14 @@ import (
 
 	"github.com/mattn/go-colorable"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/rpc"
 
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/simulations"
-	"github.com/ethereum/go-ethereum/p2p/simulations/adapters"
+	"github.com/akroma-project/akroma/node"
+	"github.com/akroma-project/akroma/p2p"
+	"github.com/akroma-project/akroma/p2p/enode"
+	"github.com/akroma-project/akroma/p2p/simulations"
+	"github.com/akroma-project/akroma/p2p/simulations/adapters"
 )
 
 const (

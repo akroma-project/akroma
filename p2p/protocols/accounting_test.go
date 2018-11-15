@@ -19,9 +19,9 @@ package protocols
 import (
 	"testing"
 
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/simulations/adapters"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/akroma-project/akroma/p2p"
+	"github.com/akroma-project/akroma/p2p/simulations/adapters"
+	"github.com/akroma-project/akroma/rlp"
 )
 
 //dummy Balance implementation
