@@ -32,7 +32,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/internal/cmdtest"
@@ -42,6 +41,7 @@ import (
 	"github.com/akroma-project/akroma/swarm"
 	"github.com/akroma-project/akroma/swarm/api"
 	swarmhttp "github.com/akroma-project/akroma/swarm/api/http"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 var loglevel = flag.Int("loglevel", 3, "verbosity of logs")
