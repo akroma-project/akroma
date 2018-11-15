@@ -147,6 +147,9 @@ var (
 		debEthereum,
 	}
 
+	// Packages to be cross-compiled by the xgo command
+	allCrossCompiledArchiveFiles = append(allToolsArchiveFiles, swarmArchiveFiles...)
+
 	// Distros for which packages are created.
 	// Note: vivid is unsupported because there is no golang-1.6 package for it.
 	// Note: wily is unsupported because it was officially deprecated on lanchpad.
@@ -317,9 +320,7 @@ func goToolArch(arch string, cc string, subcmd string, args ...string) *exec.Cmd
 // "tests" also includes static analysis tools such as vet.
 
 func doTest(cmdline []string) {
-	var (
-		coverage = flag.Bool("coverage", false, "Whether to record code coverage")
-	)
+	coverage := flag.Bool("coverage", false, "Whether to record code coverage")
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()
 
@@ -329,14 +330,11 @@ func doTest(cmdline []string) {
 	}
 	packages = build.ExpandPackagesNoVendor(packages)
 
-	// Run analysis tools before the tests.
-	build.MustRun(goTool("vet", packages...))
-
 	// Run the actual tests.
-	gotest := goTool("test", buildFlags(env)...)
 	// Test a single package at a time. CI builders are slow
 	// and some tests run into timeouts under load.
-	gotest.Args = append(gotest.Args, "-p", "1")
+	gotest := goTool("test", buildFlags(env)...)
+	gotest.Args = append(gotest.Args, "-p", "1", "-timeout", "5m")
 	if *coverage {
 		gotest.Args = append(gotest.Args, "-covermode=atomic", "-cover")
 	}
@@ -639,17 +637,6 @@ func (meta debMetadata) ExeName(exe debExecutable) string {
 		return exe.Package() + "-unstable"
 	}
 	return exe.Package()
-}
-
-// EthereumSwarmPackageName returns the name of the swarm package based on
-// environment, e.g. "ethereum-swarm-unstable", or "ethereum-swarm".
-// This is needed so that we make sure that "ethereum" package,
-// depends on and installs "ethereum-swarm"
-func (meta debMetadata) EthereumSwarmPackageName() string {
-	if isUnstableBuild(meta.Env) {
-		return debSwarm.Name + "-unstable"
-	}
-	return debSwarm.Name
 }
 
 // ExeConflicts returns the content of the Conflicts field
@@ -1009,7 +996,7 @@ func doXgo(cmdline []string) {
 
 	if *alltools {
 		args = append(args, []string{"--dest", GOBIN}...)
-		for _, res := range allToolsArchiveFiles {
+		for _, res := range allCrossCompiledArchiveFiles {
 			if strings.HasPrefix(res, GOBIN) {
 				// Binary tool found, cross build it explicitly
 				args = append(args, "./"+filepath.Join("cmd", filepath.Base(res)))
@@ -1048,7 +1035,7 @@ func xgoTool(args []string) *exec.Cmd {
 func doPurge(cmdline []string) {
 	var (
 		store = flag.String("store", "", `Destination from where to purge archives (usually "gethstore/builds")`)
-		limit = flag.Int("days", 30, `Age threshold above which to delete unstalbe archives`)
+		limit = flag.Int("days", 30, `Age threshold above which to delete unstable archives`)
 	)
 	flag.CommandLine.Parse(cmdline)
 

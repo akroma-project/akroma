@@ -29,6 +29,7 @@ import (
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/p2p/discover"
 	"github.com/akroma-project/akroma/p2p/discv5"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/p2p/nat"
 	"github.com/akroma-project/akroma/p2p/netutil"
 )
@@ -85,7 +86,7 @@ func main() {
 	}
 
 	if *writeAddr {
-		fmt.Printf("%v\n", discover.PubkeyID(&nodeKey.PublicKey))
+		fmt.Printf("%v\n", enode.PubkeyToIDV4(&nodeKey.PublicKey))
 		os.Exit(0)
 	}
 

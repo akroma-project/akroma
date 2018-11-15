@@ -6,30 +6,32 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      go: 1.9.x
+      go: 1.10.x
+      git:
+        submodules: false # avoid cloning ethereum/tests
       script:
-        - sudo modprobe fuse
-        - sudo chmod 666 /dev/fuse
-        - sudo chown root:$USER /etc/fuse.conf
-        - go run build/ci.go install
-        - go run build/ci.go test -coverage
+      - sudo modprobe fuse
+      - sudo chmod 666 /dev/fuse
+      - sudo chown root:$USER /etc/fuse.conf
+      - go run build/ci.go install
 
     # These are the latest Go versions.
     - os: linux
       dist: trusty
       sudo: required
-      go: 1.10.x
+      go: 1.11.x
+      git:
+        submodules: false # avoid cloning ethereum/tests
       script:
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse
         - sudo chown root:$USER /etc/fuse.conf
         - go run build/ci.go install
-        - go run build/ci.go test -coverage
 
     # This builder only tests code linters on latest version of Go
     - os: linux
       dist: trusty
-      go: 1.10.x
+      go: 1.11.x
       env:
         - lint
       git:

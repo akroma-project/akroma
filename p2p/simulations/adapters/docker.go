@@ -28,7 +28,7 @@ import (
 	"strings"
 
 	"github.com/akroma-project/akroma/node"
-	"github.com/akroma-project/akroma/p2p/discover"
+	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/docker/docker/pkg/reexec"
 )
 
@@ -64,7 +64,7 @@ func NewDockerAdapter() (*DockerAdapter, error) {
 
 	return &DockerAdapter{
 		ExecAdapter{
-			nodes: make(map[discover.NodeID]*ExecNode),
+			nodes: make(map[enode.ID]*ExecNode),
 		},
 	}, nil
 }
