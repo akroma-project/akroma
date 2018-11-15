@@ -33,11 +33,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/p2p/enode"
 	"github.com/akroma-project/akroma/rlp"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func init() {

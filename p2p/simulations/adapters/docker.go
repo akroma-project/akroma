@@ -27,9 +27,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/node"
 	"github.com/akroma-project/akroma/p2p/enode"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 var (
