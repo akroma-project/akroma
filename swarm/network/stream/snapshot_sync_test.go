@@ -35,7 +35,8 @@ import (
 	"github.com/akroma-project/akroma/swarm/pot"
 	"github.com/akroma-project/akroma/swarm/state"
 	"github.com/akroma-project/akroma/swarm/storage"
-	mockdb "github.com/akroma-project/akroma/swarm/storage/mock/db"
+	"github.com/akroma-project/akroma/swarm/storage/mock"
+	mockmem "github.com/akroma-project/akroma/swarm/storage/mock/mem"
 	"github.com/akroma-project/akroma/swarm/testutil"
 )
 
@@ -268,20 +269,9 @@ func runSim(conf *synctestConfig, ctx context.Context, sim *simulation.Simulatio
 
 		// File retrieval check is repeated until all uploaded files are retrieved from all nodes
 		// or until the timeout is reached.
-		var gDir string
-		var globalStore *mockdb.GlobalStore
+		var globalStore mock.GlobalStorer
 		if *useMockStore {
-			gDir, globalStore, err = createGlobalStore()
-			if err != nil {
-				return fmt.Errorf("Something went wrong; using mockStore enabled but globalStore is nil")
-			}
-			defer func() {
-				os.RemoveAll(gDir)
-				err := globalStore.Close()
-				if err != nil {
-					log.Error("Error closing global store! %v", "err", err)
-				}
-			}()
+			globalStore = mockmem.NewGlobalStore()
 		}
 	REPEAT:
 		for {
@@ -476,14 +466,9 @@ func testSyncingViaDirectSubscribe(t *testing.T, chunkCount int, nodeCount int) 
 			return err
 		}
 
-		var gDir string
-		var globalStore *mockdb.GlobalStore
+		var globalStore mock.GlobalStorer
 		if *useMockStore {
-			gDir, globalStore, err = createGlobalStore()
-			if err != nil {
-				return fmt.Errorf("Something went wrong; using mockStore enabled but globalStore is nil")
-			}
-			defer os.RemoveAll(gDir)
+			globalStore = mockmem.NewGlobalStore()
 		}
 		// File retrieval check is repeated until all uploaded files are retrieved from all nodes
 		// or until the timeout is reached.
