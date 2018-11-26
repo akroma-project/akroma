@@ -19,7 +19,6 @@ package tests
 import (
 	"bytes"
 	"flag"
-	"fmt"
 	"reflect"
 	"testing"
 
