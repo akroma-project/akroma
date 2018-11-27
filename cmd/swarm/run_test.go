@@ -39,6 +39,8 @@ import (
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/rpc"
 	"github.com/akroma-project/akroma/swarm"
+	"github.com/akroma-project/akroma/swarm/api"
+	swarmhttp "github.com/akroma-project/akroma/swarm/api/http"
 	"github.com/docker/docker/pkg/reexec"
 )
 
@@ -55,6 +57,9 @@ func init() {
 	})
 }
 
+func serverFunc(api *api.API) swarmhttp.TestServer {
+	return swarmhttp.NewServer(api, "")
+}
 func TestMain(m *testing.M) {
 	// check if we have been reexec'd
 	if reexec.Init() {

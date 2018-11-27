@@ -18,10 +18,8 @@ package stream
 
 import (
 	"context"
-	crand "crypto/rand"
 	"encoding/binary"
 	"fmt"
-	"io"
 	"os"
 	"sync"
 	"testing"
@@ -36,6 +34,7 @@ import (
 	"github.com/akroma-project/akroma/swarm/network/simulation"
 	"github.com/akroma-project/akroma/swarm/state"
 	"github.com/akroma-project/akroma/swarm/storage"
+	"github.com/akroma-project/akroma/swarm/testutil"
 )
 
 func TestIntervalsLive(t *testing.T) {
@@ -83,6 +82,8 @@ func testIntervals(t *testing.T, live bool, history *Range, skipCheck bool) {
 			netStore.NewNetFetcherFunc = network.NewFetcherFactory(delivery.RequestFromPeers, true).New
 
 			r := NewRegistry(addr.ID(), delivery, netStore, state.NewInmemoryStore(), &RegistryOptions{
+				Retrieval: RetrievalDisabled,
+				Syncing:   SyncingRegisterOnly,
 				SkipCheck: skipCheck,
 			})
 			bucket.Store(bucketKeyRegistry, r)
@@ -128,7 +129,8 @@ func testIntervals(t *testing.T, live bool, history *Range, skipCheck bool) {
 		fileStore := item.(*storage.FileStore)
 
 		size := chunkCount * chunkSize
-		_, wait, err := fileStore.Store(ctx, io.LimitReader(crand.Reader, int64(size)), int64(size), false)
+
+		_, wait, err := fileStore.Store(ctx, testutil.RandomReader(1, size), int64(size), false)
 		if err != nil {
 			log.Error("Store error: %v", "err", err)
 			t.Fatal(err)
@@ -345,8 +347,6 @@ func (c *testExternalClient) BatchDone(Stream, uint64, []byte, []byte) func() (*
 
 func (c *testExternalClient) Close() {}
 
-const testExternalServerBatchSize = 10
-
 type testExternalServer struct {
 	t         string
 	keyFunc   func(key []byte, index uint64)
@@ -366,17 +366,11 @@ func newTestExternalServer(t string, sessionAt, maxKeys uint64, keyFunc func(key
 	}
 }
 
+func (s *testExternalServer) SessionIndex() (uint64, error) {
+	return s.sessionAt, nil
+}
+
 func (s *testExternalServer) SetNextBatch(from uint64, to uint64) ([]byte, uint64, uint64, *HandoverProof, error) {
-	if from == 0 && to == 0 {
-		from = s.sessionAt
-		to = s.sessionAt + testExternalServerBatchSize
-	}
-	if to-from > testExternalServerBatchSize {
-		to = from + testExternalServerBatchSize - 1
-	}
-	if from >= s.maxKeys && to > s.maxKeys {
-		return nil, 0, 0, nil, io.EOF
-	}
 	if to > s.maxKeys {
 		to = s.maxKeys
 	}
