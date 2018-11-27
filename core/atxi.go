@@ -113,14 +113,14 @@ func putBlockAddrTxsToBatch(config *params.ChainConfig, putBatch ethdb.Batch, bl
 
 		msg, err := tx.AsMessage(types.MakeSigner(config, block.Number()))
 		if err != nil {
-			return 0, err
+			return txsCount, err
 		}
 		from := msg.From()
 		to := tx.To()
 		// s: standard
 		// c: contract
 		txKindOf := []byte("s")
-		if to == nil { //|| to.IsEmpty()
+		if to == nil || to.IsEmpty() {
 			to = &common.Address{}
 			txKindOf = []byte("c")
 		}
@@ -423,7 +423,7 @@ func RmAddrTx(db ethdb.Database, tx *types.Transaction, config *params.ChainConf
 	for it.Next() {
 		key := it.Key()
 		_, _, _, _, txh := resolveAddrTxBytes(key)
-		if bytes.Equal(txH.Bytes(), txh) {
+		if bytes.Compare(txH.Bytes(), txh) == 0 {
 			removals = append(removals, key)
 			break // because there can be only one
 		}
@@ -441,7 +441,7 @@ func RmAddrTx(db ethdb.Database, tx *types.Transaction, config *params.ChainConf
 		for it.Next() {
 			key := it.Key()
 			_, _, _, _, txh := resolveAddrTxBytes(key)
-			if bytes.Equal(txH.Bytes(), txh) {
+			if bytes.Compare(txH.Bytes(), txh) == 0 {
 				removals = append(removals, key)
 				break // because there can be only one
 			}

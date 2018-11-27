@@ -19,7 +19,9 @@ package main
 
 import (
 	"fmt"
+	golog "log"
 	"math"
+	"net/http"
 	"os"
 	"runtime"
 	godebug "runtime/debug"
@@ -42,6 +44,8 @@ import (
 	"github.com/elastic/gosigar"
 	"gopkg.in/urfave/cli.v1"
 )
+
+import _ "net/http/pprof"
 
 const (
 	clientIdentifier = "geth" // Client identifier to advertise over the network
@@ -208,6 +212,10 @@ func init() {
 		buildAddrTxIndexCommand,
 	}
 	sort.Sort(cli.CommandsByName(app.Commands))
+
+	go func() {
+		golog.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 
 	app.Flags = append(app.Flags, nodeFlags...)
 	app.Flags = append(app.Flags, rpcFlags...)
