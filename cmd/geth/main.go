@@ -19,9 +19,7 @@ package main
 
 import (
 	"fmt"
-	golog "log"
 	"math"
-	"net/http"
 	"os"
 	"runtime"
 	godebug "runtime/debug"
@@ -212,10 +210,6 @@ func init() {
 		buildAddrTxIndexCommand,
 	}
 	sort.Sort(cli.CommandsByName(app.Commands))
-
-	go func() {
-		golog.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
 
 	app.Flags = append(app.Flags, nodeFlags...)
 	app.Flags = append(app.Flags, rpcFlags...)
