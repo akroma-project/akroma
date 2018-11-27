@@ -43,8 +43,6 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
-import _ "net/http/pprof"
-
 const (
 	clientIdentifier = "geth" // Client identifier to advertise over the network
 )
