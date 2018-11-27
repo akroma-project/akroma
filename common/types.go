@@ -188,7 +188,6 @@ func EmptyAddress(a Address) bool {
 	return a == Address{}
 }
 
-
 func (a Address) IsEmpty() bool {
 	return EmptyAddress(a)
 }

@@ -423,7 +423,7 @@ func RmAddrTx(db ethdb.Database, tx *types.Transaction, config *params.ChainConf
 	for it.Next() {
 		key := it.Key()
 		_, _, _, _, txh := resolveAddrTxBytes(key)
-		if bytes.Compare(txH.Bytes(), txh) == 0 {
+		if bytes.Equal(txH.Bytes(), txh) {
 			removals = append(removals, key)
 			break // because there can be only one
 		}
@@ -441,7 +441,7 @@ func RmAddrTx(db ethdb.Database, tx *types.Transaction, config *params.ChainConf
 		for it.Next() {
 			key := it.Key()
 			_, _, _, _, txh := resolveAddrTxBytes(key)
-			if bytes.Compare(txH.Bytes(), txh) == 0 {
+			if bytes.Equal(txH.Bytes(), txh) {
 				removals = append(removals, key)
 				break // because there can be only one
 			}
