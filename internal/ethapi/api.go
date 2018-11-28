@@ -554,8 +554,9 @@ func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Addr
 	if err != nil {
 		return hexutil.Uint64(uint64(0)), err
 	}
-
-	return hexutil.Uint64(uint64(len(txs))), nil
+	var amount = hexutil.Uint64(uint64(len(txs)))
+	txs = nil
+	return amount, nil
 }
 
 // (issue 58)

@@ -184,6 +184,14 @@ func IsHexAddress(s string) bool {
 	return len(s) == 2*AddressLength && isHex(s)
 }
 
+func EmptyAddress(a Address) bool {
+	return a == Address{}
+}
+
+func (a Address) IsEmpty() bool {
+	return EmptyAddress(a)
+}
+
 // Bytes gets the string representation of the underlying address.
 func (a Address) Bytes() []byte { return a[:] }
 

@@ -113,14 +113,14 @@ func putBlockAddrTxsToBatch(config *params.ChainConfig, putBatch ethdb.Batch, bl
 
 		msg, err := tx.AsMessage(types.MakeSigner(config, block.Number()))
 		if err != nil {
-			return 0, err
+			return txsCount, err
 		}
 		from := msg.From()
 		to := tx.To()
 		// s: standard
 		// c: contract
 		txKindOf := []byte("s")
-		if to == nil { //|| to.IsEmpty()
+		if to == nil || to.IsEmpty() {
 			to = &common.Address{}
 			txKindOf = []byte("c")
 		}
