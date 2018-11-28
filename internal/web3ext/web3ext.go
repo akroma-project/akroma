@@ -496,8 +496,8 @@ web3._extend({
 		new web3._extend.Method({
 			name: 'getTransactionCountByAddress',
 			call: 'eth_getTransactionCountByAddress',
-			params: 6,
-			inputFormatter: [web3._extend.formatters.inputAddressFormatter, null, null, null, null, null]
+			params: 5,
+			inputFormatter: [web3._extend.formatters.inputAddressFormatter, null, null, null, null]
 		}),
 		new web3._extend.Method({
 			name: 'buildATXI',

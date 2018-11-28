@@ -532,7 +532,7 @@ func (api *PublicBlockChainAPI) GetTransactionsByAddress(address common.Address,
 
 // GetTransactionCountByAddress
 // Returns total transactions
-func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Address, blockStartN uint64, blockEndN rpc.BlockNumber, toOrFrom string, txKindOf string, reverse bool) (hexutil.Uint64, error) {
+func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Address, blockStartN uint64, blockEndN rpc.BlockNumber, toOrFrom string, txKindOf string) (hexutil.Uint64, error) {
 	log.Info("RPC call: eth_getTransactionCountByAddress", "address", address, "start", blockStartN, "end", blockEndN, "toOrFrom", toOrFrom, "kind", txKindOf)
 
 	atxi := api.b.Atxi()
@@ -550,7 +550,7 @@ func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Addr
 	if blockEndN == rpc.LatestBlockNumber || blockEndN == rpc.PendingBlockNumber {
 		blockEndN = 0
 	}
-	txs, err := core.GetAddrTxs(atxi.Db, address, blockStartN, uint64(blockEndN.Int64()), "", "", -1, -1, false)
+	txs, err := core.GetAddrTxs(atxi.Db, address, blockStartN, uint64(blockEndN.Int64()), toOrFrom, txKindOf, -1, -1, false)
 	if err != nil {
 		return hexutil.Uint64(uint64(0)), err
 	}

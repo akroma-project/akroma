@@ -336,7 +336,7 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 		}
 	}()
 	// Start auxiliary services if enabled
-	log.Info("Transaction Indexing", "AddrTxIndexFlax", ctx.GlobalBool(utils.AddrTxIndexFlag.Name), "AddrTxIndexAutoBuildFlag", ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name))
+	log.Info("Transaction Indexing", "AddrTxIndexFlag", ctx.GlobalBool(utils.AddrTxIndexFlag.Name), "AddrTxIndexAutoBuildFlag", ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name))
 	if ctx.GlobalBool(utils.AddrTxIndexFlag.Name) && ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name) {
 		var ethereum *eth.Ethereum
 		if err := stack.Service(&ethereum); err != nil {
