@@ -23,7 +23,7 @@
 package shed
 
 import (
-	"github.com/ethereum/go-ethereum/metrics"
+	"github.com/akroma-project/akroma/metrics"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/iterator"
 	"github.com/syndtr/goleveldb/leveldb/opt"
