@@ -530,7 +530,7 @@ func (api *PublicBlockChainAPI) GetTransactionsByAddress(address common.Address,
 	return list, nil
 }
 
-// GetTransactionCountByAddress returns count of transactions, note: reverse is not used and exists only for backwards compatability
+// GetTransactionCountByAddress returns count of transactions
 // Returns total transactions
 func (api *PublicBlockChainAPI) GetTransactionCountByAddress(address common.Address, blockStartN uint64, blockEndN rpc.BlockNumber, toOrFrom string, txKindOf string, reverse bool) (hexutil.Uint64, error) {
 	log.Info("RPC call: eth_getTransactionCountByAddress", "address", address, "start", blockStartN, "end", blockEndN, "toOrFrom", toOrFrom, "kind", txKindOf)
