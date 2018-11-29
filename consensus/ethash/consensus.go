@@ -614,6 +614,9 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	if config.IsByzantium(header.Number) {
 		blockReward = ByzantiumBlockReward
 	}
+	if config.IsConstantinople(header.Number) {
+		blockReward = ConstantinopleBlockReward
+	}
 	masternodeBlockReward := big.NewInt(2e+18)  //2.00
 	developmentBlockReward := big.NewInt(1e+18) //1.00
 	if config.IsAkroma(header.Number) {
