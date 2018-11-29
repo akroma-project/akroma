@@ -26,11 +26,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/cmd/utils"
 	"github.com/akroma-project/akroma/rpc"
 	"github.com/akroma-project/akroma/swarm"
 	"github.com/akroma-project/akroma/swarm/api"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 func TestConfigDump(t *testing.T) {
