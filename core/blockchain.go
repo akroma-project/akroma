@@ -1293,14 +1293,14 @@ func (bc *BlockChain) insertChain(chain types.Blocks, verifySeals bool) (int, []
 			// Store the addr-tx indexes if enabled (issue 58)
 			if bc.atxi != nil {
 				if err := WriteBlockAddTxIndexes(bc.Config(), bc.atxi.Db, block); err != nil {
-					return i, events, coalescedLogs, err
+					return it.index, events, coalescedLogs, err
 				}
 				// if buildATXI has been in use (via RPC) and is NOT finished, current < stop
 				// if buildATXI has been in use (via RPC) and IS finished, current == stop
 				// else if builtATXI has not been in use (via RPC), then current == stop == 0
 				if bc.atxi.AutoMode && bc.atxi.Progress.Current == bc.atxi.Progress.Stop {
 					if err := bc.atxi.SetATXIBookmark(block.NumberU64()); err != nil {
-						return i, events, coalescedLogs, err
+						return it.index, events, coalescedLogs, err
 					}
 				}
 			}
