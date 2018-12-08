@@ -25,8 +25,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/akroma-project/akroma/log"
-	"github.com/akroma-project/akroma/rlp"
+	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/errors"
 	"github.com/syndtr/goleveldb/leveldb/iterator"
