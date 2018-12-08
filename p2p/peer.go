@@ -37,6 +37,10 @@ var (
 	ErrShuttingDown = errors.New("shutting down")
 )
 
+var (
+	ErrShuttingDown = errors.New("shutting down")
+)
+
 const (
 	baseProtocolVersion    = 5
 	baseProtocolLength     = uint64(16)

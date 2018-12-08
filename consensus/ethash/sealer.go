@@ -46,6 +46,16 @@ var (
 	errInvalidSealResult = errors.New("invalid or stale proof-of-work solution")
 )
 
+const (
+	// staleThreshold is the maximum depth of the acceptable stale but valid ethash solution.
+	staleThreshold = 7
+)
+
+var (
+	errNoMiningWork      = errors.New("no mining work available yet")
+	errInvalidSealResult = errors.New("invalid or stale proof-of-work solution")
+)
+
 // Seal implements consensus.Engine, attempting to find a nonce that satisfies
 // the block's difficulty requirements.
 func (ethash *Ethash) Seal(chain consensus.ChainReader, block *types.Block, results chan<- *types.Block, stop <-chan struct{}) error {

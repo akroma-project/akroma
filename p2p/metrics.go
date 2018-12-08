@@ -41,6 +41,15 @@ const (
 	MeteredPeerLimit = 1024 // This amount of peers are individually metered
 )
 
+const (
+	MetricsInboundConnects  = "p2p/InboundConnects"  // Name for the registered inbound connects meter
+	MetricsInboundTraffic   = "p2p/InboundTraffic"   // Name for the registered inbound traffic meter
+	MetricsOutboundConnects = "p2p/OutboundConnects" // Name for the registered outbound connects meter
+	MetricsOutboundTraffic  = "p2p/OutboundTraffic"  // Name for the registered outbound traffic meter
+
+	MeteredPeerLimit = 1024 // This amount of peers are individually metered
+)
+
 var (
 	ingressConnectMeter = metrics.NewRegisteredMeter(MetricsInboundConnects, nil)  // Meter counting the ingress connections
 	ingressTrafficMeter = metrics.NewRegisteredMeter(MetricsInboundTraffic, nil)   // Meter metering the cumulative ingress traffic
