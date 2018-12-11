@@ -127,6 +127,7 @@ var (
 		utils.RinkebyFlag,
 		utils.VMEnableDebugFlag,
 		utils.NetworkIdFlag,
+		utils.ConstantinopleOverrideFlag,
 		utils.RPCCORSDomainFlag,
 		utils.RPCVirtualHostsFlag,
 		utils.EthStatsURLFlag,
