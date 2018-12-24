@@ -35,7 +35,6 @@ import (
 	p2ptest "github.com/akroma-project/akroma/p2p/testing"
 	"github.com/akroma-project/akroma/swarm/network"
 	"github.com/akroma-project/akroma/swarm/network/simulation"
-	"github.com/akroma-project/akroma/swarm/pot"
 	"github.com/akroma-project/akroma/swarm/state"
 	"github.com/akroma-project/akroma/swarm/storage"
 	"github.com/akroma-project/akroma/swarm/testutil"
@@ -57,7 +56,7 @@ var (
 	bucketKeyRegistry  = simulation.BucketKey("registry")
 
 	chunkSize = 4096
-	pof       = pot.DefaultPof(256)
+	pof       = network.Pof
 )
 
 func init() {

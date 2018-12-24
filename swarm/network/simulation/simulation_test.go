@@ -26,9 +26,8 @@ import (
 
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/node"
-	"github.com/akroma-project/akroma/p2p"
+	"github.com/akroma-project/akroma/p2p/simulations"
 	"github.com/akroma-project/akroma/p2p/simulations/adapters"
-	"github.com/akroma-project/akroma/rpc"
 	colorable "github.com/mattn/go-colorable"
 )
 
@@ -182,39 +181,23 @@ func noopServiceFunc(ctx *adapters.ServiceContext, b *sync.Map) (node.Service, f
 	return newNoopService(), nil, nil
 }
 
-// noopService is the service that does not do anything
-// but implements node.Service interface.
-type noopService struct{}
-
 func newNoopService() node.Service {
 	return &noopService{}
 }
 
-func (t *noopService) Protocols() []p2p.Protocol {
-	return []p2p.Protocol{}
-}
-
-func (t *noopService) APIs() []rpc.API {
-	return []rpc.API{}
-}
-
-func (t *noopService) Start(server *p2p.Server) error {
-	return nil
-}
-
-func (t *noopService) Stop() error {
-	return nil
-}
-
-// a helper function for most basic noop service
-// of a different type then noopService to test
+// a helper function for most basic Noop service
+// of a different type then NoopService to test
 // multiple services on one node.
 func noopService2Func(ctx *adapters.ServiceContext, b *sync.Map) (node.Service, func(), error) {
 	return new(noopService2), nil, nil
 }
 
-// noopService2 is the service that does not do anything
+// NoopService2 is the service that does not do anything
 // but implements node.Service interface.
 type noopService2 struct {
-	noopService
+	simulations.NoopService
+}
+
+type noopService struct {
+	simulations.NoopService
 }
