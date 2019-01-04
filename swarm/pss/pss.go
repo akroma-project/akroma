@@ -29,7 +29,6 @@ import (
 
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/crypto"
-	"github.com/akroma-project/akroma/crypto/sha3"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/p2p/enode"
@@ -40,6 +39,7 @@ import (
 	"github.com/akroma-project/akroma/swarm/pot"
 	"github.com/akroma-project/akroma/swarm/storage"
 	whisper "github.com/akroma-project/akroma/whisper/whisperv5"
+	"golang.org/x/crypto/sha3"
 )
 
 const (
@@ -187,7 +187,7 @@ func NewPss(k *network.Kademlia, params *PssParams) (*Pss, error) {
 
 		hashPool: sync.Pool{
 			New: func() interface{} {
-				return sha3.NewKeccak256()
+				return sha3.NewLegacyKeccak256()
 			},
 		},
 	}

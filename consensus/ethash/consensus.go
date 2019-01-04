@@ -24,16 +24,16 @@ import (
 	"runtime"
 	"time"
 
+	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/math"
 	"github.com/akroma-project/akroma/consensus"
 	"github.com/akroma-project/akroma/consensus/misc"
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/core/types"
-	"github.com/akroma-project/akroma/crypto/sha3"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
-	mapset "github.com/deckarep/golang-set"
+	"golang.org/x/crypto/sha3"
 )
 
 // Ethash proof-of-work protocol constants.
@@ -578,7 +578,7 @@ func (ethash *Ethash) Finalize(chain consensus.ChainReader, header *types.Header
 
 // SealHash returns the hash of a block prior to it being sealed.
 func (ethash *Ethash) SealHash(header *types.Header) (hash common.Hash) {
-	hasher := sha3.NewKeccak256()
+	hasher := sha3.NewLegacyKeccak256()
 
 	rlp.Encode(hasher, []interface{}{
 		header.ParentHash,

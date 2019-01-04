@@ -24,8 +24,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/akroma-project/akroma/crypto/sha3"
 	p2ptest "github.com/akroma-project/akroma/p2p/testing"
+	"golang.org/x/crypto/sha3"
 )
 
 func TestStreamerSubscribe(t *testing.T) {
