@@ -31,11 +31,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/akroma-project/akroma/crypto"
 	"github.com/akroma-project/akroma/crypto/ecies"
 	"github.com/akroma-project/akroma/p2p/simulations/pipes"
 	"github.com/akroma-project/akroma/rlp"
+	"github.com/davecgh/go-spew/spew"
 	"golang.org/x/crypto/sha3"
 )
 

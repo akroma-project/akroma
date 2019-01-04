@@ -24,7 +24,6 @@ import (
 	"runtime"
 	"time"
 
-	mapset "github.com/deckarep/golang-set"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/math"
 	"github.com/akroma-project/akroma/consensus"
@@ -33,6 +32,7 @@ import (
 	"github.com/akroma-project/akroma/core/types"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
+	mapset "github.com/deckarep/golang-set"
 	"golang.org/x/crypto/sha3"
 )
 
