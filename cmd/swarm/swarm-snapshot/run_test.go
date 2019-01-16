@@ -21,8 +21,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/akroma-project/akroma/internal/cmdtest"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 func init() {
