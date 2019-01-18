@@ -623,7 +623,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		blockReward = AkromaBlockReward //7.00
 	}
 	if config.IsBaneslayer(header.Number) {
-		blockReward = big.NewInt(600e+16)           // 6.00
+		blockReward = big.NewInt(600e+16)           //6.00
 		masternodeBlockReward = big.NewInt(225e+16) //2.25
 		developmentBlockReward = big.NewInt(75e+16) //0.75
 	}
