@@ -7,8 +7,6 @@ matrix:
       dist: trusty
       sudo: required
       go: 1.10.x
-      git:
-        submodules: false # avoid cloning ethereum/tests
       script:
       - sudo modprobe fuse
       - sudo chmod 666 /dev/fuse
@@ -20,8 +18,6 @@ matrix:
       dist: trusty
       sudo: required
       go: 1.11.x
-      git:
-        submodules: false # avoid cloning ethereum/tests
       script:
         - sudo modprobe fuse
         - sudo chmod 666 /dev/fuse

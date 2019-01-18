@@ -31,10 +31,10 @@ import (
 	"github.com/akroma-project/akroma/core/types"
 	"github.com/akroma-project/akroma/core/vm"
 	"github.com/akroma-project/akroma/crypto"
-	"github.com/akroma-project/akroma/crypto/sha3"
 	"github.com/akroma-project/akroma/ethdb"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
+	"golang.org/x/crypto/sha3"
 )
 
 // StateTest checks transaction processing without block context.
@@ -248,7 +248,7 @@ func (tx *stTransaction) toMessage(ps stPostState) (core.Message, error) {
 }
 
 func rlpHash(x interface{}) (h common.Hash) {
-	hw := sha3.NewKeccak256()
+	hw := sha3.NewLegacyKeccak256()
 	rlp.Encode(hw, x)
 	hw.Sum(h[:0])
 	return h

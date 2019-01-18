@@ -33,13 +33,13 @@ import (
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/core/types"
 	"github.com/akroma-project/akroma/crypto"
-	"github.com/akroma-project/akroma/crypto/sha3"
 	"github.com/akroma-project/akroma/ethdb"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 	"github.com/akroma-project/akroma/rpc"
 	lru "github.com/hashicorp/golang-lru"
+	"golang.org/x/crypto/sha3"
 )
 
 const (
@@ -148,7 +148,7 @@ type SignerFn func(accounts.Account, []byte) ([]byte, error)
 // panics. This is done to avoid accidentally using both forms (signature present
 // or not), which could be abused to produce different hashes for the same header.
 func sigHash(header *types.Header) (hash common.Hash) {
-	hasher := sha3.NewKeccak256()
+	hasher := sha3.NewLegacyKeccak256()
 
 	rlp.Encode(hasher, []interface{}{
 		header.ParentHash,
