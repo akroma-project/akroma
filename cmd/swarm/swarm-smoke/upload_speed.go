@@ -22,9 +22,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/swarm/testutil"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/metrics"
+	"github.com/akroma-project/akroma/swarm/testutil"
 
 	cli "gopkg.in/urfave/cli.v1"
 )
