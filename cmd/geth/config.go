@@ -30,6 +30,7 @@ import (
 	"github.com/akroma-project/akroma/cmd/utils"
 	"github.com/akroma-project/akroma/dashboard"
 	"github.com/akroma-project/akroma/eth"
+	"github.com/akroma-project/akroma/graphql"
 	"github.com/akroma-project/akroma/node"
 	"github.com/akroma-project/akroma/params"
 	whisper "github.com/akroma-project/akroma/whisper/whisperv6"
@@ -174,6 +175,13 @@ func makeFullNode(ctx *cli.Context) *node.Node {
 			cfg.Shh.RestrictConnectionBetweenLightClients = true
 		}
 		utils.RegisterShhService(stack, &cfg.Shh)
+	}
+
+	// Configure GraphQL if required
+	if ctx.GlobalIsSet(utils.GraphQLEnabledFlag.Name) {
+		if err := graphql.RegisterGraphQLService(stack, cfg.Node.GraphQLEndpoint(), cfg.Node.GraphQLCors, cfg.Node.GraphQLVirtualHosts, cfg.Node.HTTPTimeouts); err != nil {
+			utils.Fatalf("Failed to register the Ethereum service: %v", err)
+		}
 	}
 
 	// Add the Ethereum Stats daemon if requested.
