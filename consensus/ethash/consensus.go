@@ -653,8 +653,8 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
 	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
-	// Masternode Fund address
-	if config.IsAkroma(header.Number) {
+	// Masternode Fund address, removed at block 2.5M
+	if config.IsAkroma(header.Number) && header.Number.Int64() < 2500000 {
 		state.AddBalance(MasternodeFundAddress, masternodeBlockReward)
 	}
 }
