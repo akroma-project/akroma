@@ -22,8 +22,8 @@ import (
 
 const (
 	VersionMajor = 0        // Major version component of the current release
-	VersionMinor = 3        // Minor version component of the current release
-	VersionPatch = 3        // Patch version component of the current releasegetTransactionsByAddress
+	VersionMinor = 4        // Minor version component of the current release
+	VersionPatch = 0        // Patch version component of the current releasegetTransactionsByAddress
 	VersionMeta  = "akroma" // Version metadata to append to the version string
 )
 
