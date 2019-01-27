@@ -28,7 +28,7 @@ import (
 	"math/big"
 
 	"github.com/akroma-project/akroma/accounts"
-	"github.com/akroma-project/akroma/accounts/usbwallet/internal/trezor"
+	"github.com/akroma-project/akroma/accounts/usbwallet/trezor"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/common/hexutil"
 	"github.com/akroma-project/akroma/core/types"
