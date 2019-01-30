@@ -130,7 +130,7 @@ func main() {
 		swarmmetrics.MetricsInfluxDBDatabaseFlag,
 		swarmmetrics.MetricsInfluxDBUsernameFlag,
 		swarmmetrics.MetricsInfluxDBPasswordFlag,
-		swarmmetrics.MetricsInfluxDBHostTagFlag,
+		swarmmetrics.MetricsInfluxDBTagsFlag,
 	}...)
 
 	app.Flags = append(app.Flags, tracing.Flags...)
@@ -140,19 +140,25 @@ func main() {
 			Name:    "upload_and_sync",
 			Aliases: []string{"c"},
 			Usage:   "upload and sync",
-			Action:  cliUploadAndSync,
+			Action:  wrapCliCommand("upload-and-sync", true, uploadAndSync),
 		},
 		{
 			Name:    "feed_sync",
 			Aliases: []string{"f"},
 			Usage:   "feed update generate, upload and sync",
-			Action:  cliFeedUploadAndSync,
+			Action:  wrapCliCommand("feed-and-sync", true, feedUploadAndSync),
 		},
 		{
 			Name:    "upload_speed",
 			Aliases: []string{"u"},
 			Usage:   "measure upload speed",
-			Action:  cliUploadSpeed,
+			Action:  wrapCliCommand("upload-speed", true, uploadSpeed),
+		},
+		{
+			Name:    "sliding_window",
+			Aliases: []string{"s"},
+			Usage:   "measure network aggregate capacity",
+			Action:  wrapCliCommand("sliding-window", false, slidingWindow),
 		},
 	}
 
@@ -183,13 +189,14 @@ func emitMetrics(ctx *cli.Context) error {
 			database = ctx.GlobalString(swarmmetrics.MetricsInfluxDBDatabaseFlag.Name)
 			username = ctx.GlobalString(swarmmetrics.MetricsInfluxDBUsernameFlag.Name)
 			password = ctx.GlobalString(swarmmetrics.MetricsInfluxDBPasswordFlag.Name)
-			hosttag  = ctx.GlobalString(swarmmetrics.MetricsInfluxDBHostTagFlag.Name)
+			tags     = ctx.GlobalString(swarmmetrics.MetricsInfluxDBTagsFlag.Name)
 		)
-		return influxdb.InfluxDBWithTagsOnce(gethmetrics.DefaultRegistry, endpoint, database, username, password, "swarm-smoke.", map[string]string{
-			"host":     hosttag,
-			"version":  gitCommit,
-			"filesize": fmt.Sprintf("%v", filesize),
-		})
+
+		tagsMap := utils.SplitTagsFlag(tags)
+		tagsMap["version"] = gitCommit
+		tagsMap["filesize"] = fmt.Sprintf("%v", filesize)
+
+		return influxdb.InfluxDBWithTagsOnce(gethmetrics.DefaultRegistry, endpoint, database, username, password, "swarm-smoke.", tagsMap)
 	}
 
 	return nil

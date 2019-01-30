@@ -26,7 +26,7 @@ import (
 
 	"github.com/akroma-project/akroma/cmd/utils"
 	"github.com/akroma-project/akroma/internal/debug"
-	"gopkg.in/urfave/cli.v1"
+	cli "gopkg.in/urfave/cli.v1"
 )
 
 // AppHelpTemplate is the test template for the default, global app help topic.
@@ -75,6 +75,7 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.TestnetFlag,
 			utils.RinkebyFlag,
 			utils.SyncModeFlag,
+			utils.ExitWhenSyncedFlag,
 			utils.GCModeFlag,
 			utils.EthStatsURLFlag,
 			utils.IdentityFlag,
@@ -239,7 +240,7 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.MetricsInfluxDBDatabaseFlag,
 			utils.MetricsInfluxDBUsernameFlag,
 			utils.MetricsInfluxDBPasswordFlag,
-			utils.MetricsInfluxDBHostTagFlag,
+			utils.MetricsInfluxDBTagsFlag,
 		},
 	},
 	{

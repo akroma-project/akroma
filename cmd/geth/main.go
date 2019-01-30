@@ -27,19 +27,20 @@ import (
 	"strings"
 	"time"
 
+	"github.com/elastic/gosigar"
 	"github.com/akroma-project/akroma/accounts"
 	"github.com/akroma-project/akroma/accounts/keystore"
 	"github.com/akroma-project/akroma/cmd/utils"
+	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/console"
-	"github.com/akroma-project/akroma/core"
 	"github.com/akroma-project/akroma/eth"
+	"github.com/akroma-project/akroma/eth/downloader"
 	"github.com/akroma-project/akroma/ethclient"
 	"github.com/akroma-project/akroma/internal/debug"
 	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/node"
-	"github.com/elastic/gosigar"
-	"gopkg.in/urfave/cli.v1"
+	cli "gopkg.in/urfave/cli.v1"
 )
 
 const (
@@ -88,6 +89,7 @@ var (
 		utils.ULCTrustedNodesFlag,
 		utils.ULCMinTrustedFractionFlag,
 		utils.SyncModeFlag,
+		utils.ExitWhenSyncedFlag,
 		utils.GCModeFlag,
 		utils.LightServFlag,
 		utils.LightPeersFlag,
@@ -179,7 +181,7 @@ var (
 		utils.MetricsInfluxDBDatabaseFlag,
 		utils.MetricsInfluxDBUsernameFlag,
 		utils.MetricsInfluxDBPasswordFlag,
-		utils.MetricsInfluxDBHostTagFlag,
+		utils.MetricsInfluxDBTagsFlag,
 	}
 )
 
@@ -347,6 +349,32 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 			}
 		}
 	}()
+
+	// Spawn a standalone goroutine for status synchronization monitoring,
+	// close the node when synchronization is complete if user required.
+	if ctx.GlobalBool(utils.ExitWhenSyncedFlag.Name) {
+		go func() {
+			sub := stack.EventMux().Subscribe(downloader.DoneEvent{})
+			defer sub.Unsubscribe()
+			for {
+				event := <-sub.Chan()
+				if event == nil {
+					continue
+				}
+				done, ok := event.Data.(downloader.DoneEvent)
+				if !ok {
+					continue
+				}
+				if timestamp := time.Unix(done.Latest.Time.Int64(), 0); time.Since(timestamp) < 10*time.Minute {
+					log.Info("Synchronisation completed", "latestnum", done.Latest.Number, "latesthash", done.Latest.Hash(),
+						"age", common.PrettyAge(timestamp))
+					stack.Stop()
+				}
+
+			}
+		}()
+	}
+
 	// Start auxiliary services if enabled
 	log.Info("Transaction Indexing", "AddrTxIndexFlag", ctx.GlobalBool(utils.AddrTxIndexFlag.Name), "AddrTxIndexAutoBuildFlag", ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name))
 	if ctx.GlobalBool(utils.AddrTxIndexFlag.Name) && ctx.GlobalBool(utils.AddrTxIndexAutoBuildFlag.Name) {
