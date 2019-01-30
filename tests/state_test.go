@@ -29,7 +29,7 @@ import (
 
 // func TestState(t *testing.T) {
 // 	t.Parallel()
-// 
+//
 // 	st := new(testMatcher)
 // 	// Long tests:
 // 	st.slow(`^stAttackTest/ContractCreationSpam`)
@@ -51,7 +51,7 @@ import (
 // 	st.fails(`^stRevertTest/RevertPrecompiledTouch(_storage)?\.json/Constantinople/3`, "bug in test")
 // 	st.fails(`^stRevertTest/RevertPrecompiledTouch(_storage)?\.json/ConstantinopleFix/0`, "bug in test")
 // 	st.fails(`^stRevertTest/RevertPrecompiledTouch(_storage)?\.json/ConstantinopleFix/3`, "bug in test")
-// 
+//
 // 	st.walk(t, stateTestDir, func(t *testing.T, name string, test *StateTest) {
 // 		for _, subtest := range test.Subtests() {
 // 			subtest := subtest
