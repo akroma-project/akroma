@@ -24,8 +24,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
+	"github.com/akroma-project/akroma/log"
+	"github.com/akroma-project/akroma/metrics"
 	"github.com/pborman/uuid"
 
 	cli "gopkg.in/urfave/cli.v1"
