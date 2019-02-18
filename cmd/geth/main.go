@@ -32,6 +32,7 @@ import (
 	"github.com/akroma-project/akroma/cmd/utils"
 	"github.com/akroma-project/akroma/common"
 	"github.com/akroma-project/akroma/console"
+	"github.com/akroma-project/akroma/core"
 	"github.com/akroma-project/akroma/eth"
 	"github.com/akroma-project/akroma/eth/downloader"
 	"github.com/akroma-project/akroma/ethclient"
@@ -149,8 +150,6 @@ var (
 
 	rpcFlags = []cli.Flag{
 		utils.RPCEnabledFlag,
-		utils.RPCUserFlag,
-		utils.RPCPasswordFlag,
 		utils.RPCListenAddrFlag,
 		utils.RPCPortFlag,
 		utils.GraphQLEnabledFlag,
