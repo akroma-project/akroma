@@ -19,7 +19,6 @@ package rpc
 import (
 	"bytes"
 	"context"
-	"crypto/subtle"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -199,15 +198,11 @@ func (t *httpReadWriteNopCloser) Close() error {
 // NewHTTPServer creates a new HTTP RPC server around an API provider.
 //
 // Deprecated: Server implements http.Handler
-func NewHTTPServer(cors []string, vhosts []string, timeouts HTTPTimeouts, user string, password string, srv *Server) *http.Server {
+func NewHTTPServer(cors []string, vhosts []string, timeouts HTTPTimeouts, srv http.Handler) *http.Server {
 	// Wrap the CORS-handler within a host-handler
 	handler := newCorsHandler(srv, cors)
 	handler = newVHostHandler(vhosts, handler)
 
-	if user != "" && password != "" {
-		log.Info("HTTP endpoint is secured by basic authentication.")
-		handler = newBasicAuthHandler(user, password, handler)
-	}
 	// Make sure timeout values are meaningful
 	if timeouts.ReadTimeout < time.Second {
 		log.Warn("Sanitizing invalid HTTP read timeout", "provided", timeouts.ReadTimeout, "updated", DefaultHTTPTimeouts.ReadTimeout)
@@ -289,7 +284,7 @@ func validateRequest(r *http.Request) (int, error) {
 	return http.StatusUnsupportedMediaType, err
 }
 
-func newCorsHandler(srv *Server, allowedOrigins []string) http.Handler {
+func newCorsHandler(srv http.Handler, allowedOrigins []string) http.Handler {
 	// disable CORS support if user has not specified a custom CORS configuration
 	if len(allowedOrigins) == 0 {
 		return srv
@@ -301,20 +296,6 @@ func newCorsHandler(srv *Server, allowedOrigins []string) http.Handler {
 		AllowedHeaders: []string{"*"},
 	})
 	return c.Handler(srv)
-}
-
-func newBasicAuthHandler(username string, password string, next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		user, pass, ok := r.BasicAuth()
-
-		if !ok || subtle.ConstantTimeCompare([]byte(user), []byte(username)) != 1 || subtle.ConstantTimeCompare([]byte(pass), []byte(password)) != 1 {
-			w.Header().Set("WWW-Authenticate", `Basic realm="Please use the right user and password"`)
-			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
 }
 
 // virtualHostHandler is a handler which validates the Host-header of incoming requests.

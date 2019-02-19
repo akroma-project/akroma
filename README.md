@@ -31,7 +31,6 @@ or, to build the full suite of utilities:
 
 Since Akroma is derived from the Ethereum codebase and has not diverged from it, you can reference the Ethereum build documentation for more details on building Akroma: https://github.com/akroma-project/akroma/wiki/Building-Ethereum
 
-
 ## Executables
 
 The Akroma project comes with several wrappers/executables found in the `cmd` directory.
