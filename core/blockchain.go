@@ -43,7 +43,7 @@ import (
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 	"github.com/akroma-project/akroma/trie"
-	"github.com/hashicorp/golang-lru"
+	lru "github.com/hashicorp/golang-lru"
 )
 
 var (
