@@ -17,6 +17,8 @@ jobs:
         go-version: 1.17
 
     - name: Build
+      env:
+        GO111MODULE: auto
       run: go build -v ./...
     
     - name: Make Geth
