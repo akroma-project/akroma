@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          path: go/src/github.com/akroma-project/akroma
+          path: go/src/github.com/akroma-project/
 
       - name: Set up Go
         uses: actions/setup-go@v2
