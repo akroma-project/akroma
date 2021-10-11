@@ -8,15 +8,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2\
+        with:
+          fetch-depth: 1
+          path: go/src/github.com/akroma-project/akroma
 
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: "1.16"
 
+      - name: Debug
+        run: |
+          pwd
+          echo ${HOME}
+          echo ${GITHUB_WORKSPACE}
+          echo ${GOPATH}
+          echo ${GOROOT}
+        env:
+          GOPATH: /home/runner/work/akroma/go
+
       - name: Build
         env:
           GO111MODULE: auto
+          GOPATH: /home/runner/work/akroma/go
         run: |
           go build -v ./...
