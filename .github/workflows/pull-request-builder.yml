@@ -28,6 +28,6 @@ jobs:
 
       - name: Build
         env:
-          GO111MODULE: on
+          GO111MODULE: auto
         run: |
-          go build -v ./...
+          make geth
