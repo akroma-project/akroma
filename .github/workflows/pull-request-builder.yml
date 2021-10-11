@@ -30,7 +30,6 @@ jobs:
 
       - name: Build
         env:
-          GO111MODULE: auto
           GOPATH: /home/runner/work/akroma/go
         run: |
           go build -v ./...
