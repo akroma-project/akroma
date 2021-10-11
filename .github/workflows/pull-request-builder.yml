@@ -18,10 +18,7 @@ jobs:
 
     - name: Build
       env:
-        GO111MODULE: auto
       run: go build -v ./...
     
     - name: Make Geth
-      env:
-        GO111MODULE: auto
       run: make geth
