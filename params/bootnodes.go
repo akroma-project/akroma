@@ -19,7 +19,8 @@ package params
 // MainnetBootnodes are the enode URLs of the P2P bootstrap nodes running on
 // the main Akroma network.
 var MainnetBootnodes = []string{
-	"enode://e9fb6b5bfa04bbfe134e2b34d761d669defe68a2ce311a59231d524ccd003b6f833703546a58dc9a6791939e63226fa04beaa02a6d4fc8aa603fff537bf9642d@137.184.120.92:30303",
+	"enode://9a670c1cb783f0519c7ff5210017b6685cae4f3bd4f092b310a08f25c8fe4e052b2a999e7084be91902e61f4469bc398377446b31b4e5cbfa01762fe67deffd9@167.71.17.10:30303",    //akaboot2
+	"enode://171c35270162bb4257e7392b5aa274bc6fe92fc79462a785d139d9bc8730e6b9d3e2d85794e39b23331463818883717bc6dd890af19fab52fb0401f165d770a0@147.182.158.117:30303", //akaboot3
 }
 
 // TestnetBootnodes are the enode URLs of the P2P bootstrap nodes running on the
