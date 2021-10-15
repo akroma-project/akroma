@@ -160,8 +160,8 @@ func New(ctx *node.ServiceContext, config *Config) (*Ethereum, error) {
 		// the atxi database should require far fewer resources since application performance is limited primarily by block import (chaindata db).
 		ethdb.SetCacheRatio("chaindata", 0.95)
 		ethdb.SetHandleRatio("chaindata", 0.95)
-		ethdb.SetCacheRatio("indexes", 0.25)
-		ethdb.SetHandleRatio("indexes", 0.25)
+		ethdb.SetCacheRatio("indexes", 0.10)
+		ethdb.SetHandleRatio("indexes", 0.10)
 		indexesDb, err = ctx.OpenDatabase("indexes", config.DatabaseCache, config.DatabaseCache)
 		if err != nil {
 			return nil, err
