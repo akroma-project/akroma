@@ -21,12 +21,13 @@ This README has be adapted from the Go Ethereum official implementation, the ori
 
 Building geth requires both a Go (version 1.9 or later) and a C compiler.
 
-    sudo apt install make gcc build-essential
+    `sudo apt install make gcc build-essential`
 
+Ensure docker is installed and can be run as non-root
 
 Once the dependencies are installed, run
 
-    `GO111MODULE=auto make geth`
+    `make geth`
 
 or, to build the full suite of utilities:
 
@@ -66,21 +67,6 @@ This command will:
    This too is optional and if you leave it out you can always attach to an already running Geth instance
    with `geth attach`.
 
-### Configuration
-
-As an alternative to passing the numerous flags to the `geth` binary, you can also pass a configuration file via:
-
-```
-$ geth --config /path/to/your_config.toml
-```
-
-To get an idea how the file should look like you can use the `dumpconfig` subcommand to export your existing configuration:
-
-```
-$ geth --your-favourite-flags dumpconfig
-```
-
-*Note: This works only with geth v1.6.0 and above.*
 
 #### Docker quick start
 
