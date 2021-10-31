@@ -20,10 +20,13 @@ This README has be adapted from the Go Ethereum official implementation, the ori
 ## Building the source
 
 Building geth requires both a Go (version 1.9 or later) and a C compiler.
-You can install them using your favorite package manager.
+
+    sudo apt install make gcc build-essential
+
+
 Once the dependencies are installed, run
 
-    make geth
+    `GO111MODULE=auto make geth`
 
 or, to build the full suite of utilities:
 
