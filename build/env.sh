@@ -22,6 +22,8 @@ fi
 GOPATH="$workspace"
 export GOPATH
 
+GO111MODULE=auto
+export GO111MODULE
 # Run the command inside the workspace.
 cd "$ethdir/akroma"
 PWD="$ethdir/akroma"
