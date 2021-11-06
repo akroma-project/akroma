@@ -33,22 +33,40 @@ var (
 var (
 	// MainnetChainConfig is the chain parameters to run a node on the main network.
 	MainnetChainConfig = &ChainConfig{
-		ChainID:             big.NewInt(200625),
-		HomesteadBlock:      big.NewInt(0),
-		DAOForkBlock:        nil,
-		DAOForkSupport:      false,
-		EIP150Block:         big.NewInt(0),
-		EIP150Hash:          common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
-		EIP155Block:         big.NewInt(1),
-		EIP158Block:         big.NewInt(1),
-		ByzantiumBlock:      big.NewInt(0),
-		ConstantinopleBlock: nil,
-		PetersburgBlock:     nil,
-		AkromaBlock:         big.NewInt(300000),
-		BaneslayerBlock:     big.NewInt(1200000),
-		CopperLeafBlock:     big.NewInt(2200000),
-		DawnbreakBlock:      big.NewInt(3200000),
-		Ethash:              new(EthashConfig),
+		ChainID:                 big.NewInt(200625),
+		HomesteadBlock:          big.NewInt(0),
+		DAOForkBlock:            nil,
+		DAOForkSupport:          false,
+		EIP150Block:             big.NewInt(0),
+		EIP150Hash:              common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
+		EIP155Block:             big.NewInt(1),
+		EIP158Block:             big.NewInt(1),
+		ByzantiumBlock:          big.NewInt(0),
+		ConstantinopleBlock:     nil,
+		PetersburgBlock:         nil,
+		AkromaBlock:             big.NewInt(300000),
+		BaneslayerBlock:         big.NewInt(1200000),
+		CopperLeafBlock:         big.NewInt(2200000),
+		DawnbreakBlock:          big.NewInt(3200000),
+		ExaltedAngelBlock:       big.NewInt(6300000),
+		FlamebladeBlock:         big.NewInt(7300000),
+		GabrielAngelfireBlock:   big.NewInt(8300000),
+		HailstormValkyrieBlock:  big.NewInt(9300000),
+		IonaBlock:               big.NewInt(10300000),
+		JenaraBlock:             big.NewInt(11300000),
+		KarmicGuideBlock:        big.NewInt(12300000),
+		LinvalaBlock:            big.NewInt(13300000),
+		MaelstromArchangelBlock: big.NewInt(14300000),
+		PlatinumAngelBlock:      big.NewInt(15300000),
+		RestorationAngelBlock:   big.NewInt(16300000),
+		SerraAngelBlock:         big.NewInt(17300000),
+		TwilightShepherdBlock:   big.NewInt(18300000),
+		ValkyrieHarbingerBlock:  big.NewInt(19300000),
+		WarriorAngelBlock:       big.NewInt(20300000),
+		XathridDemonBlock:       big.NewInt(21300000),
+		YouthfulValkyrieBlock:   big.NewInt(22300000),
+		ZuranOrbBlock:           big.NewInt(23300000),
+		Ethash:                  new(EthashConfig),
 	}
 
 	// MainnetTrustedCheckpoint contains the light client trusted checkpoint for the main network.
@@ -62,22 +80,40 @@ var (
 
 	// TestnetChainConfig contains the chain parameters to run a node on the Ropsten test network.
 	TestnetChainConfig = &ChainConfig{
-		ChainID:             big.NewInt(200624),
-		HomesteadBlock:      big.NewInt(0),
-		DAOForkBlock:        nil,
-		DAOForkSupport:      false,
-		EIP150Block:         big.NewInt(0),
-		EIP150Hash:          common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
-		EIP155Block:         big.NewInt(1),
-		EIP158Block:         big.NewInt(1),
-		ByzantiumBlock:      big.NewInt(0),
-		ConstantinopleBlock: big.NewInt(0),
-		PetersburgBlock:     big.NewInt(0),
-		AkromaBlock:         big.NewInt(0),
-		BaneslayerBlock:     big.NewInt(0),
-		CopperLeafBlock:     big.NewInt(0),
-		DawnbreakBlock:      big.NewInt(0),
-		Ethash:              new(EthashConfig),
+		ChainID:                 big.NewInt(200624),
+		HomesteadBlock:          big.NewInt(0),
+		DAOForkBlock:            nil,
+		DAOForkSupport:          false,
+		EIP150Block:             big.NewInt(0),
+		EIP150Hash:              common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
+		EIP155Block:             big.NewInt(1),
+		EIP158Block:             big.NewInt(1),
+		ByzantiumBlock:          big.NewInt(0),
+		ConstantinopleBlock:     big.NewInt(0),
+		PetersburgBlock:         big.NewInt(0),
+		AkromaBlock:             big.NewInt(0),
+		BaneslayerBlock:         big.NewInt(0),
+		CopperLeafBlock:         big.NewInt(0),
+		DawnbreakBlock:          big.NewInt(0),
+		ExaltedAngelBlock:       big.NewInt(0),
+		FlamebladeBlock:         big.NewInt(0),
+		GabrielAngelfireBlock:   big.NewInt(0),
+		HailstormValkyrieBlock:  big.NewInt(0),
+		IonaBlock:               big.NewInt(0),
+		JenaraBlock:             big.NewInt(0),
+		KarmicGuideBlock:        big.NewInt(0),
+		LinvalaBlock:            big.NewInt(0),
+		MaelstromArchangelBlock: big.NewInt(0),
+		PlatinumAngelBlock:      big.NewInt(0),
+		RestorationAngelBlock:   big.NewInt(0),
+		SerraAngelBlock:         big.NewInt(0),
+		TwilightShepherdBlock:   big.NewInt(0),
+		ValkyrieHarbingerBlock:  big.NewInt(0),
+		WarriorAngelBlock:       big.NewInt(0),
+		XathridDemonBlock:       big.NewInt(0),
+		YouthfulValkyrieBlock:   big.NewInt(0),
+		ZuranOrbBlock:           big.NewInt(0),
+		Ethash:                  new(EthashConfig),
 	}
 
 	// TestnetTrustedCheckpoint contains the light client trusted checkpoint for the Ropsten test network.
@@ -170,14 +206,31 @@ type ChainConfig struct {
 	EIP155Block *big.Int `json:"eip155Block,omitempty"` // EIP155 HF block
 	EIP158Block *big.Int `json:"eip158Block,omitempty"` // EIP158 HF block
 
-	ByzantiumBlock      *big.Int `json:"byzantiumBlock,omitempty"`      // Byzantium switch block (nil = no fork, 0 = already on byzantium)
-	ConstantinopleBlock *big.Int `json:"constantinopleBlock,omitempty"` // Constantinople switch block (nil = no fork, 0 = already activated)
-	PetersburgBlock     *big.Int `json:"petersburgBlock,omitempty"`     // Petersburg switch block (nil = same as Constantinople)
-	EWASMBlock          *big.Int `json:"ewasmBlock,omitempty"`          // EWASM switch block (nil = no fork, 0 = already activated)
-	AkromaBlock         *big.Int `json:"akromaBlock,omitempty"`         // Akroma switch block (nil = no fork, 0 = already on akroma)
-	BaneslayerBlock     *big.Int `json:"baneslayerBlock,omitempty"`     //second major akroma release
-	CopperLeafBlock     *big.Int `json:"copperLeafBlock,omitempty"`     //third major akroma release
-	DawnbreakBlock      *big.Int `json:"dawnbreakBlock,omitempty"`      //fourth major akroma release
+	ByzantiumBlock          *big.Int `json:"byzantiumBlock,omitempty"`          // Byzantium switch block (nil = no fork, 0 = already on byzantium)
+	ConstantinopleBlock     *big.Int `json:"constantinopleBlock,omitempty"`     // Constantinople switch block (nil = no fork, 0 = already activated)
+	PetersburgBlock         *big.Int `json:"petersburgBlock,omitempty"`         // Petersburg switch block (nil = same as Constantinople)
+	EWASMBlock              *big.Int `json:"ewasmBlock,omitempty"`              // EWASM switch block (nil = no fork, 0 = already activated)
+	AkromaBlock             *big.Int `json:"akromaBlock,omitempty"`             // Akroma switch block (nil = no fork, 0 = already on akroma)
+	BaneslayerBlock         *big.Int `json:"baneslayerBlock,omitempty"`         // second major akroma release
+	CopperLeafBlock         *big.Int `json:"copperLeafBlock,omitempty"`         // third major akroma release
+	DawnbreakBlock          *big.Int `json:"dawnbreakBlock,omitempty"`          // fourth major akroma release
+	ExaltedAngelBlock       *big.Int `json:"exaltedAngelBlock,omitempty"`       // x major akroma release
+	FlamebladeBlock         *big.Int `json:"flamebladeBlock,omitempty"`         // x major akroma release
+	GabrielAngelfireBlock   *big.Int `json:"gabrielAngelfireBlock,omitempty"`   // x major akroma release
+	HailstormValkyrieBlock  *big.Int `json:"hailstormValkyrieBlock,omitempty"`  // x major akroma release
+	IonaBlock               *big.Int `json:"ionaBlock,omitempty"`               // x major akroma release
+	JenaraBlock             *big.Int `json:"jenaraBlock,omitempty"`             // x major akroma release
+	KarmicGuideBlock        *big.Int `json:"karmicGuideBlock,omitempty"`        // x major akroma release
+	LinvalaBlock            *big.Int `json:"linvalaBlock,omitempty"`            // x major akroma release
+	MaelstromArchangelBlock *big.Int `json:"maelstromArchangelBlock,omitempty"` // x major akroma release
+	PlatinumAngelBlock      *big.Int `json:"platinumAngelBlock,omitempty"`      // x major akroma release
+	RestorationAngelBlock   *big.Int `json:"restorationAngelBlock,omitempty"`   // x major akroma release
+	SerraAngelBlock         *big.Int `json:"serraAngelBlock,omitempty"`         // x major akroma release
+	TwilightShepherdBlock   *big.Int `json:"twilightShepherdBlock,omitempty"`   // x major akroma release
+	WarriorAngelBlock       *big.Int `json:"warriorAngelBlock,omitempty"`       // x major akroma release
+	XathridDemonBlock       *big.Int `json:"xathridDemonBlock,omitempty"`       // x major akroma release
+	YouthfulValkyrieBlock   *big.Int `json:"youthfulValkyrieBlock,omitempty"`   // x major akroma release
+	ZuranOrbBlock           *big.Int `json:"zuranOrbBlock,omitempty"`           // x major akroma release
 
 	// Various consensus engines
 	Ethash *EthashConfig `json:"ethash,omitempty"`
