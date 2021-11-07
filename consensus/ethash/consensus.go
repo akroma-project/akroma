@@ -316,6 +316,8 @@ func (ethash *Ethash) CalcDifficulty(chain consensus.ChainReader, time uint64, p
 func CalcDifficulty(config *params.ChainConfig, time uint64, parent *types.Header) *big.Int {
 	next := new(big.Int).Add(parent.Number, big1)
 	switch {
+	case config.IsExaltedAngel(next):
+		return calcDifficultyAllFutureEpocs(time, parent)
 	case config.IsConstantinople(next):
 		return calcDifficultyConstantinople(time, parent)
 	case config.IsByzantium(next):
@@ -326,23 +328,6 @@ func CalcDifficulty(config *params.ChainConfig, time uint64, parent *types.Heade
 		return calcDifficultyFrontier(time, parent)
 	}
 
-	// diff := new(big.Int)
-	// adjust := new(big.Int).Div(parent.Difficulty, params.DifficultyBoundDivisor)
-	// bigTime := new(big.Int)
-	// bigParentTime := new(big.Int)
-
-	// bigTime.SetUint64(time)
-	// bigParentTime.SetUint64(parent.Time)
-
-	// if bigTime.Sub(bigTime, bigParentTime).Cmp(params.DurationLimit) < 0 {
-	// 	diff.Add(parent.Difficulty, adjust)
-	// } else {
-	// 	diff.Sub(parent.Difficulty, adjust)
-	// }
-	// if diff.Cmp(params.MinimumDifficulty) < 0 {
-	// 	return params.MinimumDifficulty
-	// }
-	// return diff
 }
 
 // Some weird constants to avoid constant memory allocs for them.
@@ -354,6 +339,47 @@ var (
 	big10         = big.NewInt(10)
 	bigMinus99    = big.NewInt(-99)
 )
+
+// calcDifficultyAllFutureEpocs creates a difficultyCalculator without a bomb-delay.
+// the difficulty is calculated with Byzantium rules, which differs from Homestead in
+// how uncles affect the calculation
+func calcDifficultyAllFutureEpocs(time uint64, parent *types.Header) *big.Int {
+	// https://github.com/ethereum/EIPs/issues/100.
+	// algorithm:
+	// diff = (parent_diff +
+	//         (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+	//        ) + 2^(periodCount - 2)
+
+	bigTime := new(big.Int).SetUint64(time)
+	bigParentTime := new(big.Int).Set(parent.Time)
+
+	// holds intermediate values to make the algo easier to read & audit
+	x := new(big.Int)
+	y := new(big.Int)
+
+	// (2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9
+	x.Sub(bigTime, bigParentTime)
+	x.Div(x, big9)
+	if parent.UncleHash == types.EmptyUncleHash {
+		x.Sub(big1, x)
+	} else {
+		x.Sub(big2, x)
+	}
+	// max((2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9, -99)
+	if x.Cmp(bigMinus99) < 0 {
+		x.Set(bigMinus99)
+	}
+	// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+	y.Div(parent.Difficulty, params.DifficultyBoundDivisor)
+	x.Mul(y, x)
+	x.Add(parent.Difficulty, x)
+
+	// minimum difficulty can ever be (before exponential factor)
+	if x.Cmp(params.MinimumDifficulty) < 0 {
+		x.Set(params.MinimumDifficulty)
+	}
+	return x
+}
 
 // makeDifficultyCalculator creates a difficultyCalculator with the given bomb-delay.
 // the difficulty is calculated with Byzantium rules, which differs from Homestead in
