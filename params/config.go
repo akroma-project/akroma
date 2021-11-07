@@ -268,7 +268,7 @@ func (c *ChainConfig) String() string {
 	default:
 		engine = "unknown"
 	}
-	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v  ConstantinopleFix: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Dawnbreak: %v  ExaltedAngel: %v Flameblade: %v GabrielAngelfire: %v HailstormValkyrie: %v Iona: %v Jenara: %v KarmicGuide: %v Linvala: %v MaelstromArchangel: %v  PlatinumAngel: %v  RestorationAngel: %v SerraAngel: %v CopperLeaf: %v TwilightShepherd: %v WarriorAngel: %v ValkyrieHarbinger: %v XathridDemon: %v YouthfulValkyrie: %v ZuranOrb: %v Engine: %v}",
+	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v  ConstantinopleFix: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Dawnbreak: %v  ExaltedAngel: %v Flameblade: %v GabrielAngelfire: %v HailstormValkyrie: %v Iona: %v Jenara: %v KarmicGuide: %v Linvala: %v MaelstromArchangel: %v  PlatinumAngel: %v  RestorationAngel: %v SerraAngel: %v TwilightShepherd: %v WarriorAngel: %v ValkyrieHarbinger: %v XathridDemon: %v YouthfulValkyrie: %v ZuranOrb: %v Engine: %v}",
 		c.ChainID,
 		c.HomesteadBlock,
 		c.DAOForkBlock,
