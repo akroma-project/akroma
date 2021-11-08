@@ -374,92 +374,92 @@ func (c *ChainConfig) IsDawnbreak(num *big.Int) bool {
 
 // IsExaltedAngel returns whether num is either equal to the ExaltedAngel fork block or greater.
 func (c *ChainConfig) IsExaltedAngel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.ExaltedAngelBlock, num)
 }
 
 // IsFlameblade returns whether num is either equal to the Flameblade fork block or greater.
 func (c *ChainConfig) IsFlameblade(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.FlamebladeBlock, num)
 }
 
 // IsGabrielAngelfire returns whether num is either equal to the GabrielAngelfire fork block or greater.
 func (c *ChainConfig) IsGabrielAngelfire(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.GabrielAngelfireBlock, num)
 }
 
 // IsHailstormValkyrie returns whether num is either equal to the HailstormValkyrie fork block or greater.
 func (c *ChainConfig) IsHailstormValkyrie(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.HailstormValkyrieBlock, num)
 }
 
 // IsIona returns whether num is either equal to the Iona fork block or greater.
 func (c *ChainConfig) IsIona(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.IonaBlock, num)
 }
 
 // IsJenara returns whether num is either equal to the Jenara fork block or greater.
 func (c *ChainConfig) IsJenara(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.JenaraBlock, num)
 }
 
 // IsKarmicGuide returns whether num is either equal to the KarmicGuide fork block or greater.
 func (c *ChainConfig) IsKarmicGuide(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.KarmicGuideBlock, num)
 }
 
 // IsLinvala returns whether num is either equal to the Linvala fork block or greater.
 func (c *ChainConfig) IsLinvala(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.LinvalaBlock, num)
 }
 
 // IsMaelstromArchangel returns whether num is either equal to the MaelstromArchangel fork block or greater.
 func (c *ChainConfig) IsMaelstromArchangel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.MaelstromArchangelBlock, num)
 }
 
 // IsPlatinumAngel returns whether num is either equal to the PlatinumAngel fork block or greater.
 func (c *ChainConfig) IsPlatinumAngel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.PlatinumAngelBlock, num)
 }
 
 // IsRestorationAngel returns whether num is either equal to the RestorationAngel fork block or greater.
 func (c *ChainConfig) IsRestorationAngel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.RestorationAngelBlock, num)
 }
 
 // IsSerraAngel returns whether num is either equal to the SerraAngel fork block or greater.
 func (c *ChainConfig) IsSerraAngel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.SerraAngelBlock, num)
 }
 
 // IsTwilightShepherd returns whether num is either equal to the TwilightShepherd fork block or greater.
 func (c *ChainConfig) IsTwilightShepherd(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.TwilightShepherdBlock, num)
 }
 
 // IsValkyrieHarbinger returns whether num is either equal to the ValkyrieHarbinger fork block or greater.
 func (c *ChainConfig) IsValkyrieHarbinger(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.ValkyrieHarbingerBlock, num)
 }
 
 // IsWarriorAngel returns whether num is either equal to the WarriorAngel fork block or greater.
 func (c *ChainConfig) IsWarriorAngel(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.WarriorAngelBlock, num)
 }
 
 // IsXathridDemon returns whether num is either equal to the XathridDemon fork block or greater.
 func (c *ChainConfig) IsXathridDemon(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.XathridDemonBlock, num)
 }
 
 // IsYouthfulValkyrie returns whether num is either equal to the YouthfulValkyrie fork block or greater.
 func (c *ChainConfig) IsYouthfulValkyrie(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.YouthfulValkyrieBlock, num)
 }
 
 // IsZuranOrb returns whether num is either equal to the ZuranOrb fork block or greater.
 func (c *ChainConfig) IsZuranOrb(num *big.Int) bool {
-	return isForked(c.DawnbreakBlock, num)
+	return isForked(c.ZuranOrbBlock, num)
 }
 
 // GasTable returns the gas table corresponding to the current phase (homestead or homestead reprice).
