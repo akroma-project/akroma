@@ -654,86 +654,105 @@ var (
 // included uncles. The coinbase of each uncle block is also rewarded.
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 	// Select the correct block reward based on chain progression
+	blockReward := FrontierBlockReward
+	if config.IsByzantium(header.Number) {
+		blockReward = ByzantiumBlockReward
+	}
+	if config.IsConstantinople(header.Number) {
+		blockReward = ConstantinopleBlockReward
+	}
 	masternodeBlockReward := big.NewInt(2e+18)  //2.00
 	developmentBlockReward := big.NewInt(1e+18) //1.00
-	blockReward := big.NewInt(7e+18)            //7.00
-
+	if config.IsAkroma(header.Number) {
+		blockReward = AkromaBlockReward //7.00
+	}
+	if config.IsBaneslayer(header.Number) {
+		blockReward = big.NewInt(600e+16)           //6.00
+		masternodeBlockReward = big.NewInt(225e+16) //2.25
+		developmentBlockReward = big.NewInt(75e+16) //0.75
+	}
+	if config.IsCopperLeaf(header.Number) {
+		blockReward = big.NewInt(550e+16)           //5.50
+		masternodeBlockReward = big.NewInt(250e+16) //2.50
+		developmentBlockReward = big.NewInt(65e+16) //0.65
+	}
+	if config.IsDawnbreak(header.Number) {
+		blockReward = big.NewInt(500e+16)           //5.00
+		masternodeBlockReward = big.NewInt(260e+16) //2.60
+		developmentBlockReward = big.NewInt(55e+16) //0.55
+	}
+	if config.IsExaltedAngel(header.Number) {
+		blockReward = big.NewInt(5.2e+18)
+		developmentBlockReward = big.NewInt(1.55e+18)
+	}
+	if config.IsFlameblade(header.Number) {
+		blockReward = big.NewInt(4.95e+18)
+		developmentBlockReward = big.NewInt(1.4e+18)
+	}
+	if config.IsGabrielAngelfire(header.Number) {
+		blockReward = big.NewInt(4.7e+18)
+		developmentBlockReward = big.NewInt(1.25e+18)
+	}
+	if config.IsHailstormValkyrie(header.Number) {
+		blockReward = big.NewInt(4.45e+18)
+		developmentBlockReward = big.NewInt(1.20e+18)
+	}
+	if config.IsIona(header.Number) {
+		blockReward = big.NewInt(4.20e+18)
+		developmentBlockReward = big.NewInt(1.15e+18)
+	}
+	if config.IsJenara(header.Number) {
+		blockReward = big.NewInt(3.95e+18)
+		developmentBlockReward = big.NewInt(1.10e+18)
+	}
+	if config.IsKarmicGuide(header.Number) {
+		blockReward = big.NewInt(3.70e+18)
+		developmentBlockReward = big.NewInt(1.05e+18)
+	}
+	if config.IsLinvala(header.Number) {
+		blockReward = big.NewInt(3.45e+18)
+		developmentBlockReward = big.NewInt(1e+18)
+	}
+	if config.IsMaelstromArchangel(header.Number) {
+		blockReward = big.NewInt(3.20e+18)
+		developmentBlockReward = big.NewInt(0.95e+18)
+	}
+	if config.IsPlatinumAngel(header.Number) {
+		blockReward = big.NewInt(2.95e+18)
+		developmentBlockReward = big.NewInt(0.9e+18)
+	}
+	if config.IsRestorationAngel(header.Number) {
+		blockReward = big.NewInt(2.7e+18)
+		developmentBlockReward = big.NewInt(0.8e+18)
+	}
+	if config.IsSerraAngel(header.Number) {
+		blockReward = big.NewInt(2.45e+18)
+		developmentBlockReward = big.NewInt(0.75e+18)
+	}
+	if config.IsTwilightShepherd(header.Number) {
+		blockReward = big.NewInt(2.2e+18)
+		developmentBlockReward = big.NewInt(0.70e+18)
+	}
+	if config.IsValkyrieHarbinger(header.Number) {
+		blockReward = big.NewInt(2e+18)
+		developmentBlockReward = big.NewInt(0.65e+18)
+	}
+	if config.IsWarriorAngel(header.Number) {
+		blockReward = big.NewInt(1.9e+18)
+		developmentBlockReward = big.NewInt(0.60e+18)
+	}
+	if config.IsXathridDemon(header.Number) {
+		blockReward = big.NewInt(1.8e+18)
+		developmentBlockReward = big.NewInt(0.55e+18)
+	}
+	if config.IsYouthfulValkyrie(header.Number) {
+		blockReward = big.NewInt(1.7e+18)
+		developmentBlockReward = big.NewInt(0.50e+18)
+	}
 	if config.IsZuranOrb(header.Number) {
 		blockReward = big.NewInt(1.5e+18)
 		developmentBlockReward = big.NewInt(0.45e+18)
-	} else if config.IsYouthfulValkyrie(header.Number) {
-		blockReward = big.NewInt(1.7e+18)
-		developmentBlockReward = big.NewInt(0.50e+18)
-	} else if config.IsXathridDemon(header.Number) {
-		blockReward = big.NewInt(1.8e+18)
-		developmentBlockReward = big.NewInt(0.55e+18)
-	} else if config.IsWarriorAngel(header.Number) {
-		blockReward = big.NewInt(1.9e+18)
-		developmentBlockReward = big.NewInt(0.60e+18)
-	} else if config.IsValkyrieHarbinger(header.Number) {
-		blockReward = big.NewInt(2e+18)
-		developmentBlockReward = big.NewInt(0.65e+18)
-	} else if config.IsTwilightShepherd(header.Number) {
-		blockReward = big.NewInt(2.2e+18)
-		developmentBlockReward = big.NewInt(0.70e+18)
-	} else if config.IsSerraAngel(header.Number) {
-		blockReward = big.NewInt(2.45e+18)
-		developmentBlockReward = big.NewInt(0.75e+18)
-	} else if config.IsRestorationAngel(header.Number) {
-		blockReward = big.NewInt(2.7e+18)
-		developmentBlockReward = big.NewInt(0.8e+18)
-	} else if config.IsPlatinumAngel(header.Number) {
-		blockReward = big.NewInt(2.95e+18)
-		developmentBlockReward = big.NewInt(0.9e+18)
-	} else if config.IsMaelstromArchangel(header.Number) {
-		blockReward = big.NewInt(3.20e+18)
-		developmentBlockReward = big.NewInt(0.95e+18)
-	} else if config.IsLinvala(header.Number) {
-		blockReward = big.NewInt(3.45e+18)
-		developmentBlockReward = big.NewInt(1e+18)
-	} else if config.IsKarmicGuide(header.Number) {
-		blockReward = big.NewInt(3.70e+18)
-		developmentBlockReward = big.NewInt(1.05e+18)
-	} else if config.IsJenara(header.Number) {
-		blockReward = big.NewInt(3.95e+18)
-		developmentBlockReward = big.NewInt(1.10e+18)
-	} else if config.IsIona(header.Number) {
-		blockReward = big.NewInt(4.20e+18)
-		developmentBlockReward = big.NewInt(1.15e+18)
-	} else if config.IsHailstormValkyrie(header.Number) {
-		blockReward = big.NewInt(4.45e+18)
-		developmentBlockReward = big.NewInt(1.20e+18)
-	} else if config.IsGabrielAngelfire(header.Number) {
-		blockReward = big.NewInt(4.7e+18)
-		developmentBlockReward = big.NewInt(1.25e+18)
-	} else if config.IsFlameblade(header.Number) {
-		blockReward = big.NewInt(4.95e+18)
-		developmentBlockReward = big.NewInt(1.4e+18)
-	} else if config.IsExaltedAngel(header.Number) {
-		blockReward = big.NewInt(5.2e+18)
-		developmentBlockReward = big.NewInt(1.55e+18)
-	} else if config.IsDawnbreak(header.Number) {
-		blockReward = big.NewInt(5e+18)
-		masternodeBlockReward = big.NewInt(2.6e+18)
-		developmentBlockReward = big.NewInt(0.55e+18)
-	} else if config.IsCopperLeaf(header.Number) {
-		blockReward = big.NewInt(5.5e+18)
-		masternodeBlockReward = big.NewInt(2.5e+18)
-		developmentBlockReward = big.NewInt(0.65e+18)
-	} else if config.IsBaneslayer(header.Number) {
-		blockReward = big.NewInt(6e+18)
-		masternodeBlockReward = big.NewInt(2.25e+18)
-		developmentBlockReward = big.NewInt(0.75e+18)
-	} else if config.IsAkroma(header.Number) {
-		blockReward = AkromaBlockReward //7.00
-	} else if config.IsConstantinople(header.Number) {
-		blockReward = ConstantinopleBlockReward
-	} else if config.IsByzantium(header.Number) {
-		blockReward = ByzantiumBlockReward
-	} else {
-		blockReward = FrontierBlockReward
 	}
-
 	// Accumulate the rewards for the miner and any included uncles
 	reward := new(big.Int).Set(blockReward)
 	r := new(big.Int)
@@ -750,8 +769,8 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
 	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
-	// Masternode Fund address, removed at block 2.5M
-	if config.IsAkroma(header.Number) {
+	// Masternode Fund address, removed at block 6.5M/ExaltedAngel fork
+	if config.IsAkroma(header.Number) && config.IsExaltedAngel(header.Number) == false {
 		state.AddBalance(MasternodeFundAddress, masternodeBlockReward)
 	}
 }
