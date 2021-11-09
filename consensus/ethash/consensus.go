@@ -30,6 +30,7 @@ import (
 	"github.com/akroma-project/akroma/consensus/misc"
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/core/types"
+	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 	mapset "github.com/deckarep/golang-set"
@@ -41,11 +42,11 @@ var (
 	FrontierBlockReward       = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
 	ByzantiumBlockReward      = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
 	ConstantinopleBlockReward = big.NewInt(2e+18) // Block reward in wei for successfully mining a block upward from Constantinople
-	AkromaBlockReward         = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
-	maxUncles                 = 2                 // Maximum number of uncles allowed in a single block
-	allowedFutureBlockTime    = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
-	DevelopmentFundAddress    = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
-	MasternodeFundAddress     = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
+	// AkromaBlockReward         = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
+	maxUncles              = 2                // Maximum number of uncles allowed in a single block
+	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
+	DevelopmentFundAddress = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
+	MasternodeFundAddress  = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
 
 	// calcDifficultyConstantinople is the difficulty adjustment algorithm for Constantinople.
 	// It returns the difficulty that a new block should have when created at time given the
@@ -653,19 +654,12 @@ var (
 // reward. The total reward consists of the static block reward and rewards for
 // included uncles. The coinbase of each uncle block is also rewarded.
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
-	// Select the correct block reward based on chain progression
-	// TODO: Rolled back headers count=2200 header=3199847->3197799 fast=3199661->3197799 block=0->0
-	blockReward := FrontierBlockReward
-	if config.IsByzantium(header.Number) {
-		blockReward = ByzantiumBlockReward
-	}
-	if config.IsConstantinople(header.Number) {
-		blockReward = ConstantinopleBlockReward
-	}
+	blockReward := ByzantiumBlockReward
 	masternodeBlockReward := big.NewInt(2e+18)  //2.00
 	developmentBlockReward := big.NewInt(1e+18) //1.00
+
 	if config.IsAkroma(header.Number) {
-		blockReward = AkromaBlockReward //7.00
+		blockReward = big.NewInt(7e+18)
 	}
 	if config.IsBaneslayer(header.Number) {
 		blockReward = big.NewInt(600e+16)           //6.00
@@ -699,7 +693,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		developmentBlockReward = big.NewInt(1.20e+18)
 	}
 	if config.IsIona(header.Number) {
-		blockReward = big.NewInt(4.20e+18)
+		blockReward = big.NewInt(4.2e+18)
 		developmentBlockReward = big.NewInt(1.15e+18)
 	}
 	if config.IsJenara(header.Number) {
@@ -715,7 +709,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		developmentBlockReward = big.NewInt(1e+18)
 	}
 	if config.IsMaelstromArchangel(header.Number) {
-		blockReward = big.NewInt(3.20e+18)
+		blockReward = big.NewInt(3.2e+18)
 		developmentBlockReward = big.NewInt(0.95e+18)
 	}
 	if config.IsPlatinumAngel(header.Number) {
@@ -767,6 +761,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		r.Div(blockReward, big32)
 		reward.Add(reward, r)
 	}
+	log.Info("🤑 Block reward log", "BlockNumber", header.Number, "Coinbase", header.Coinbase, "Reward", reward.String())
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
 	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
