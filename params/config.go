@@ -33,22 +33,40 @@ var (
 var (
 	// MainnetChainConfig is the chain parameters to run a node on the main network.
 	MainnetChainConfig = &ChainConfig{
-		ChainID:             big.NewInt(200625),
-		HomesteadBlock:      big.NewInt(0),
-		DAOForkBlock:        nil,
-		DAOForkSupport:      false,
-		EIP150Block:         big.NewInt(0),
-		EIP150Hash:          common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
-		EIP155Block:         big.NewInt(1),
-		EIP158Block:         big.NewInt(1),
-		ByzantiumBlock:      big.NewInt(0),
-		ConstantinopleBlock: nil,
-		PetersburgBlock:     nil,
-		AkromaBlock:         big.NewInt(300000),
-		BaneslayerBlock:     big.NewInt(1200000),
-		CopperLeafBlock:     big.NewInt(2200000),
-		DawnbreakBlock:      big.NewInt(3200000),
-		Ethash:              new(EthashConfig),
+		ChainID:                 big.NewInt(200625),
+		HomesteadBlock:          big.NewInt(0),
+		DAOForkBlock:            nil,
+		DAOForkSupport:          false,
+		EIP150Block:             big.NewInt(0),
+		EIP150Hash:              common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
+		EIP155Block:             big.NewInt(1),
+		EIP158Block:             big.NewInt(1),
+		ByzantiumBlock:          big.NewInt(0),
+		ConstantinopleBlock:     nil,
+		PetersburgBlock:         nil,
+		AkromaBlock:             big.NewInt(300000),
+		BaneslayerBlock:         big.NewInt(1200000),
+		CopperLeafBlock:         big.NewInt(2200000),
+		DawnbreakBlock:          big.NewInt(3200000),
+		ExaltedAngelBlock:       big.NewInt(6500000),
+		FlamebladeBlock:         big.NewInt(7500000),
+		GabrielAngelfireBlock:   big.NewInt(8500000),
+		HailstormValkyrieBlock:  big.NewInt(9500000),
+		IonaBlock:               big.NewInt(10500000),
+		JenaraBlock:             big.NewInt(11500000),
+		KarmicGuideBlock:        big.NewInt(12500000),
+		LinvalaBlock:            big.NewInt(13500000),
+		MaelstromArchangelBlock: big.NewInt(14500000),
+		PlatinumAngelBlock:      big.NewInt(15500000),
+		RestorationAngelBlock:   big.NewInt(16500000),
+		SerraAngelBlock:         big.NewInt(17500000),
+		TwilightShepherdBlock:   big.NewInt(18500000),
+		ValkyrieHarbingerBlock:  big.NewInt(19500000),
+		WarriorAngelBlock:       big.NewInt(20500000),
+		XathridDemonBlock:       big.NewInt(21500000),
+		YouthfulValkyrieBlock:   big.NewInt(22500000),
+		ZuranOrbBlock:           big.NewInt(23500000),
+		Ethash:                  new(EthashConfig),
 	}
 
 	// MainnetTrustedCheckpoint contains the light client trusted checkpoint for the main network.
@@ -62,22 +80,40 @@ var (
 
 	// TestnetChainConfig contains the chain parameters to run a node on the Ropsten test network.
 	TestnetChainConfig = &ChainConfig{
-		ChainID:             big.NewInt(200624),
-		HomesteadBlock:      big.NewInt(0),
-		DAOForkBlock:        nil,
-		DAOForkSupport:      false,
-		EIP150Block:         big.NewInt(0),
-		EIP150Hash:          common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
-		EIP155Block:         big.NewInt(1),
-		EIP158Block:         big.NewInt(1),
-		ByzantiumBlock:      big.NewInt(0),
-		ConstantinopleBlock: big.NewInt(0),
-		PetersburgBlock:     big.NewInt(0),
-		AkromaBlock:         big.NewInt(0),
-		BaneslayerBlock:     big.NewInt(0),
-		CopperLeafBlock:     big.NewInt(0),
-		DawnbreakBlock:      big.NewInt(0),
-		Ethash:              new(EthashConfig),
+		ChainID:                 big.NewInt(200624),
+		HomesteadBlock:          big.NewInt(0),
+		DAOForkBlock:            nil,
+		DAOForkSupport:          false,
+		EIP150Block:             big.NewInt(0),
+		EIP150Hash:              common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
+		EIP155Block:             big.NewInt(1),
+		EIP158Block:             big.NewInt(1),
+		ByzantiumBlock:          big.NewInt(0),
+		ConstantinopleBlock:     nil,
+		PetersburgBlock:         nil,
+		AkromaBlock:             big.NewInt(5),
+		BaneslayerBlock:         big.NewInt(10),
+		CopperLeafBlock:         big.NewInt(15),
+		DawnbreakBlock:          big.NewInt(20),
+		ExaltedAngelBlock:       big.NewInt(25),
+		FlamebladeBlock:         big.NewInt(30),
+		GabrielAngelfireBlock:   big.NewInt(35),
+		HailstormValkyrieBlock:  big.NewInt(40),
+		IonaBlock:               big.NewInt(45),
+		JenaraBlock:             big.NewInt(50),
+		KarmicGuideBlock:        big.NewInt(55),
+		LinvalaBlock:            big.NewInt(60),
+		MaelstromArchangelBlock: big.NewInt(65),
+		PlatinumAngelBlock:      big.NewInt(70),
+		RestorationAngelBlock:   big.NewInt(75),
+		SerraAngelBlock:         big.NewInt(80),
+		TwilightShepherdBlock:   big.NewInt(85),
+		ValkyrieHarbingerBlock:  big.NewInt(90),
+		WarriorAngelBlock:       big.NewInt(95),
+		XathridDemonBlock:       big.NewInt(100),
+		YouthfulValkyrieBlock:   big.NewInt(105),
+		ZuranOrbBlock:           big.NewInt(110),
+		Ethash:                  new(EthashConfig),
 	}
 
 	// TestnetTrustedCheckpoint contains the light client trusted checkpoint for the Ropsten test network.
@@ -125,16 +161,16 @@ var (
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllEthashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
+	AllEthashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
 
 	// AllCliqueProtocolChanges contains every protocol change (EIPs) introduced
 	// and accepted by the Ethereum core developers into the Clique consensus.
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &CliqueConfig{Period: 0, Epoch: 30000}}
+	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &CliqueConfig{Period: 0, Epoch: 30000}}
 
-	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
+	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), nil, false, big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), new(EthashConfig), nil}
 	TestRules       = TestChainConfig.Rules(new(big.Int))
 )
 
@@ -170,14 +206,32 @@ type ChainConfig struct {
 	EIP155Block *big.Int `json:"eip155Block,omitempty"` // EIP155 HF block
 	EIP158Block *big.Int `json:"eip158Block,omitempty"` // EIP158 HF block
 
-	ByzantiumBlock      *big.Int `json:"byzantiumBlock,omitempty"`      // Byzantium switch block (nil = no fork, 0 = already on byzantium)
-	ConstantinopleBlock *big.Int `json:"constantinopleBlock,omitempty"` // Constantinople switch block (nil = no fork, 0 = already activated)
-	PetersburgBlock     *big.Int `json:"petersburgBlock,omitempty"`     // Petersburg switch block (nil = same as Constantinople)
-	EWASMBlock          *big.Int `json:"ewasmBlock,omitempty"`          // EWASM switch block (nil = no fork, 0 = already activated)
-	AkromaBlock         *big.Int `json:"akromaBlock,omitempty"`         // Akroma switch block (nil = no fork, 0 = already on akroma)
-	BaneslayerBlock     *big.Int `json:"baneslayerBlock,omitempty"`     //second major akroma release
-	CopperLeafBlock     *big.Int `json:"copperLeafBlock,omitempty"`     //third major akroma release
-	DawnbreakBlock      *big.Int `json:"dawnbreakBlock,omitempty"`      //fourth major akroma release
+	ByzantiumBlock          *big.Int `json:"byzantiumBlock,omitempty"`          // Byzantium switch block (nil = no fork, 0 = already on byzantium)
+	ConstantinopleBlock     *big.Int `json:"constantinopleBlock,omitempty"`     // Constantinople switch block (nil = no fork, 0 = already activated)
+	PetersburgBlock         *big.Int `json:"petersburgBlock,omitempty"`         // Petersburg switch block (nil = same as Constantinople)
+	EWASMBlock              *big.Int `json:"ewasmBlock,omitempty"`              // EWASM switch block (nil = no fork, 0 = already activated)
+	AkromaBlock             *big.Int `json:"akromaBlock,omitempty"`             // Akroma switch block (nil = no fork, 0 = already on akroma)
+	BaneslayerBlock         *big.Int `json:"baneslayerBlock,omitempty"`         // second major akroma release
+	CopperLeafBlock         *big.Int `json:"copperLeafBlock,omitempty"`         // third major akroma release
+	DawnbreakBlock          *big.Int `json:"dawnbreakBlock,omitempty"`          // fourth major akroma release
+	ExaltedAngelBlock       *big.Int `json:"exaltedAngelBlock,omitempty"`       // x major akroma release
+	FlamebladeBlock         *big.Int `json:"flamebladeBlock,omitempty"`         // x major akroma release
+	GabrielAngelfireBlock   *big.Int `json:"gabrielAngelfireBlock,omitempty"`   // x major akroma release
+	HailstormValkyrieBlock  *big.Int `json:"hailstormValkyrieBlock,omitempty"`  // x major akroma release
+	IonaBlock               *big.Int `json:"ionaBlock,omitempty"`               // x major akroma release
+	JenaraBlock             *big.Int `json:"jenaraBlock,omitempty"`             // x major akroma release
+	KarmicGuideBlock        *big.Int `json:"karmicGuideBlock,omitempty"`        // x major akroma release
+	LinvalaBlock            *big.Int `json:"linvalaBlock,omitempty"`            // x major akroma release
+	MaelstromArchangelBlock *big.Int `json:"maelstromArchangelBlock,omitempty"` // x major akroma release
+	PlatinumAngelBlock      *big.Int `json:"platinumAngelBlock,omitempty"`      // x major akroma release
+	RestorationAngelBlock   *big.Int `json:"restorationAngelBlock,omitempty"`   // x major akroma release
+	SerraAngelBlock         *big.Int `json:"serraAngelBlock,omitempty"`         // x major akroma release
+	TwilightShepherdBlock   *big.Int `json:"twilightShepherdBlock,omitempty"`   // x major akroma release
+	ValkyrieHarbingerBlock  *big.Int `json:"valkyrieHarbingerBlock,omitempty"`  // x major akroma release
+	WarriorAngelBlock       *big.Int `json:"warriorAngelBlock,omitempty"`       // x major akroma release
+	XathridDemonBlock       *big.Int `json:"xathridDemonBlock,omitempty"`       // x major akroma release
+	YouthfulValkyrieBlock   *big.Int `json:"youthfulValkyrieBlock,omitempty"`   // x major akroma release
+	ZuranOrbBlock           *big.Int `json:"zuranOrbBlock,omitempty"`           // x major akroma release
 
 	// Various consensus engines
 	Ethash *EthashConfig `json:"ethash,omitempty"`
@@ -214,7 +268,7 @@ func (c *ChainConfig) String() string {
 	default:
 		engine = "unknown"
 	}
-	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v  ConstantinopleFix: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Dawnbreak: %v Engine: %v}",
+	return fmt.Sprintf("{ChainID: %v Homestead: %v DAO: %v DAOSupport: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v  ConstantinopleFix: %v Akroma: %v Baneslayer: %v CopperLeaf: %v Dawnbreak: %v  ExaltedAngel: %v Flameblade: %v GabrielAngelfire: %v HailstormValkyrie: %v Iona: %v Jenara: %v KarmicGuide: %v Linvala: %v MaelstromArchangel: %v  PlatinumAngel: %v  RestorationAngel: %v SerraAngel: %v TwilightShepherd: %v WarriorAngel: %v ValkyrieHarbinger: %v XathridDemon: %v YouthfulValkyrie: %v ZuranOrb: %v Engine: %v}",
 		c.ChainID,
 		c.HomesteadBlock,
 		c.DAOForkBlock,
@@ -229,6 +283,24 @@ func (c *ChainConfig) String() string {
 		c.BaneslayerBlock,
 		c.CopperLeafBlock,
 		c.DawnbreakBlock,
+		c.ExaltedAngelBlock,
+		c.FlamebladeBlock,
+		c.GabrielAngelfireBlock,
+		c.HailstormValkyrieBlock,
+		c.IonaBlock,
+		c.JenaraBlock,
+		c.KarmicGuideBlock,
+		c.LinvalaBlock,
+		c.MaelstromArchangelBlock,
+		c.PlatinumAngelBlock,
+		c.RestorationAngelBlock,
+		c.SerraAngelBlock,
+		c.TwilightShepherdBlock,
+		c.ValkyrieHarbingerBlock,
+		c.WarriorAngelBlock,
+		c.XathridDemonBlock,
+		c.YouthfulValkyrieBlock,
+		c.ZuranOrbBlock,
 		engine,
 	)
 }
@@ -298,6 +370,96 @@ func (c *ChainConfig) IsCopperLeaf(num *big.Int) bool {
 // IsDawnbreak returns whether num is either equal to the Dawnbreak fork block or greater.
 func (c *ChainConfig) IsDawnbreak(num *big.Int) bool {
 	return isForked(c.DawnbreakBlock, num)
+}
+
+// IsExaltedAngel returns whether num is either equal to the ExaltedAngel fork block or greater.
+func (c *ChainConfig) IsExaltedAngel(num *big.Int) bool {
+	return isForked(c.ExaltedAngelBlock, num)
+}
+
+// IsFlameblade returns whether num is either equal to the Flameblade fork block or greater.
+func (c *ChainConfig) IsFlameblade(num *big.Int) bool {
+	return isForked(c.FlamebladeBlock, num)
+}
+
+// IsGabrielAngelfire returns whether num is either equal to the GabrielAngelfire fork block or greater.
+func (c *ChainConfig) IsGabrielAngelfire(num *big.Int) bool {
+	return isForked(c.GabrielAngelfireBlock, num)
+}
+
+// IsHailstormValkyrie returns whether num is either equal to the HailstormValkyrie fork block or greater.
+func (c *ChainConfig) IsHailstormValkyrie(num *big.Int) bool {
+	return isForked(c.HailstormValkyrieBlock, num)
+}
+
+// IsIona returns whether num is either equal to the Iona fork block or greater.
+func (c *ChainConfig) IsIona(num *big.Int) bool {
+	return isForked(c.IonaBlock, num)
+}
+
+// IsJenara returns whether num is either equal to the Jenara fork block or greater.
+func (c *ChainConfig) IsJenara(num *big.Int) bool {
+	return isForked(c.JenaraBlock, num)
+}
+
+// IsKarmicGuide returns whether num is either equal to the KarmicGuide fork block or greater.
+func (c *ChainConfig) IsKarmicGuide(num *big.Int) bool {
+	return isForked(c.KarmicGuideBlock, num)
+}
+
+// IsLinvala returns whether num is either equal to the Linvala fork block or greater.
+func (c *ChainConfig) IsLinvala(num *big.Int) bool {
+	return isForked(c.LinvalaBlock, num)
+}
+
+// IsMaelstromArchangel returns whether num is either equal to the MaelstromArchangel fork block or greater.
+func (c *ChainConfig) IsMaelstromArchangel(num *big.Int) bool {
+	return isForked(c.MaelstromArchangelBlock, num)
+}
+
+// IsPlatinumAngel returns whether num is either equal to the PlatinumAngel fork block or greater.
+func (c *ChainConfig) IsPlatinumAngel(num *big.Int) bool {
+	return isForked(c.PlatinumAngelBlock, num)
+}
+
+// IsRestorationAngel returns whether num is either equal to the RestorationAngel fork block or greater.
+func (c *ChainConfig) IsRestorationAngel(num *big.Int) bool {
+	return isForked(c.RestorationAngelBlock, num)
+}
+
+// IsSerraAngel returns whether num is either equal to the SerraAngel fork block or greater.
+func (c *ChainConfig) IsSerraAngel(num *big.Int) bool {
+	return isForked(c.SerraAngelBlock, num)
+}
+
+// IsTwilightShepherd returns whether num is either equal to the TwilightShepherd fork block or greater.
+func (c *ChainConfig) IsTwilightShepherd(num *big.Int) bool {
+	return isForked(c.TwilightShepherdBlock, num)
+}
+
+// IsValkyrieHarbinger returns whether num is either equal to the ValkyrieHarbinger fork block or greater.
+func (c *ChainConfig) IsValkyrieHarbinger(num *big.Int) bool {
+	return isForked(c.ValkyrieHarbingerBlock, num)
+}
+
+// IsWarriorAngel returns whether num is either equal to the WarriorAngel fork block or greater.
+func (c *ChainConfig) IsWarriorAngel(num *big.Int) bool {
+	return isForked(c.WarriorAngelBlock, num)
+}
+
+// IsXathridDemon returns whether num is either equal to the XathridDemon fork block or greater.
+func (c *ChainConfig) IsXathridDemon(num *big.Int) bool {
+	return isForked(c.XathridDemonBlock, num)
+}
+
+// IsYouthfulValkyrie returns whether num is either equal to the YouthfulValkyrie fork block or greater.
+func (c *ChainConfig) IsYouthfulValkyrie(num *big.Int) bool {
+	return isForked(c.YouthfulValkyrieBlock, num)
+}
+
+// IsZuranOrb returns whether num is either equal to the ZuranOrb fork block or greater.
+func (c *ChainConfig) IsZuranOrb(num *big.Int) bool {
+	return isForked(c.ZuranOrbBlock, num)
 }
 
 // GasTable returns the gas table corresponding to the current phase (homestead or homestead reprice).
@@ -383,6 +545,60 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	if isForkIncompatible(c.DawnbreakBlock, newcfg.DawnbreakBlock, head) {
 		return newCompatError("Dawnbreak fork block", c.DawnbreakBlock, newcfg.DawnbreakBlock)
 	}
+	if isForkIncompatible(c.ExaltedAngelBlock, newcfg.ExaltedAngelBlock, head) {
+		return newCompatError("ExaltedAngel fork block", c.ExaltedAngelBlock, newcfg.ExaltedAngelBlock)
+	}
+	if isForkIncompatible(c.FlamebladeBlock, newcfg.FlamebladeBlock, head) {
+		return newCompatError("Flameblade fork block", c.FlamebladeBlock, newcfg.FlamebladeBlock)
+	}
+	if isForkIncompatible(c.GabrielAngelfireBlock, newcfg.GabrielAngelfireBlock, head) {
+		return newCompatError("GabrielAngelfire fork block", c.GabrielAngelfireBlock, newcfg.GabrielAngelfireBlock)
+	}
+	if isForkIncompatible(c.HailstormValkyrieBlock, newcfg.HailstormValkyrieBlock, head) {
+		return newCompatError("HailstormValkyrie fork block", c.HailstormValkyrieBlock, newcfg.HailstormValkyrieBlock)
+	}
+	if isForkIncompatible(c.IonaBlock, newcfg.IonaBlock, head) {
+		return newCompatError("Iona fork block", c.IonaBlock, newcfg.IonaBlock)
+	}
+	if isForkIncompatible(c.JenaraBlock, newcfg.JenaraBlock, head) {
+		return newCompatError("Jenara fork block", c.JenaraBlock, newcfg.JenaraBlock)
+	}
+	if isForkIncompatible(c.KarmicGuideBlock, newcfg.KarmicGuideBlock, head) {
+		return newCompatError("KarmicGuide fork block", c.KarmicGuideBlock, newcfg.KarmicGuideBlock)
+	}
+	if isForkIncompatible(c.LinvalaBlock, newcfg.LinvalaBlock, head) {
+		return newCompatError("Dawnbreak fork block", c.LinvalaBlock, newcfg.LinvalaBlock)
+	}
+	if isForkIncompatible(c.MaelstromArchangelBlock, newcfg.MaelstromArchangelBlock, head) {
+		return newCompatError("MaelstromArchangel fork block", c.MaelstromArchangelBlock, newcfg.MaelstromArchangelBlock)
+	}
+	if isForkIncompatible(c.PlatinumAngelBlock, newcfg.PlatinumAngelBlock, head) {
+		return newCompatError("PlatinumAngel fork block", c.PlatinumAngelBlock, newcfg.PlatinumAngelBlock)
+	}
+	if isForkIncompatible(c.RestorationAngelBlock, newcfg.RestorationAngelBlock, head) {
+		return newCompatError("RestorationAngel fork block", c.RestorationAngelBlock, newcfg.RestorationAngelBlock)
+	}
+	if isForkIncompatible(c.SerraAngelBlock, newcfg.SerraAngelBlock, head) {
+		return newCompatError("SerraAngel fork block", c.SerraAngelBlock, newcfg.SerraAngelBlock)
+	}
+	if isForkIncompatible(c.TwilightShepherdBlock, newcfg.TwilightShepherdBlock, head) {
+		return newCompatError("TwilightShepherd fork block", c.TwilightShepherdBlock, newcfg.TwilightShepherdBlock)
+	}
+	if isForkIncompatible(c.ValkyrieHarbingerBlock, newcfg.ValkyrieHarbingerBlock, head) {
+		return newCompatError("ValkyrieHarbinger fork block", c.ValkyrieHarbingerBlock, newcfg.ValkyrieHarbingerBlock)
+	}
+	if isForkIncompatible(c.WarriorAngelBlock, newcfg.WarriorAngelBlock, head) {
+		return newCompatError("WarriorAngel fork block", c.WarriorAngelBlock, newcfg.WarriorAngelBlock)
+	}
+	if isForkIncompatible(c.XathridDemonBlock, newcfg.XathridDemonBlock, head) {
+		return newCompatError("XathridDemon fork block", c.XathridDemonBlock, newcfg.XathridDemonBlock)
+	}
+	if isForkIncompatible(c.YouthfulValkyrieBlock, newcfg.YouthfulValkyrieBlock, head) {
+		return newCompatError("YouthfulValkyrie fork block", c.YouthfulValkyrieBlock, newcfg.YouthfulValkyrieBlock)
+	}
+	if isForkIncompatible(c.ZuranOrbBlock, newcfg.ZuranOrbBlock, head) {
+		return newCompatError("ZuranOrb fork block", c.ZuranOrbBlock, newcfg.ZuranOrbBlock)
+	}
 	return nil
 }
 
@@ -454,6 +670,24 @@ type Rules struct {
 	IsBaneslayer                                bool
 	IsCopperLeaf                                bool
 	IsDawnbreak                                 bool
+	IsExaltedAngel                              bool
+	IsFlameblade                                bool
+	IsGabrielAngelfire                          bool
+	IsHailstormValkyrie                         bool
+	IsIona                                      bool
+	IsJenara                                    bool
+	IsKarmicGuide                               bool
+	IsLinvala                                   bool
+	IsMaelstromArchangel                        bool
+	IsPlatinumAngel                             bool
+	IsRestorationAngel                          bool
+	IsSerraAngel                                bool
+	IsTwilightShepherd                          bool
+	IsValkyrieHarbinger                         bool
+	IsWarriorAngel                              bool
+	IsXathridDemon                              bool
+	IsYouthfulValkyrie                          bool
+	IsZuranOrb                                  bool
 }
 
 // Rules ensures c's ChainID is not nil.
@@ -463,17 +697,35 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 		chainID = new(big.Int)
 	}
 	return Rules{
-		ChainID:          new(big.Int).Set(chainID),
-		IsHomestead:      c.IsHomestead(num),
-		IsEIP150:         c.IsEIP150(num),
-		IsEIP155:         c.IsEIP155(num),
-		IsEIP158:         c.IsEIP158(num),
-		IsByzantium:      c.IsByzantium(num),
-		IsConstantinople: c.IsConstantinople(num),
-		IsPetersburg:     c.IsPetersburg(num),
-		IsAkroma:         c.IsAkroma(num),
-		IsBaneslayer:     c.IsBaneslayer(num),
-		IsCopperLeaf:     c.IsCopperLeaf(num),
-		IsDawnbreak:      c.IsDawnbreak(num),
+		ChainID:              new(big.Int).Set(chainID),
+		IsHomestead:          c.IsHomestead(num),
+		IsEIP150:             c.IsEIP150(num),
+		IsEIP155:             c.IsEIP155(num),
+		IsEIP158:             c.IsEIP158(num),
+		IsByzantium:          c.IsByzantium(num),
+		IsConstantinople:     c.IsConstantinople(num),
+		IsPetersburg:         c.IsPetersburg(num),
+		IsAkroma:             c.IsAkroma(num),
+		IsBaneslayer:         c.IsBaneslayer(num),
+		IsCopperLeaf:         c.IsCopperLeaf(num),
+		IsDawnbreak:          c.IsDawnbreak(num),
+		IsExaltedAngel:       c.IsExaltedAngel(num),
+		IsFlameblade:         c.IsFlameblade(num),
+		IsGabrielAngelfire:   c.IsGabrielAngelfire(num),
+		IsHailstormValkyrie:  c.IsHailstormValkyrie(num),
+		IsIona:               c.IsIona(num),
+		IsJenara:             c.IsJenara(num),
+		IsKarmicGuide:        c.IsKarmicGuide(num),
+		IsLinvala:            c.IsLinvala(num),
+		IsMaelstromArchangel: c.IsMaelstromArchangel(num),
+		IsPlatinumAngel:      c.IsPlatinumAngel(num),
+		IsRestorationAngel:   c.IsRestorationAngel(num),
+		IsSerraAngel:         c.IsSerraAngel(num),
+		IsTwilightShepherd:   c.IsTwilightShepherd(num),
+		IsValkyrieHarbinger:  c.IsValkyrieHarbinger(num),
+		IsWarriorAngel:       c.IsWarriorAngel(num),
+		IsXathridDemon:       c.IsXathridDemon(num),
+		IsYouthfulValkyrie:   c.IsYouthfulValkyrie(num),
+		IsZuranOrb:           c.IsZuranOrb(num),
 	}
 }

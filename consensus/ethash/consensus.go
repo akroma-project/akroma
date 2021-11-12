@@ -30,6 +30,7 @@ import (
 	"github.com/akroma-project/akroma/consensus/misc"
 	"github.com/akroma-project/akroma/core/state"
 	"github.com/akroma-project/akroma/core/types"
+	"github.com/akroma-project/akroma/log"
 	"github.com/akroma-project/akroma/params"
 	"github.com/akroma-project/akroma/rlp"
 	mapset "github.com/deckarep/golang-set"
@@ -41,11 +42,11 @@ var (
 	FrontierBlockReward       = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
 	ByzantiumBlockReward      = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
 	ConstantinopleBlockReward = big.NewInt(2e+18) // Block reward in wei for successfully mining a block upward from Constantinople
-	AkromaBlockReward         = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
-	maxUncles                 = 2                 // Maximum number of uncles allowed in a single block
-	allowedFutureBlockTime    = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
-	DevelopmentFundAddress    = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
-	MasternodeFundAddress     = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
+	// AkromaBlockReward         = big.NewInt(7e+18) // Block reward for the Akroma initial release (hard fork)
+	maxUncles              = 2                // Maximum number of uncles allowed in a single block
+	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
+	DevelopmentFundAddress = common.HexToAddress("0x0d20f8b8bef42d768555cf9c1fa7401d930b3484")
+	MasternodeFundAddress  = common.HexToAddress("0x4b0b5aBfB408eC93a40369FB1Ed29e29D5504a43")
 
 	// calcDifficultyConstantinople is the difficulty adjustment algorithm for Constantinople.
 	// It returns the difficulty that a new block should have when created at time given the
@@ -316,6 +317,8 @@ func (ethash *Ethash) CalcDifficulty(chain consensus.ChainReader, time uint64, p
 func CalcDifficulty(config *params.ChainConfig, time uint64, parent *types.Header) *big.Int {
 	next := new(big.Int).Add(parent.Number, big1)
 	switch {
+	case config.IsExaltedAngel(next):
+		return calcDifficultyAllFutureEpocs(time, parent)
 	case config.IsConstantinople(next):
 		return calcDifficultyConstantinople(time, parent)
 	case config.IsByzantium(next):
@@ -325,6 +328,7 @@ func CalcDifficulty(config *params.ChainConfig, time uint64, parent *types.Heade
 	default:
 		return calcDifficultyFrontier(time, parent)
 	}
+
 }
 
 // Some weird constants to avoid constant memory allocs for them.
@@ -336,6 +340,47 @@ var (
 	big10         = big.NewInt(10)
 	bigMinus99    = big.NewInt(-99)
 )
+
+// calcDifficultyAllFutureEpocs creates a difficultyCalculator without a bomb-delay.
+// the difficulty is calculated with Byzantium rules, which differs from Homestead in
+// how uncles affect the calculation
+func calcDifficultyAllFutureEpocs(time uint64, parent *types.Header) *big.Int {
+	// https://github.com/ethereum/EIPs/issues/100.
+	// algorithm:
+	// diff = (parent_diff +
+	//         (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+	//        ) + 2^(periodCount - 2)
+
+	bigTime := new(big.Int).SetUint64(time)
+	bigParentTime := new(big.Int).Set(parent.Time)
+
+	// holds intermediate values to make the algo easier to read & audit
+	x := new(big.Int)
+	y := new(big.Int)
+
+	// (2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9
+	x.Sub(bigTime, bigParentTime)
+	x.Div(x, big9)
+	if parent.UncleHash == types.EmptyUncleHash {
+		x.Sub(big1, x)
+	} else {
+		x.Sub(big2, x)
+	}
+	// max((2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9, -99)
+	if x.Cmp(bigMinus99) < 0 {
+		x.Set(bigMinus99)
+	}
+	// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+	y.Div(parent.Difficulty, params.DifficultyBoundDivisor)
+	x.Mul(y, x)
+	x.Add(parent.Difficulty, x)
+
+	// minimum difficulty can ever be (before exponential factor)
+	if x.Cmp(params.MinimumDifficulty) < 0 {
+		x.Set(params.MinimumDifficulty)
+	}
+	return x
+}
 
 // makeDifficultyCalculator creates a difficultyCalculator with the given bomb-delay.
 // the difficulty is calculated with Byzantium rules, which differs from Homestead in
@@ -609,18 +654,12 @@ var (
 // reward. The total reward consists of the static block reward and rewards for
 // included uncles. The coinbase of each uncle block is also rewarded.
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
-	// Select the correct block reward based on chain progression
-	blockReward := FrontierBlockReward
-	if config.IsByzantium(header.Number) {
-		blockReward = ByzantiumBlockReward
-	}
-	if config.IsConstantinople(header.Number) {
-		blockReward = ConstantinopleBlockReward
-	}
+	blockReward := ByzantiumBlockReward
 	masternodeBlockReward := big.NewInt(2e+18)  //2.00
 	developmentBlockReward := big.NewInt(1e+18) //1.00
+
 	if config.IsAkroma(header.Number) {
-		blockReward = AkromaBlockReward //7.00
+		blockReward = big.NewInt(7e+18)
 	}
 	if config.IsBaneslayer(header.Number) {
 		blockReward = big.NewInt(600e+16)           //6.00
@@ -637,6 +676,78 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		masternodeBlockReward = big.NewInt(260e+16) //2.60
 		developmentBlockReward = big.NewInt(55e+16) //0.55
 	}
+	if config.IsExaltedAngel(header.Number) {
+		blockReward = big.NewInt(5.2e+18)
+		developmentBlockReward = big.NewInt(1.55e+18)
+	}
+	if config.IsFlameblade(header.Number) {
+		blockReward = big.NewInt(4.95e+18)
+		developmentBlockReward = big.NewInt(1.4e+18)
+	}
+	if config.IsGabrielAngelfire(header.Number) {
+		blockReward = big.NewInt(4.7e+18)
+		developmentBlockReward = big.NewInt(1.25e+18)
+	}
+	if config.IsHailstormValkyrie(header.Number) {
+		blockReward = big.NewInt(4.45e+18)
+		developmentBlockReward = big.NewInt(1.20e+18)
+	}
+	if config.IsIona(header.Number) {
+		blockReward = big.NewInt(4.2e+18)
+		developmentBlockReward = big.NewInt(1.15e+18)
+	}
+	if config.IsJenara(header.Number) {
+		blockReward = big.NewInt(3.95e+18)
+		developmentBlockReward = big.NewInt(1.10e+18)
+	}
+	if config.IsKarmicGuide(header.Number) {
+		blockReward = big.NewInt(3.70e+18)
+		developmentBlockReward = big.NewInt(1.05e+18)
+	}
+	if config.IsLinvala(header.Number) {
+		blockReward = big.NewInt(3.45e+18)
+		developmentBlockReward = big.NewInt(1e+18)
+	}
+	if config.IsMaelstromArchangel(header.Number) {
+		blockReward = big.NewInt(3.2e+18)
+		developmentBlockReward = big.NewInt(0.95e+18)
+	}
+	if config.IsPlatinumAngel(header.Number) {
+		blockReward = big.NewInt(2.95e+18)
+		developmentBlockReward = big.NewInt(0.9e+18)
+	}
+	if config.IsRestorationAngel(header.Number) {
+		blockReward = big.NewInt(2.7e+18)
+		developmentBlockReward = big.NewInt(0.8e+18)
+	}
+	if config.IsSerraAngel(header.Number) {
+		blockReward = big.NewInt(2.45e+18)
+		developmentBlockReward = big.NewInt(0.75e+18)
+	}
+	if config.IsTwilightShepherd(header.Number) {
+		blockReward = big.NewInt(2.2e+18)
+		developmentBlockReward = big.NewInt(0.70e+18)
+	}
+	if config.IsValkyrieHarbinger(header.Number) {
+		blockReward = big.NewInt(2e+18)
+		developmentBlockReward = big.NewInt(0.65e+18)
+	}
+	if config.IsWarriorAngel(header.Number) {
+		blockReward = big.NewInt(1.9e+18)
+		developmentBlockReward = big.NewInt(0.60e+18)
+	}
+	if config.IsXathridDemon(header.Number) {
+		blockReward = big.NewInt(1.8e+18)
+		developmentBlockReward = big.NewInt(0.55e+18)
+	}
+	if config.IsYouthfulValkyrie(header.Number) {
+		blockReward = big.NewInt(1.7e+18)
+		developmentBlockReward = big.NewInt(0.50e+18)
+	}
+	if config.IsZuranOrb(header.Number) {
+		blockReward = big.NewInt(1.5e+18)
+		developmentBlockReward = big.NewInt(0.45e+18)
+	}
 	// Accumulate the rewards for the miner and any included uncles
 	reward := new(big.Int).Set(blockReward)
 	r := new(big.Int)
@@ -650,11 +761,12 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		r.Div(blockReward, big32)
 		reward.Add(reward, r)
 	}
+	log.Info("🤑 Block reward log", "BlockNumber", header.Number, "Coinbase", header.Coinbase, "Reward", reward.String())
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
 	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
-	// Masternode Fund address, removed at block 2.5M
-	if config.IsAkroma(header.Number) {
+	// Masternode Fund address, removed at block 6.5M/ExaltedAngel fork
+	if config.IsAkroma(header.Number) && config.IsExaltedAngel(header.Number) == false {
 		state.AddBalance(MasternodeFundAddress, masternodeBlockReward)
 	}
 }
