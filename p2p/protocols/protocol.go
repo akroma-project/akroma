@@ -42,8 +42,6 @@ import (
 	"github.com/akroma-project/akroma/metrics"
 	"github.com/akroma-project/akroma/p2p"
 	"github.com/akroma-project/akroma/rlp"
-	"github.com/akroma-project/akroma/swarm/spancontext"
-	"github.com/akroma-project/akroma/swarm/tracing"
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
