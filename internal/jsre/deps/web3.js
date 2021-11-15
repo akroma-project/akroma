@@ -2612,12 +2612,7 @@ var properties = function () {
             name: 'version.ethereum',
             getter: 'eth_protocolVersion',
             inputFormatter: utils.toDecimal
-        }),
-        new Property({
-            name: 'version.whisper',
-            getter: 'shh_version',
-            inputFormatter: utils.toDecimal
-        })
+        })        
     ];
 };
 
@@ -3857,65 +3852,6 @@ var outputLogFormatter = function(log) {
         log.logIndex = utils.toDecimal(log.logIndex);
 
     return log;
-};
-
-/**
- * Formats the input of a whisper post and converts all values to HEX
- *
- * @method inputPostFormatter
- * @param {Object} transaction object
- * @returns {Object}
-*/
-var inputPostFormatter = function(post) {
-
-    // post.payload = utils.toHex(post.payload);
-    post.ttl = utils.fromDecimal(post.ttl);
-    post.workToProve = utils.fromDecimal(post.workToProve);
-    post.priority = utils.fromDecimal(post.priority);
-
-    // fallback
-    if (!utils.isArray(post.topics)) {
-        post.topics = post.topics ? [post.topics] : [];
-    }
-
-    // format the following options
-    post.topics = post.topics.map(function(topic){
-        // convert only if not hex
-        return (topic.indexOf('0x') === 0) ? topic : utils.fromUtf8(topic);
-    });
-
-    return post;
-};
-
-/**
- * Formats the output of a received post message
- *
- * @method outputPostFormatter
- * @param {Object}
- * @returns {Object}
- */
-var outputPostFormatter = function(post){
-
-    post.expiry = utils.toDecimal(post.expiry);
-    post.sent = utils.toDecimal(post.sent);
-    post.ttl = utils.toDecimal(post.ttl);
-    post.workProved = utils.toDecimal(post.workProved);
-    // post.payloadRaw = post.payload;
-    // post.payload = utils.toAscii(post.payload);
-
-    // if (utils.isJson(post.payload)) {
-    //     post.payload = JSON.parse(post.payload);
-    // }
-
-    // format the following options
-    if (!post.topics) {
-        post.topics = [];
-    }
-    post.topics = post.topics.map(function(topic){
-        return utils.toAscii(topic);
-    });
-
-    return post;
 };
 
 var inputAddressFormatter = function (address) {
