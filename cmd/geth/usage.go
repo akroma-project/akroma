@@ -73,7 +73,6 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.NoUSBFlag,
 			utils.NetworkIdFlag,
 			utils.TestnetFlag,
-			utils.RinkebyFlag,
 			utils.SyncModeFlag,
 			utils.ExitWhenSyncedFlag,
 			utils.GCModeFlag,
@@ -177,12 +176,6 @@ var AppHelpFlagGroups = []flagGroup{
 			utils.NetrestrictFlag,
 			utils.NodeKeyFileFlag,
 			utils.NodeKeyHexFlag,
-		},
-	},
-	{
-		Name: "MASTERNODE",
-		Flags: []cli.Flag{
-			utils.MasternodeFlag,
 		},
 	},
 	{
