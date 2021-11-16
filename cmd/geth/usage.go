@@ -86,13 +86,6 @@ var AppHelpFlagGroups = []flagGroup{
 		},
 	},
 	{
-		Name: "DEVELOPER CHAIN",
-		Flags: []cli.Flag{
-			utils.DeveloperFlag,
-			utils.DeveloperPeriodFlag,
-		},
-	},
-	{
 		Name: "ETHASH",
 		Flags: []cli.Flag{
 			utils.EthashCacheDirFlag,
