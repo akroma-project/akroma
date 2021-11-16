@@ -27,7 +27,6 @@ import (
 var (
 	MainnetGenesisHash = common.HexToHash("0x679ee3d5213ddab6aad2c53c2b5a7a1021d113f868b93929893a42c93ae61efd")
 	TestnetGenesisHash = common.HexToHash("0xc0aa9949ba05d4e30bff37bcdc4e5d9523a55a0fb34f7ad6abab1a4981ab5971")
-	RinkebyGenesisHash = common.HexToHash("0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177")
 )
 
 var (
@@ -123,33 +122,6 @@ var (
 		SectionHead:  common.HexToHash("0x4d3181bedb6aa96a6f3efa866c71f7802400d0fb4a6906946c453630d850efc0"),
 		CHTRoot:      common.HexToHash("0x25df2f9d63a5f84b2852988f0f0f7af5a7877da061c11b85c812780b5a27a5ec"),
 		BloomRoot:    common.HexToHash("0x0584834e5222471a06c669d210e302ca602780eaaddd04634fd65471c2a91419"),
-	}
-
-	// RinkebyChainConfig contains the chain parameters to run a node on the Rinkeby test network.
-	RinkebyChainConfig = &ChainConfig{
-		ChainID:             big.NewInt(4),
-		HomesteadBlock:      big.NewInt(1),
-		DAOForkBlock:        nil,
-		DAOForkSupport:      true,
-		EIP150Block:         big.NewInt(2),
-		EIP150Hash:          common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
-		EIP155Block:         big.NewInt(3),
-		EIP158Block:         big.NewInt(3),
-		ByzantiumBlock:      big.NewInt(1035301),
-		ConstantinopleBlock: nil,
-		PetersburgBlock:     nil, //TODO! Insert Rinkeby block number
-		AkromaBlock:         nil,
-		BaneslayerBlock:     nil,
-		DawnbreakBlock:      nil,
-	}
-
-	// RinkebyTrustedCheckpoint contains the light client trusted checkpoint for the Rinkeby test network.
-	RinkebyTrustedCheckpoint = &TrustedCheckpoint{
-		Name:         "rinkeby",
-		SectionIndex: 113,
-		SectionHead:  common.HexToHash("0xb812f3095af3af1cb2de7d7c2086ee807736a7315992c461b0986699185daf77"),
-		CHTRoot:      common.HexToHash("0x5416d0924925eb835987ad3d1f059ecc66778c51959c8246a7a35b22ec5f3109"),
-		BloomRoot:    common.HexToHash("0xcf74ca2c14e843b366561dab4fc64237bf6bb335119cbc97d723f3b501863470"),
 	}
 
 	// AllEthashProtocolChanges contains every protocol change (EIPs) introduced

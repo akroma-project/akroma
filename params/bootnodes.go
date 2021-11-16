@@ -29,10 +29,6 @@ var TestnetBootnodes = []string{
 	"enode://7fdacaac41d84d56c0713797f75392c74419c56478e39e9831ecc3685e752dd53373df515b5caf1cb9b62af6682c13c2417be8dc059e3dae8ade9660409bd3f3@159.89.41.132:30303", //west-us
 }
 
-// RinkebyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
-// Rinkeby test network.
-var RinkebyBootnodes = []string{}
-
 // DiscoveryV5Bootnodes are the enode URLs of the P2P bootstrap nodes for the
 // experimental RLPx v5 topic-discovery network.
 var DiscoveryV5Bootnodes = []string{}
