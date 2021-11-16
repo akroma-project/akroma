@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
+//go:build none
 // +build none
 
 /*
@@ -72,8 +73,6 @@ var (
 		"internal/jsre/deps",
 		"log/",
 		"common/bitutil/bitutil",
-		// don't license generated files
-		"contracts/chequebook/contract/code.go",
 	}
 
 	// paths with this prefix are licensed as GPL. all other files are LGPL.
