@@ -128,8 +128,6 @@ var (
 		utils.NetrestrictFlag,
 		utils.NodeKeyFileFlag,
 		utils.NodeKeyHexFlag,
-		utils.DeveloperFlag,
-		utils.DeveloperPeriodFlag,
 		utils.TestnetFlag,
 		utils.RinkebyFlag,
 		utils.VMEnableDebugFlag,
@@ -376,7 +374,7 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 		go core.BuildAddrTxIndex(ethereum.BlockChain(), ethereum.ChainDb(), a.Db, math.MaxUint64, math.MaxUint64, 10000)
 	}
 
-	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) || ctx.GlobalBool(utils.DeveloperFlag.Name) {
+	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) {
 		// Mining only makes sense if a full Ethereum node is running
 		if ctx.GlobalString(utils.SyncModeFlag.Name) == "light" {
 			utils.Fatalf("Light clients do not support mining")
