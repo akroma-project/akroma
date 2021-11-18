@@ -1,0 +1,18 @@
+name: pull-request-merged
+
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: post-notice-to-twitter
+        uses: m1ner79/Github-Twittction@v1.0.1
+        with:
+            twitter_status: "Akroma Client\n\nPR MERGED:\n ${{ github.event.head_commit.message }} 🥳 \n ${{ github.event.head_commit.url }}"
+            twitter_consumer_key: ${{ secrets.TWITTER_CONSUMER_API_KEY }} 
+            twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }} 
+            twitter_access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN }} 
+            twitter_access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }} 
