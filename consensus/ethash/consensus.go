@@ -761,7 +761,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		r.Div(blockReward, big32)
 		reward.Add(reward, r)
 	}
-	log.Info("🤑 Block reward log", "BlockNumber", header.Number, "Coinbase", header.Coinbase, "Reward", reward.String())
+	log.Debug("🤑 Block reward log", "BlockNumber", header.Number, "Coinbase", header.Coinbase, "Reward", reward.String())
 	state.AddBalance(header.Coinbase, reward)
 	// Akroma Foundation address
 	state.AddBalance(DevelopmentFundAddress, developmentBlockReward)
