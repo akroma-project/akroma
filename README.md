@@ -1,9 +1,6 @@
 ## Akroma
 
-Akroma is an EVM based application development platform that supports smart contracts, NFTs and DAOs. Akroma is a fork of the Ethereumwith a governance model via the Akroma Foundation. Akroma inherits all of the features of Ethereum and will merge in upstream changes from the Ethereum go-lang client.
-
-- FAQ: https://medium.com/akroma/akroma-faq-and-ama-674fe45d7dfc
-- Whitepaper/Roadmap: https://medium.com/akroma/hello-akroma-f413245a342b
+Akroma is an EVM based application development platform that supports smart contracts, NFTs and DAOs.
 
 ## Build
 
@@ -12,6 +9,10 @@ Akroma is an EVM based application development platform that supports smart cont
 ## Releases
 
 Official releases are published at https://github.com/akroma-project/akroma/releases
+
+## Docker
+
+Official docker images are published at https://hub.docker.com/repository/docker/akromaproject/akroma-node/general
 
 ## Attribution
 
@@ -53,14 +54,12 @@ the user doesn't care about years-old historical data, so we can fast-sync quick
 state of the network. To do so:
 
 ```
-$ geth --fast --cache=512 console
+$ geth --cache=512 console
 ```
 
 This command will:
 
- * Start geth in fast sync mode (`--fast`), causing it to download more data in exchange for avoiding
-   processing the entire history of the Akroma network, which is very CPU intensive.
- * Bump the memory allowance of the database to 512MB (`--cache=512`), which can help significantly in
+  * Bump the memory allowance of the database to 512MB (`--cache=512`), which can help significantly in
    sync times especially for HDD users. This flag is optional and you can set it as high or as low as
    you'd like, though we'd recommend the 512MB - 2GB range.
  * Start up Geth's built-in interactive JavaScript console, (via the trailing `console` subcommand) through which you can invoke all official `web3` methods.
@@ -73,14 +72,16 @@ This command will:
 One of the quickest ways to get Akroma up and running on your machine is by using Docker:
 
 ```
-docker run -d --name akroma-node -v /Users/alice/akroma:/root \
-           -p 8545:8545 -p 40403:40403 \
-           akroma/client-go --fast --cache=512
+docker run -d --name akroma-node -v akroma-data:/root -p 8545:8545 -p 40403:40403 akromaproject/akroma-node --cache=512
 ```
 
 This will start geth in fast sync mode with a DB memory allowance of 512MB just as the above command does.  It will also create a persistent volume in your home directory for saving your blockchain as well as map the default ports. There is also an `alpine` tag available for a slim version of the image.
 
 Do not forget `--rpcaddr 0.0.0.0`, if you want to access RPC from other containers and/or hosts. By default, `geth` binds to the local interface and RPC endpoints is not accessible from the outside.
+
+```
+docker run -d --name akroma-node -v akroma-data:/root -p 8545:8545 -p 40403:40403 akromaproject/akroma-node --cache=512 --rpc --rpcapi web3,eth,debug,personal,net --nat extip:127.0.0.1 --atxi --atxi.autobuild --rpcaddr 0.0.0.0
+```
 
 ### Programatically interfacing Geth nodes
 
