@@ -118,6 +118,26 @@ doing so! Hackers on the internet are actively trying to subvert Akroma nodes wi
 Further, all browser tabs can access locally running webservers, so malicious webpages could try to
 subvert locally available APIs!**
 
+## Creating a release
+
+**Update version**
+
+```
+https://github.com/akroma-project/akroma/blob/main/params/version.go
+```
+
+**Build geth**
+
+From the root, run `make geth`
+
+**package release artifacts**
+
+1. update version in package-release.sh
+2. run package-release.sh to generate new tar.gz artifacts
+
+TODO: automate this process using GitHub actions
+
+
 ## Contribution
 
 Thank you for considering to help out with the source code! We welcome contributions from
