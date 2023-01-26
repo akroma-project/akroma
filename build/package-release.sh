@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=0.4.5
+VERSION=0.4.6
 BUILD_FOLDER=bin/*
 PROCESSING_FOLDER=release
 
